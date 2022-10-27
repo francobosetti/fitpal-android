@@ -25,8 +25,10 @@ fun Profile() {
         },
         drawerContent = {
             NavigationDrawer(
-                selectedScreen = 0,
-                onMenuClick = { scope.launch { state.drawerState.close() } })
+                selectedScreen = 3,
+                onMenuClick = { scope.launch { state.drawerState.close() } },
+                onItemClick = { /* TODO */}
+            )
         },
     ) { padding ->
         Surface(color = MaterialTheme.colors.background) {

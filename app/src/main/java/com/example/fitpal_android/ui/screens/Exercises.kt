@@ -41,7 +41,9 @@ fun Exercises() {
         drawerContent = {
             NavigationDrawer(
                 selectedScreen = 0,
-                onMenuClick = { scope.launch { state.drawerState.close() } })
+                onMenuClick = { scope.launch { state.drawerState.close() } },
+                onItemClick = { /* TODO */}
+            )
         },
     ) { padding ->
         Surface(color = MaterialTheme.colors.background) {

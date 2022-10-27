@@ -39,8 +39,10 @@ fun MyRoutines() {
         },
         drawerContent = {
             NavigationDrawer(
-                selectedScreen = 0,
-                onMenuClick = { scope.launch { state.drawerState.close() } })
+                selectedScreen = 1,
+                onMenuClick = { scope.launch { state.drawerState.close() } },
+                onItemClick = { /* TODO */}
+            )
         },
     ) { padding ->
         Surface(color = MaterialTheme.colors.background) {
