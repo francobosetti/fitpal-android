@@ -47,7 +47,7 @@ fun Exercises() {
         topBar = {
             TopBar(
                 title = "My Exercises",
-                imageUrl = "https://st.depositphotos.com/1008939/2240/i/950/depositphotos_22408839-stock-photo-serious.jpg",
+                imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
                 onMenuClick = { scope.launch { state.drawerState.open() } })
         },
         floatingActionButton = {
@@ -88,6 +88,7 @@ fun Exercises() {
     }
 }
 
+// TODO: sacar esto cuando tengamos backend
 private class Exercise(
     val name: String,
     val description: String,
