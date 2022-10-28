@@ -97,4 +97,4 @@ private class MenuItem(
     var iconId: Int,
     var iconContentDescription: String,
     var isSelected: Boolean
-) {}
+)
