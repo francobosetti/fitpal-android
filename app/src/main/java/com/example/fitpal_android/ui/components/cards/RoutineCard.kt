@@ -1,11 +1,12 @@
 package com.example.fitpal_android.ui.components.cards
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -126,7 +127,7 @@ fun RoutineCard(name: String, description: String, imageUrl: String, rating: Dou
 @Preview
 @Composable
 fun RoutineCardPreview() {
-    FitpalandroidTheme() {
+    FitpalandroidTheme {
         RoutineCard(
             name = "Routine name",
             description = "Routine description",
