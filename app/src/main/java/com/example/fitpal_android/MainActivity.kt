@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FitpalandroidTheme {
                 // A surface container using the 'background' color from the theme
-                Exercises()
+                Profile()
             }
         }
     }
