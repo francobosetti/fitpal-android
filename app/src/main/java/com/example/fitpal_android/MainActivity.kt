@@ -32,27 +32,15 @@ class MainActivity : ComponentActivity() {
 
                 // Router current route
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
 
-                // TODO: HACER ESTO MEJOR
-                val title = if (currentRoute == Screens.Profile.route) {
-                    Screens.Profile.title
-                } else {
-                    if (currentRoute == Screens.Exercises.route) {
-                        Screens.Exercises.title
-                    } else {
-                        if (currentRoute == Screens.Routines.route) {
-                            Screens.Routines.title
-                        } else {
-                            if (currentRoute == Screens.ExploreRoutines.route) {
-                                Screens.ExploreRoutines.title
-                            } else {
-                                Screens.Exercises.title
-                            }
-                        }
-                    }
+
+                val title = when (navBackStackEntry?.destination?.route) {
+                    Screens.Profile.route -> Screens.Profile.title
+                    Screens.Exercises.route -> Screens.Exercises.title
+                    Screens.Routines.route -> Screens.Routines.title
+                    Screens.ExploreRoutines.route -> Screens.ExploreRoutines.title
+                    else -> Screens.Exercises.title
                 }
-
 
                 Scaffold(
                     scaffoldState = state,
@@ -63,18 +51,6 @@ class MainActivity : ComponentActivity() {
                             onMenuClick = { scope.launch { state.drawerState.open() } },
                             navController = navController
                         )
-                    },
-                    floatingActionButton = {
-                        /*FloatingActionButton(
-                            onClick = { /* TODO */ },
-                            backgroundColor = MaterialTheme.colors.primary
-                        ) {
-                            Icon(
-                                Icons.Filled.Add,
-                                contentDescription = "Add Exercise",
-                                tint = MaterialTheme.colors.onPrimary
-                            )
-                        }*/
                     },
                     drawerContent = {
                         NavigationDrawer(
