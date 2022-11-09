@@ -11,14 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.fitpal_android.ui.components.NavigationDrawer
-import com.example.fitpal_android.ui.components.TopBar
-import kotlinx.coroutines.launch
 
 @Composable
-fun Profile(
-
-) {
+fun Profile() {
 
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()

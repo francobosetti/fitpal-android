@@ -8,7 +8,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
-import com.example.fitpal_android.ui.screens.Profile
 
 @Composable
 fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
