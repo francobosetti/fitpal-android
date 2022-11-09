@@ -69,10 +69,12 @@ class MainActivity : ComponentActivity() {
                         TopBar(
                             title = title,
                             imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-                            onMenuClick = { scope.launch { state.drawerState.open() } })
+                            onMenuClick = { scope.launch { state.drawerState.open() } },
+                            navController = navController
+                        )
                     },
                     floatingActionButton = {
-                        FloatingActionButton(
+                        /*FloatingActionButton(
                             onClick = { /* TODO */ },
                             backgroundColor = MaterialTheme.colors.primary
                         ) {
@@ -81,7 +83,7 @@ class MainActivity : ComponentActivity() {
                                 contentDescription = "Add Exercise",
                                 tint = MaterialTheme.colors.onPrimary
                             )
-                        }
+                        }*/
                     },
                     drawerContent = {
                         NavigationDrawer(
@@ -90,7 +92,10 @@ class MainActivity : ComponentActivity() {
                         )
                     },
                 ) {
-                    MyAppNavHost(navController = navController, startDestination = Screens.Exercises.route)
+                    MyAppNavHost(
+                        navController = navController,
+                        startDestination = Screens.Exercises.route
+                    )
                 }
             }
 
@@ -107,8 +112,10 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun MyAppNavHost(navController: NavHostController = rememberNavController(),
-                 startDestination: String = Screens.Exercises.route){
+fun MyAppNavHost(
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = Screens.Exercises.route
+) {
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screens.Exercises.route) {
