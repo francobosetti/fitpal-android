@@ -23,32 +23,17 @@ fun Profile(
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    Scaffold(
-        scaffoldState = state,
-        topBar = {
-            TopBar(
-                title = "Profile",
-                imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-                onMenuClick = { scope.launch { state.drawerState.open() } })
-        },
-        drawerContent = {
-            NavigationDrawer(
-                selectedScreen = 3,
-                onMenuClick = { scope.launch { state.drawerState.close() } },
-                onItemClick = { /* TODO */ }
-            )
-        },
-    ) { padding ->
-        Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(padding)) {
-            // Form with profile info
-            ProfileForm(
-                firstName = "Faker",
-                lastName = "Faker",
-                email = "faker@gmail.com",
-                profilePicture = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small"
-            )
-        }
+
+    Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
+        // Form with profile info
+        ProfileForm(
+            firstName = "Faker",
+            lastName = "Faker",
+            email = "faker@gmail.com",
+            profilePicture = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small"
+        )
     }
+
 }
 
 @Composable

@@ -57,38 +57,23 @@ fun ExploreRoutines(
         ),
     )
 
-    Scaffold(
-        scaffoldState = state,
-        topBar = {
-            TopBar(
-                title = "Explore Routines",
-                imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-                onMenuClick = { scope.launch { state.drawerState.open() } })
-        },
-        drawerContent = {
-            NavigationDrawer(
-                selectedScreen = 2,
-                onMenuClick = { scope.launch { state.drawerState.close() } },
-                onItemClick = { /* TODO */ }
-            )
-        },
-    ) { padding ->
-        Surface(color = MaterialTheme.colors.background) {
-            LazyColumn(
-                modifier = Modifier.padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(routines.size) {
-                    RoutineCard(
-                        name = routines[it].name,
-                        imageUrl = routines[it].imageUrl,
-                        description = routines[it].description,
-                        rating = routines[it].rating
-                    )
-                }
+
+    Surface(color = MaterialTheme.colors.background) {
+        LazyColumn(
+            modifier = Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(routines.size) {
+                RoutineCard(
+                    name = routines[it].name,
+                    imageUrl = routines[it].imageUrl,
+                    description = routines[it].description,
+                    rating = routines[it].rating
+                )
             }
         }
     }
+
 }
 
 // TODO: sacar esto cuando tengamos backend

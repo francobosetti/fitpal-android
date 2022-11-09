@@ -10,11 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.screens.Profile
@@ -23,13 +25,17 @@ import com.example.fitpal_android.ui.screens.Profile
 fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
 
 
-
+    // Items for nav menu
     val menuItems = listOf(
         Screens.Exercises,
         Screens.Routines,
         Screens.ExploreRoutines,
         Screens.Profile
     )
+
+    // Router current route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     return Column(
         modifier = Modifier
@@ -55,7 +61,18 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { }
+                    .clickable {
+                        navController.navigate(menuItem.route) {
+                            navController.graph.startDestinationRoute?.let { screenRoute ->
+                                popUpTo(screenRoute) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                        onMenuClick()
+                    }
                     .padding(vertical = 16.dp)
             ) {
                 // Icon
@@ -69,7 +86,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                 // Text
                 Text(
                     text = menuItem.title,
-                    color = if (menuItem.isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+                    color = if (menuItem.route == currentRoute) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }
         }

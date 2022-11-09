@@ -3,24 +3,18 @@ package com.example.fitpal_android.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.ui.components.NavigationDrawer
-import com.example.fitpal_android.ui.components.TopBar
 import com.example.fitpal_android.ui.components.cards.ExerciseCard
-import kotlinx.coroutines.launch
 
 @Composable
 fun Exercises(
 ) {
 
-    val state = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
 
     val exercises = listOf(
         Exercise(
@@ -43,45 +37,18 @@ fun Exercises(
         )
     )
 
-    Scaffold(
-        scaffoldState = state,
-        topBar = {
-            TopBar(
-                title = "My Exercises",
-                imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-                onMenuClick = { scope.launch { state.drawerState.open() } })
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* TODO */ },
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(
-                    Icons.Filled.Add,
-                    contentDescription = "Add Exercise",
-                    tint = MaterialTheme.colors.onPrimary
+    Surface(color = MaterialTheme.colors.background) {
+        LazyColumn(
+            modifier = Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(exercises.size) {
+                ExerciseCard(
+                    name = exercises[it].name,
+                    videoUrl = exercises[it].imageUrl,
+                    description = exercises[it].description,
+                    tags = exercises[it].tags
                 )
-            }
-        },
-        drawerContent = {
-            NavigationDrawer(
-                onMenuClick = { scope.launch { state.drawerState.close() } }
-            )
-        },
-    ) { padding ->
-        Surface(color = MaterialTheme.colors.background) {
-            LazyColumn(
-                modifier = Modifier.padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(exercises.size) {
-                    ExerciseCard(
-                        name = exercises[it].name,
-                        videoUrl = exercises[it].imageUrl,
-                        description = exercises[it].description,
-                        tags = exercises[it].tags
-                    )
-                }
             }
         }
     }

@@ -56,50 +56,22 @@ fun MyRoutines(
         ),
     )
 
-    Scaffold(
-        scaffoldState = state,
-        topBar = {
-            TopBar(
-                title = "My Routines",
-                imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-                onMenuClick = { scope.launch { state.drawerState.open() } })
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* TODO */ },
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(
-                    Icons.Filled.Add,
-                    contentDescription = "Add Routine",
-                    tint = MaterialTheme.colors.onPrimary
+    Surface(color = MaterialTheme.colors.background) {
+        LazyColumn(
+            modifier = Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(routines.size) {
+                RoutineCard(
+                    name = routines[it].name,
+                    imageUrl = routines[it].imageUrl,
+                    description = routines[it].description,
+                    rating = routines[it].rating
                 )
-            }
-        },
-        drawerContent = {
-            NavigationDrawer(
-                selectedScreen = 1,
-                onMenuClick = { scope.launch { state.drawerState.close() } },
-                onItemClick = { /* TODO */ }
-            )
-        },
-    ) { padding ->
-        Surface(color = MaterialTheme.colors.background) {
-            LazyColumn(
-                modifier = Modifier.padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(routines.size) {
-                    RoutineCard(
-                        name = routines[it].name,
-                        imageUrl = routines[it].imageUrl,
-                        description = routines[it].description,
-                        rating = routines[it].rating
-                    )
-                }
             }
         }
     }
+
 }
 
 // TODO: sacar esto cuando tengamos backend
