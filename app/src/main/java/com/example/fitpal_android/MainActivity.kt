@@ -19,6 +19,7 @@ import com.example.fitpal_android.ui.theme.FitpalandroidTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    // TODO: Ver Que onda con este warning
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +34,20 @@ class MainActivity : ComponentActivity() {
                 // Router current route
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-
-                val title = when (navBackStackEntry?.destination?.route) {
-                    Screens.Profile.route -> Screens.Profile.title
-                    Screens.Exercises.route -> Screens.Exercises.title
-                    Screens.Routines.route -> Screens.Routines.title
-                    Screens.ExploreRoutines.route -> Screens.ExploreRoutines.title
-                    else -> Screens.Exercises.title
-                }
-
                 Scaffold(
                     scaffoldState = state,
                     topBar = {
                         TopBar(
-                            title = title,
+                            title = when (navBackStackEntry?.destination?.route) {
+                                Screens.Profile.route -> Screens.Profile.title
+                                Screens.Exercises.route -> Screens.Exercises.title
+                                Screens.Routines.route -> Screens.Routines.title
+                                Screens.ExploreRoutines.route -> Screens.ExploreRoutines.title
+                                Screens.DetailedExercise.route -> Screens.DetailedExercise.title
+                                Screens.DetailedRoutine.route -> Screens.DetailedRoutine.title
+                                Screens.ExecRoutine.route -> Screens.ExecRoutine.title
+                                else -> "FitPal"
+                            },
                             imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
                             onMenuClick = { scope.launch { state.drawerState.open() } },
                             navController = navController

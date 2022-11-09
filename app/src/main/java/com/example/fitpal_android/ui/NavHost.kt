@@ -18,13 +18,19 @@ fun MyAppNavHost(
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screens.Exercises.route) {
-            Exercises()
+            Exercises(onItemClicked = { exerciseId ->
+                navController.navigate("DetailedExercise/$exerciseId")
+            })
         }
         composable(Screens.Routines.route) {
-            ExploreRoutines()
+            ExploreRoutines(onItemClicked = { routineId ->
+                navController.navigate("DetailedRoutine/$routineId")
+            })
         }
         composable(Screens.ExploreRoutines.route) {
-            MyRoutines()
+            MyRoutines(onItemClicked = { routineId ->
+                navController.navigate("DetailedRoutine/$routineId")
+            })
         }
         composable(Screens.Profile.route) {
             Profile()
@@ -33,13 +39,27 @@ fun MyAppNavHost(
             Screens.DetailedExercise.route,
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) {
-            DetailedExercise(it.arguments?.getInt("exerciseId"))
+            DetailedExercise(it.arguments?.getInt("exerciseId"), onBackPressed = {
+                navController.popBackStack()
+            })
         }
         composable(
             Screens.DetailedRoutine.route,
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
-            DetailedRoutine(it.arguments?.getInt("routineId"))
+            DetailedRoutine(it.arguments?.getInt("routineId"),
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                onStartPressed = { routineId ->
+                    navController.navigate("ExecRoutine/$routineId")
+                })
+        }
+        composable(
+            Screens.ExecRoutine.route,
+            arguments = listOf(navArgument("routineId") { type = NavType.IntType })
+        ) {
+            ExecRoutine(it.arguments?.getInt("routineId"))
         }
     }
 }

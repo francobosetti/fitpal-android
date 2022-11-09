@@ -1,12 +1,13 @@
-package com.example.fitpal_android.ui.components.cards
+package com.example.fitpal_android.ui.components.cards.detailed
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -14,15 +15,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
-// Card for displaying an exercise
-// It shows a video thumbnail, the name of the exercise, the exercise tags and the exercise description
-
 @Composable
-fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: Modifier) {
+fun DetailedExerciseCard(name: String, description: String, tags: List<String>, videoUrl: String) {
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(12.dp),
-        modifier = modifier
     ) {
         Column {
 
@@ -49,18 +46,8 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
                 modifier = Modifier.padding(8.dp)
             )
 
-            // Exercise tags
-            Row(
-                modifier = Modifier.padding(bottom = 8.dp)
-            ) {
-                tags.forEach { tag ->
-                    // Tag
-                    BuildChip(label = tag)
-                }
-            }
-
             // Exercise description
-            /*Text(
+            Text(
                 text = "Description",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
@@ -71,24 +58,40 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-            )*/
-        }
-    }
-}
-
-@Composable
-fun BuildChip(label: String) {
-    Box(modifier = Modifier.padding(start = 8.dp)) {
-        Surface(
-            elevation = 1.dp,
-            shape = CircleShape,
-            color = MaterialTheme.colors.primary,
-        ) {
-            Text(
-                label,
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.padding(8.dp),
             )
+
+            // Essence of the exercise
+            Text(
+                text = "Essence of exercise",
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.padding(8.dp)
+            )
+
+            // Shows tags in a checklist
+            Column {
+                tags.forEach { tag ->
+                    // Tag
+                    Row {
+                        // Check icon
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Check icon",
+                            tint = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(8.dp)
+                        )
+
+                        // Tag text
+                        Text(
+                            text = tag,
+                            style = MaterialTheme.typography.body1,
+                            color = MaterialTheme.colors.onPrimary,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
+            }
+
         }
     }
 }

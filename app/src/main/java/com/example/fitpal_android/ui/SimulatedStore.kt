@@ -10,30 +10,35 @@ class SimulatedStore {
                     imageUrl = "https://pbs.twimg.com/media/FfoC1MmWAAkViRz?format=jpg&name=small",
                     description = "A routine that will make your chest grow",
                     rating = 4.5,
+                    tags = listOf("Chest", "Arms", "Shoulders")
                 ),
                 MyRoutine(
                     name = "Legs",
                     imageUrl = "https://pbs.twimg.com/media/Fft9e-FXgAIzIfv?format=jpg&name=small",
                     description = "A routine that will make your legs grow",
                     rating = 3.5,
+                    tags = listOf("Legs", "Arms")
                 ),
                 MyRoutine(
                     name = "Back",
                     imageUrl = "https://pbs.twimg.com/media/Fft_ZgcXwAEuS2-?format=jpg&name=small",
                     description = "A routine that will make your back grow",
                     rating = 2.5,
+                    tags = listOf("Back", "Arms")
                 ),
                 MyRoutine(
                     name = "Arms",
                     imageUrl = "https://pbs.twimg.com/media/Ffzc9nAXEAMdh8T?format=jpg&name=small",
                     description = "A routine that will make your arms grow",
                     rating = 1.5,
+                    tags = listOf("Arms", "Shoulders")
                 ),
                 MyRoutine(
                     name = "Shoulders",
                     imageUrl = "https://pbs.twimg.com/media/Ffi2TERXoAAzFA1?format=jpg&name=4096x4096",
                     description = "A routine that will make your shoulders grow",
                     rating = 0.5,
+                    tags = listOf("Shoulders", "Arms")
                 ),
             )
         }
@@ -69,7 +74,8 @@ class MyRoutine(
     val name: String,
     val description: String,
     val imageUrl: String,
-    val rating: Double
+    val rating: Double,
+    val tags: List<String>
 )
 
 // TODO: sacar esto cuando tengamos backend

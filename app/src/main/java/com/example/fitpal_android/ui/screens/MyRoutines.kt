@@ -1,5 +1,6 @@
 package com.example.fitpal_android.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +14,7 @@ import com.example.fitpal_android.ui.components.cards.RoutineCard
 
 @Composable
 fun MyRoutines(
-
+    onItemClicked: (Int) -> Unit
 ) {
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn(
@@ -24,8 +25,11 @@ fun MyRoutines(
                 RoutineCard(
                     name = SimulatedStore.myRoutines()[it].name,
                     imageUrl = SimulatedStore.myRoutines()[it].imageUrl,
-                    description = SimulatedStore.myRoutines()[it].description,
-                    rating = SimulatedStore.myRoutines()[it].rating
+                    tags = SimulatedStore.myRoutines()[it].tags,
+                    rating = SimulatedStore.myRoutines()[it].rating,
+                    modifier = Modifier.clickable {
+                        onItemClicked(it)
+                    }
                 )
             }
         }
