@@ -17,7 +17,9 @@ import com.example.fitpal_android.ui.components.cards.RoutineCard
 import kotlinx.coroutines.launch
 
 @Composable
-fun ExploreRoutines() {
+fun ExploreRoutines(
+
+) {
 
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()

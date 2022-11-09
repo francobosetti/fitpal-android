@@ -16,7 +16,9 @@ import com.example.fitpal_android.ui.components.TopBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun Profile() {
+fun Profile(
+
+) {
 
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()

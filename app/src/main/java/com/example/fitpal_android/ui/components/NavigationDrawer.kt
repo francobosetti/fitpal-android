@@ -14,37 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.fitpal_android.R
+import com.example.fitpal_android.Screens
+import com.example.fitpal_android.ui.screens.Profile
 
 @Composable
-fun NavigationDrawer(onMenuClick: () -> Unit, selectedScreen: Int, onItemClick: () -> Unit) {
+fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
+
 
 
     val menuItems = listOf(
-        MenuItem(
-            title = "Exercises",
-            iconId = R.drawable.ic_baseline_self_improvement_24,
-            iconContentDescription = "Exercises",
-            isSelected = selectedScreen == 0
-        ),
-        MenuItem(
-            title = "Routines",
-            iconId = R.drawable.ic_baseline_sports_gymnastics_24,
-            iconContentDescription = "Routines",
-            isSelected = selectedScreen == 1
-        ),
-        MenuItem(
-            title = "Explore Routines",
-            iconId = R.drawable.ic_baseline_explore_24,
-            iconContentDescription = "Explore Routines",
-            isSelected = selectedScreen == 2
-        ),
-        MenuItem(
-            title = "Profile",
-            iconId = R.drawable.ic_baseline_person_24,
-            iconContentDescription = "Profile",
-            isSelected = selectedScreen == 3
-        ),
+        Screens.Exercises,
+        Screens.Routines,
+        Screens.ExploreRoutines,
+        Screens.Profile
     )
 
     return Column(
@@ -71,13 +55,13 @@ fun NavigationDrawer(onMenuClick: () -> Unit, selectedScreen: Int, onItemClick: 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { /* TODO */ }
+                    .clickable { }
                     .padding(vertical = 16.dp)
             ) {
                 // Icon
                 Icon(
-                    painter = painterResource(id = menuItem.iconId),
-                    contentDescription = menuItem.iconContentDescription
+                    painter = painterResource(id = menuItem.icon),
+                    contentDescription = menuItem.iconDesc
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -92,9 +76,3 @@ fun NavigationDrawer(onMenuClick: () -> Unit, selectedScreen: Int, onItemClick: 
     }
 }
 
-private class MenuItem(
-    var title: String,
-    var iconId: Int,
-    var iconContentDescription: String,
-    var isSelected: Boolean
-)

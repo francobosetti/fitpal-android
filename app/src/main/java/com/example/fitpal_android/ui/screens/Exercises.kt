@@ -16,7 +16,8 @@ import com.example.fitpal_android.ui.components.cards.ExerciseCard
 import kotlinx.coroutines.launch
 
 @Composable
-fun Exercises() {
+fun Exercises(
+) {
 
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -64,9 +65,7 @@ fun Exercises() {
         },
         drawerContent = {
             NavigationDrawer(
-                selectedScreen = 0,
-                onMenuClick = { scope.launch { state.drawerState.close() } },
-                onItemClick = { /* TODO */ }
+                onMenuClick = { scope.launch { state.drawerState.close() } }
             )
         },
     ) { padding ->
