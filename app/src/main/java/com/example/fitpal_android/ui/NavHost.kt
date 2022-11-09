@@ -13,7 +13,7 @@ import com.example.fitpal_android.ui.screens.*
 @Composable
 fun MyAppNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Screens.Exercises.route
+    startDestination: String = Screens.LogIn.route
 ) {
 
     NavHost(navController = navController, startDestination = startDestination) {
@@ -60,6 +60,9 @@ fun MyAppNavHost(
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
             ExecRoutine(it.arguments?.getInt("routineId"))
+        }
+        composable(Screens.LogIn.route){
+            LogIn(onButtonClicked = {navController.navigate(Screens.Exercises.route)})
         }
     }
 }

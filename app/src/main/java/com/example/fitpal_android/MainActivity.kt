@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     MyAppNavHost(
                         navController = navController,
-                        startDestination = Screens.Exercises.route
+                        startDestination = Screens.LogIn.route
                     )
                 }
             }

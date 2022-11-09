@@ -3,10 +3,7 @@ package com.example.fitpal_android.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -19,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
+import com.example.fitpal_android.ui.theme.White100
 
 @Composable
 fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
@@ -88,6 +86,10 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                     color = if (menuItem.route == currentRoute) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }
+        }
+        Button(onClick = { navController.navigate(Screens.LogIn.route);onMenuClick()},
+        Modifier.fillMaxWidth()) {
+            Text(text = "Log Out", color = White100)
         }
     }
 }
