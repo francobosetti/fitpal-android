@@ -8,9 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.fitpal_android.data.repository.UserRepository
+
+import com.example.fitpal_android.R
+
 
 @Composable
 fun Profile() {
@@ -84,7 +88,7 @@ fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: S
                 OutlinedTextField(
                     value = firstname,
                     onValueChange = { /*TODO*/ },
-                    label = { Text("First name") },
+                    label = { Text(stringResource(R.string.profile_first_name)) },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
@@ -93,7 +97,7 @@ fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: S
                 OutlinedTextField(
                     value = lastname,
                     onValueChange = { /*TODO*/ },
-                    label = { Text("Last name") },
+                    label = { Text(stringResource(R.string.profile_last_name)) },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
@@ -102,7 +106,7 @@ fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: S
                 OutlinedTextField(
                     value = email,
                     onValueChange = { /*TODO*/ },
-                    label = { Text("Email") },
+                    label = { Text(stringResource(R.string.profile_email)) },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
@@ -113,7 +117,7 @@ fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: S
                 OutlinedTextField(
                     value = avatarUrl,
                     onValueChange = { /*TODO*/ },
-                    label = { Text("Profile picture") },
+                    label = { Text(stringResource(R.string.Profile_pic)) },
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
@@ -129,7 +133,7 @@ fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: S
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
-                Text("Edit profile")
+                Text(stringResource(R.string.edit_profile_button))
             }
         }
     }

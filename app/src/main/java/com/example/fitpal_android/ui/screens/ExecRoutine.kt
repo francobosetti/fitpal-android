@@ -5,6 +5,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -28,6 +31,7 @@ import com.example.fitpal_android.ui.theme.White100
 @Composable
 fun ExecRoutine(
     routineId: Int?,
+    onBackPressed: () -> Unit,
     viewModel : ExercisesViewModel = ExercisesViewModel(routineId)
 ) {
     Surface(color = MaterialTheme.colors.background) {
@@ -35,14 +39,23 @@ fun ExecRoutine(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row{
+                IconButton(onClick = { onBackPressed() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
             Row{
                 Text(
                     text = viewModel.getCurrentExercise().name,
                     modifier = Modifier
-                        .padding(10.dp),
-                    style = androidx.compose.ui.text.TextStyle(
+                        .padding(10.dp)
+                        .fillMaxWidth(),
+                    style = TextStyle(
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center
                     ),
@@ -66,28 +79,47 @@ fun ExecRoutine(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            Row {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f)
+                    .padding(10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Button(
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                     onClick = { viewModel.previousExercise() },
-                    shape = RoundedCornerShape(50.dp),
                     modifier = Modifier
-                        .padding(10.dp)
                         .height(50.dp)
-                        .width(100.dp)
+                        .width(120.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
                 ) {
-                    Text(text = "Previous", color = White100)
+                    Text(
+                        text = "Previous",
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        color= Color.White
+                    )
                 }
                 Button(
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                     onClick = { viewModel.nextExercise() },
-                    shape = RoundedCornerShape(50.dp),
                     modifier = Modifier
-                        .padding(10.dp)
                         .height(50.dp)
-                        .width(100.dp)
+                        .width(120.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                 ) {
-                    Text(text = "Next", color = White100)
+                    Text(
+                        text = "Next",
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        color= Color.White
+                    )
                 }
             }
         }

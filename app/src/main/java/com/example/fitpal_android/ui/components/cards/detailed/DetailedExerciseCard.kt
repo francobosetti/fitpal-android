@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.fitpal_android.R
 
 @Composable
 fun DetailedExerciseCard(name: String, description: String, tags: List<String>, videoUrl: String) {
@@ -29,7 +31,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 model = videoUrl,
                 contentDescription = "Exercise video",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .height(175.dp)
                     .clip(
@@ -43,29 +45,29 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 text = name,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Exercise description
             Text(
-                text = "Description",
+                text = stringResource(R.string.description_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             )
 
             // Essence of the exercise
             Text(
-                text = "Essence of exercise",
+                text = stringResource(R.string.essence_exercise_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Shows tags in a checklist
@@ -78,7 +80,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                             imageVector = Icons.Default.Check,
                             contentDescription = "Check icon",
                             tint = MaterialTheme.colors.primary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
 
                         // Tag text
@@ -86,7 +88,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                             text = tag,
                             style = MaterialTheme.typography.body1,
                             color = MaterialTheme.colors.onPrimary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
                     }
                 }

@@ -1,5 +1,10 @@
 package com.example.fitpal_android
 
+import android.content.res.Resources
+import android.provider.Settings.Global.getString
+import androidx.compose.ui.platform.LocalContext
+
+
 sealed class Screens(val title: String, val icon: Int, val iconDesc: String,  val route: String) {
     object Exercises: Screens("Exercises", R.drawable.ic_baseline_self_improvement_24 , "exercise", "Exercises")
     object Routines: Screens("My Routines", R.drawable.ic_baseline_sports_gymnastics_24 , "MyRoutine", "Routines")
