@@ -18,7 +18,8 @@ import com.example.fitpal_android.ui.components.cards.detailed.DetailedRoutineCa
 fun DetailedRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
-    onStartPressed: (Int?) -> Unit
+    onStartPressed: (Int?) -> Unit,
+    onSharePressed: (Int?) -> Unit
 ) {
 
     val routine = RoutineRepository().getMyRoutines()[routineId ?: 0]
@@ -43,7 +44,8 @@ fun DetailedRoutine(
                 videoUrl = routine.imageUrl,
                 modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                 rating = routine.rating,
-                onStartPressedCallback = { onStartPressed(routineId) }
+                onStartPressedCallback = { onStartPressed(routineId) },
+                onSharePressedCallback = { onSharePressed(routineId) }
             )
         }
 

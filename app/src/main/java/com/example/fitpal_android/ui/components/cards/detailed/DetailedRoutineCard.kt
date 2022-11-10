@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +25,8 @@ fun DetailedRoutineCard(
     videoUrl: String,
     modifier: Modifier,
     rating: Double,
-    onStartPressedCallback: () -> Unit
+    onStartPressedCallback: () -> Unit,
+    onSharePressedCallback: () -> Unit
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -47,13 +49,27 @@ fun DetailedRoutineCard(
                 contentScale = ContentScale.FillWidth
             )
 
-            // Routine name
-            Text(
-                text = name,
-                style = MaterialTheme.typography.h5,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .padding(bottom = 8.dp, start = 12.dp, end = 12.dp)
+                    .fillMaxWidth()
+            ) {
+                // Routine name
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.h5,
+                    color = MaterialTheme.colors.onPrimary,
+                )
+
+                // Share button
+                IconButton(
+                    onClick = { onSharePressedCallback() },
+                ) {
+                    Icon(imageVector = Icons.Filled.Share, contentDescription = "Share button", modifier = Modifier.size(28.dp), tint = MaterialTheme.colors.primary)
+                }
+            }
 
             // Routine description
             Text(
@@ -158,8 +174,12 @@ fun DetailedRoutineCard(
             }
 
             // Start routine button
-            Button(onClick = { onStartPressedCallback() },
-                modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+            Button(
+                onClick = { onStartPressedCallback() },
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth()
+            ) {
                 // Center text
                 Text(text = stringResource(R.string.start_routine_button))
             }

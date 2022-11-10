@@ -2,6 +2,7 @@ package com.example.fitpal_android.ui
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,6 +18,8 @@ fun MyAppNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Screens.LogIn.route
 ) {
+
+    val currentContext = LocalContext.current
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screens.Exercises.route) {
@@ -68,6 +71,16 @@ fun MyAppNavHost(
                 },
                 onStartPressed = { routineId ->
                     navController.navigate("ExecRoutine/$routineId")
+                },
+                onSharePressed = { routineId ->
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, "fitpal://routines/$routineId")
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TITLE, "FitPal Routine")
+                    }
+                    val shareIntent = Intent.createChooser(intent, null)
+                    currentContext.startActivity(shareIntent)
                 })
         }
         composable(
