@@ -26,7 +26,7 @@ fun DetailedRoutineCard(
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = modifier
     ) {
         Column {
@@ -36,7 +36,7 @@ fun DetailedRoutineCard(
                 model = videoUrl,
                 contentDescription = "Routine video",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .height(175.dp)
                     .clip(
@@ -50,7 +50,7 @@ fun DetailedRoutineCard(
                 text = name,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Routine description
@@ -58,13 +58,13 @@ fun DetailedRoutineCard(
                 text = "Description",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             )
 
             // Essence of the routine
@@ -72,7 +72,7 @@ fun DetailedRoutineCard(
                 text = "Essence of routine",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Shows tags in a checklist
@@ -85,7 +85,7 @@ fun DetailedRoutineCard(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Check icon",
                             tint = MaterialTheme.colors.primary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
 
                         // Tag text
@@ -93,7 +93,7 @@ fun DetailedRoutineCard(
                             text = tag,
                             style = MaterialTheme.typography.body1,
                             color = MaterialTheme.colors.onPrimary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
                     }
                 }
@@ -156,7 +156,8 @@ fun DetailedRoutineCard(
             }
 
             // Start routine button
-            Button(onClick = { onStartPressedCallback() }, modifier = Modifier.padding(8.dp)) {
+            Button(onClick = { onStartPressedCallback() },
+                modifier = Modifier.padding(12.dp).fillMaxWidth()) {
                 // Center text
                 Text(text = "Start Routine")
             }

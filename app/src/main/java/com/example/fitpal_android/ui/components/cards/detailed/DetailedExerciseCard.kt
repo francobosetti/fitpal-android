@@ -29,7 +29,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 model = videoUrl,
                 contentDescription = "Exercise video",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .height(175.dp)
                     .clip(
@@ -43,7 +43,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 text = name,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Exercise description
@@ -51,13 +51,13 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 text = "Description",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             )
 
             // Essence of the exercise
@@ -65,7 +65,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                 text = "Essence of exercise",
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
             // Shows tags in a checklist
@@ -78,7 +78,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                             imageVector = Icons.Default.Check,
                             contentDescription = "Check icon",
                             tint = MaterialTheme.colors.primary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
 
                         // Tag text
@@ -86,7 +86,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
                             text = tag,
                             style = MaterialTheme.typography.body1,
                             color = MaterialTheme.colors.onPrimary,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                         )
                     }
                 }

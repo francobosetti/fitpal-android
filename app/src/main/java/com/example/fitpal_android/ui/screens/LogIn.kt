@@ -78,13 +78,21 @@ fun LogIn(onButtonClicked: () -> Unit){
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                 onClick = { onButtonClicked() },
-                shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .height(50.dp)
+                    .width(120.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
             ) {
-                Text(text = "Login", color = White100)
+                Text(
+                    text = "Log In",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                    color= Color.White
+                )
             }
         }
 

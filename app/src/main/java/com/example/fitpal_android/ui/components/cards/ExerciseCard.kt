@@ -32,7 +32,7 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
                 model = videoUrl,
                 contentDescription = "Exercise video",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .height(175.dp)
                     .clip(
@@ -46,12 +46,12 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
                 text = name,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             )
 
             // Exercise tags
             Row(
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 12.dp)
             ) {
                 tags.forEach { tag ->
                     // Tag
@@ -78,7 +78,7 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
 
 @Composable
 fun BuildChip(label: String) {
-    Box(modifier = Modifier.padding(start = 8.dp)) {
+    Box(modifier = Modifier.padding(start = 12.dp)) {
         Surface(
             elevation = 1.dp,
             shape = CircleShape,
