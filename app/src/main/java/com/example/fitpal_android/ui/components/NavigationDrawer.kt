@@ -30,10 +30,6 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
         Screens.Profile
     )
 
-    // Router current route
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
     return Column(
         modifier = Modifier
             .padding(16.dp)
@@ -62,6 +58,9 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                         navController.navigate(menuItem.route) {
                             navController.graph.startDestinationRoute?.let { screenRoute ->
                                 popUpTo(screenRoute) {
+                                    // TODO: determinar si queremos que esto se limpie o no
+                                    // Si es true, si estoy en una detailed routine y voy al profile, cuando vuelvo sigo en la detailed routine
+                                    // Si es false cuando vuelvo aparece la lista de rutinas
                                     saveState = true
                                 }
                                 launchSingleTop = true
@@ -83,7 +82,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                 // Text
                 Text(
                     text = menuItem.title,
-                    color = if (menuItem.route == currentRoute) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+                    color = if (navController.backQueue.any { entry -> entry.destination.route == menuItem.route }) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }
         }
