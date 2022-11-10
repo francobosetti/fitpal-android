@@ -22,4 +22,6 @@
     <string name="profile_email">Email</string>
     <string name="Profile_pic">Profile picture</string>
     <string name="edit_profile_button">Edit profile</string>
+    <string name="previous_button">Previous</string>
+    <string name="next_button">Next</string>
 </resources>

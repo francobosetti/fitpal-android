@@ -27,8 +27,10 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
     val menuItems = listOf(
         Screens.Exercises,
         Screens.Routines,
+        Screens.FavoriteRoutine,
         Screens.ExploreRoutines,
         Screens.Profile
+
     )
 
     return Column(
