@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.fitpal_android.R
 
 @Composable
 fun DetailedRoutineCard(
@@ -55,7 +57,7 @@ fun DetailedRoutineCard(
 
             // Routine description
             Text(
-                text = "Description",
+                text = stringResource(R.string.description_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
@@ -69,7 +71,7 @@ fun DetailedRoutineCard(
 
             // Essence of the routine
             Text(
-                text = "Essence of routine",
+                text = stringResource(R.string.essence_routine_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
@@ -159,7 +161,7 @@ fun DetailedRoutineCard(
             Button(onClick = { onStartPressedCallback() },
                 modifier = Modifier.padding(12.dp).fillMaxWidth()) {
                 // Center text
-                Text(text = "Start Routine")
+                Text(text = stringResource(R.string.start_routine_button))
             }
         }
     }

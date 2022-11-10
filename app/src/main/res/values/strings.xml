@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">fitpal-android</string>
+    <string name="exercises_screen">Exercises</string>
+    <string name="my_routine_screen">My Routines</string>
+    <string name="explore_routines_screen">Explore Routines</string>
+    <string name="profile_screen">Profile</string>
+    <string name="detailed_exercise_screen">Detailed Exercise</string>
+    <string name="detailed_routine_screen">Detailed Routine</string>
+    <string name="exec_routine_screen">Exec Routine</string>
+    <string name="log_in_screen">Log In</string>
+    <string name="welcome_message">Welcome to your exercise companion</string>
+    <string name="log_in_username">Username</string>
+    <string name="log_in_password">Password</string>
+    <string name="log_in_button">Log In</string>
+    <string name="log_out_button">Log Out</string>
+    <string name="description_title">Description</string>
+    <string name="essence_exercise_title">Essence of exercise</string>
+    <string name="essence_routine_title">Essence of routine</string>
+    <string name="start_routine_button">Start Routine</string>
+    <string name="profile_first_name">First name</string>
+    <string name="profile_last_name">Last name</string>
+    <string name="profile_email">Email</string>
+    <string name="Profile_pic">Profile picture</string>
+    <string name="edit_profile_button">Edit profile</string>
 </resources>

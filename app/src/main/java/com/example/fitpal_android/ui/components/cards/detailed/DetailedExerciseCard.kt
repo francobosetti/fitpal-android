@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.fitpal_android.R
 
 @Composable
 fun DetailedExerciseCard(name: String, description: String, tags: List<String>, videoUrl: String) {
@@ -48,7 +50,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
 
             // Exercise description
             Text(
-                text = "Description",
+                text = stringResource(R.string.description_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
@@ -62,7 +64,7 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
 
             // Essence of the exercise
             Text(
-                text = "Essence of exercise",
+                text = stringResource(R.string.essence_exercise_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
