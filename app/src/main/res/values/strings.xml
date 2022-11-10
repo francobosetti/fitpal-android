@@ -24,4 +24,7 @@
     <string name="edit_profile_button">Edit profile</string>
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
+    <string name="rating_button_text">Rate</string>
+    <string name="rating_title">Rate Routine</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>

@@ -86,16 +86,25 @@ fun MyAppNavHost(
                     }
                     val shareIntent = Intent.createChooser(intent, null)
                     currentContext.startActivity(shareIntent)
-                })
+                },
+                onFavoritePressed = {
+                    // TODO: implementar favoritos
+                },
+                onRatingSubmit = { routineId, rating ->
+                    // TODO: impementar submit ratings
+                }
+            )
         }
         composable(
             Screens.ExecRoutine.route,
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
-            ExecRoutine(it.arguments?.getInt("routineId"),
+            ExecRoutine(
+                it.arguments?.getInt("routineId"),
                 onBackPressed = {
                     navController.popBackStack()
-                },)
+                },
+            )
         }
         composable(Screens.LogIn.route) {
             LogIn(onButtonClicked = { navController.navigate(Screens.Exercises.route) })
