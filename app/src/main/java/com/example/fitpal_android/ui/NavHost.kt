@@ -1,5 +1,6 @@
 package com.example.fitpal_android.ui
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -7,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.screens.*
 
@@ -37,16 +39,29 @@ fun MyAppNavHost(
         }
         composable(
             Screens.DetailedExercise.route,
-            arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
+            arguments = listOf(navArgument("exerciseId") { type = NavType.IntType }),
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "fitpal://exercise/{exerciseId}"
+                action = Intent.ACTION_VIEW
+            })
         ) {
+            // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de ejercicios
             DetailedExercise(it.arguments?.getInt("exerciseId"), onBackPressed = {
                 navController.popBackStack()
             })
         }
         composable(
             Screens.DetailedRoutine.route,
-            arguments = listOf(navArgument("routineId") { type = NavType.IntType })
+            arguments = listOf(navArgument("routineId") { type = NavType.IntType }),
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "fitpal://routines/{routineId}" // TODO: Revisar link
+                action = Intent.ACTION_VIEW
+
+
+            })
         ) {
+            // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de rutinas
+
             DetailedRoutine(it.arguments?.getInt("routineId"),
                 onBackPressed = {
                     navController.popBackStack()
@@ -64,8 +79,8 @@ fun MyAppNavHost(
                     navController.popBackStack()
                 },)
         }
-        composable(Screens.LogIn.route){
-            LogIn(onButtonClicked = {navController.navigate(Screens.Exercises.route)})
+        composable(Screens.LogIn.route) {
+            LogIn(onButtonClicked = { navController.navigate(Screens.Exercises.route) })
         }
     }
 }
