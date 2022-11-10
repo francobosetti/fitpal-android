@@ -84,7 +84,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
 
                 // Text
                 Text(
-                    text = menuItem.title,
+                    text = stringResource(menuItem.title),
                     color = if (navController.backQueue.any { entry -> entry.destination.route == menuItem.route }) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }

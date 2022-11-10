@@ -27,4 +27,5 @@
     <string name="rating_button_text">Rate</string>
     <string name="rating_title">Rate Routine</string>
     <string name="cancel_button_text">Cancel</string>
+    <string name="fav_routine_screen">Favorite Routines</string>
 </resources>

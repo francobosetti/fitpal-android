@@ -27,4 +27,5 @@
     <string name="rating_button_text">Puntuar</string>
     <string name="rating_title">Puntuar Rutina</string>
     <string name="cancel_button_text">Cancelar</string>
+    <string name="fav_routine_screen">Rutinas Favoritas</string>
 </resources>
