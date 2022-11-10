@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import com.example.fitpal_android.R
 import com.example.fitpal_android.data.repository.Exercise
 import com.example.fitpal_android.data.repository.MyRoutine
 import com.example.fitpal_android.data.repository.RoutineRepository
@@ -96,7 +98,7 @@ fun ExecRoutine(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
                 ) {
                     Text(
-                        text = "Previous",
+                        text = stringResource(R.string.previous_button),
                         style = TextStyle(
                             fontSize = 18.sp,
                             textAlign = TextAlign.Center
@@ -113,7 +115,7 @@ fun ExecRoutine(
                     colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                 ) {
                     Text(
-                        text = "Next",
+                        text = stringResource(R.string.next_button),
                         style = TextStyle(
                             fontSize = 18.sp,
                             textAlign = TextAlign.Center

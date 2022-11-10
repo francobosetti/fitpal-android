@@ -9,6 +9,7 @@ sealed class Screens(val title: String, val icon: Int, val iconDesc: String,  va
     object Exercises: Screens("Exercises", R.drawable.ic_baseline_self_improvement_24 , "exercise", "Exercises")
     object Routines: Screens("My Routines", R.drawable.ic_baseline_sports_gymnastics_24 , "MyRoutine", "Routines")
     object ExploreRoutines: Screens("Explore Routines", R.drawable.ic_baseline_explore_24 , "Routines", "ExploreRoutines")
+    object FavoriteRoutine: Screens("Favorite Routines", R.drawable.ic_baseline_star_24, "FavRoutines", "FavRoutines")
     object Profile: Screens("Profile", R.drawable.ic_baseline_person_24 , "Profile", "Profile")
     // TODO : make icons optional
     object DetailedExercise: Screens("Detailed Exercise", R.drawable.ic_baseline_explore_24, "DetailedExercise", "DetailedExercise/{exerciseId}")

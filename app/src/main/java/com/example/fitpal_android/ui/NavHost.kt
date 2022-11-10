@@ -27,12 +27,17 @@ fun MyAppNavHost(
                 navController.navigate("DetailedExercise/$exerciseId")
             })
         }
-        composable(Screens.Routines.route) {
+        composable(Screens.ExploreRoutines.route) {
             ExploreRoutines(onItemClicked = { routineId ->
                 navController.navigate("DetailedRoutine/$routineId")
             })
         }
-        composable(Screens.ExploreRoutines.route) {
+        composable(Screens.FavoriteRoutine.route) {
+            FavRoutines(onItemClicked = { routineId ->
+                navController.navigate("DetailedRoutine/$routineId")
+            })
+        }
+        composable(Screens.Routines.route) {
             MyRoutines(onItemClicked = { routineId ->
                 navController.navigate("DetailedRoutine/$routineId")
             })

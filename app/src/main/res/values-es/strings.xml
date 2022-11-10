@@ -22,4 +22,6 @@
     <string name="profile_email">Correo Electronico</string>
     <string name="Profile_pic">Foto de perfil</string>
     <string name="edit_profile_button">Editar perfil</string>
+    <string name="previous_button">Anterior</string>
+    <string name="next_button">Proximo</string>
 </resources>

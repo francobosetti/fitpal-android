@@ -61,6 +61,7 @@ class MainActivity : ComponentActivity() {
                                     Screens.DetailedExercise.route -> Screens.DetailedExercise.title
                                     Screens.DetailedRoutine.route -> Screens.DetailedRoutine.title
                                     Screens.ExecRoutine.route -> Screens.ExecRoutine.title
+                                    Screens.FavoriteRoutine.route -> Screens.FavoriteRoutine.title
                                     else -> "FitPal"
                                 },
                                 imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",

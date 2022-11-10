@@ -27,8 +27,10 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
     val menuItems = listOf(
         Screens.Exercises,
         Screens.Routines,
+        Screens.FavoriteRoutine,
         Screens.ExploreRoutines,
         Screens.Profile
+
     )
 
     return Column(
@@ -88,7 +90,14 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        Button(onClick = { navController.navigate(Screens.LogIn.route);onMenuClick()},
+        Button(onClick = { navController.navigate(Screens.LogIn.route){
+            navController.graph.startDestinationRoute?.let { screenRoute ->
+                popUpTo(screenRoute) {
+                    saveState = true
+                }
+                launchSingleTop = true
+            }
+        };onMenuClick()},
         Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.log_out_button), color = White100)
         }
