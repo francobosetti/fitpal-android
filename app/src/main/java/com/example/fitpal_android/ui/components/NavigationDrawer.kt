@@ -86,6 +86,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                 )
             }
         }
+        Spacer(modifier = Modifier.weight(1f))
         Button(onClick = { navController.navigate(Screens.LogIn.route);onMenuClick()},
         Modifier.fillMaxWidth()) {
             Text(text = "Log Out", color = White100)
