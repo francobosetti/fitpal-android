@@ -1,6 +1,5 @@
 package com.example.fitpal_android.ui.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -12,8 +11,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.ui.SimulatedStore
-import com.example.fitpal_android.ui.components.cards.detailed.DetailedExerciseCard
+import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedRoutineCard
 
 @Composable
@@ -23,7 +21,7 @@ fun DetailedRoutine(
     onStartPressed: (Int?) -> Unit
 ) {
 
-    val routine = SimulatedStore.myRoutines()[routineId ?: 0]
+    val routine = RoutineRepository().getMyRoutines()[routineId ?: 0]
 
 
     Surface(color = MaterialTheme.colors.background) {

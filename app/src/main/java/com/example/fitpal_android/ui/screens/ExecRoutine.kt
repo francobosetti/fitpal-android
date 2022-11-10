@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import com.example.fitpal_android.ui.Exercise
-import com.example.fitpal_android.ui.MyRoutine
-import com.example.fitpal_android.ui.SimulatedStore
+import com.example.fitpal_android.data.repository.Exercise
+import com.example.fitpal_android.data.repository.MyRoutine
+import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.ui.theme.White100
 
@@ -137,7 +137,7 @@ fun CircularProgressBar(
 
 class ExercisesViewModel( private val routineId: Int? ) : ViewModel() {
     private var uiState by mutableStateOf(ExercisesUiState(
-        routine = SimulatedStore.myRoutines().find { it.id == routineId },
+        routine = RoutineRepository().getMyRoutines().find { it.id == routineId },
     ))
 
     fun getCurrentExercise(): Exercise {
@@ -161,6 +161,6 @@ class ExercisesViewModel( private val routineId: Int? ) : ViewModel() {
 
 data class ExercisesUiState(
     val routine: MyRoutine?,
-    val exercises: List<Exercise> = SimulatedStore.myRoutines().find { it.id == routine?.id }?.exercises ?: emptyList(),
+    val exercises: List<Exercise> = RoutineRepository().getMyRoutines().find { it.id == routine?.id }?.exercises ?: emptyList(),
     var currentExerciseIndex : Int = 0,
 )

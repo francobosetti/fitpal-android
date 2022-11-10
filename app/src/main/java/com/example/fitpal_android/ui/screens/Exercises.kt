@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.fitpal_android.ui.SimulatedStore
+import com.example.fitpal_android.data.repository.ExerciseRepository
 import com.example.fitpal_android.ui.components.cards.ExerciseCard
 
 @Composable
@@ -22,11 +22,12 @@ fun Exercises(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(SimulatedStore.myExercises().size) {
+            val exercises = ExerciseRepository().getExercises()
+            items(exercises.size) {
                 ExerciseCard(
-                    name = SimulatedStore.myExercises()[it].name,
-                    videoUrl = SimulatedStore.myExercises()[it].imageUrl,
-                    tags = SimulatedStore.myExercises()[it].tags,
+                    name = exercises[it].name,
+                    videoUrl = exercises[it].imageUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
+                    tags = exercises[it].tags,
                     modifier = Modifier.clickable {
                         onItemClicked(it)
                     }

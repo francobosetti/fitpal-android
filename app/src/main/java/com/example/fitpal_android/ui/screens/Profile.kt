@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.fitpal_android.data.model.User
 import com.example.fitpal_android.data.repository.UserRepository
 
 @Composable
@@ -19,14 +18,17 @@ fun Profile() {
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
         // Form with profile info
         ProfileForm(
-            UserRepository().getCurrentUser() // TODO: USE VIEW MODEL
+            firstname = UserRepository().getCurrentUser().firstname,
+            lastname = UserRepository().getCurrentUser().lastname,
+            email = UserRepository().getCurrentUser().email,
+            avatarUrl = UserRepository().getCurrentUser().avatarUrl,
         )
     }
 
 }
 
 @Composable
-fun ProfileForm(user: User) {
+fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: String) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -43,7 +45,7 @@ fun ProfileForm(user: User) {
             ) {
                 // Show profile picture
                 AsyncImage(
-                    model = user.avatarUrl,
+                    model = avatarUrl,
                     contentDescription = "Profile picture",
                     modifier = Modifier
                         .padding(8.dp)
@@ -58,13 +60,13 @@ fun ProfileForm(user: User) {
                 ) {
                     // Name
                     Text(
-                        text = "${user.firstname} ${user.lastname}",
+                        text = "$firstname $lastname",
                         style = MaterialTheme.typography.h5,
                         modifier = Modifier.padding(bottom = 2.dp)
                     )
                     // Email
                     Text(
-                        text = user.email,
+                        text = email,
                         style = MaterialTheme.typography.h6,
                         modifier = Modifier.padding(top = 2.dp)
                     )
@@ -80,7 +82,7 @@ fun ProfileForm(user: User) {
             ) {
                 // First name
                 OutlinedTextField(
-                    value = user.firstname,
+                    value = firstname,
                     onValueChange = { /*TODO*/ },
                     label = { Text("First name") },
                     modifier = Modifier
@@ -89,7 +91,7 @@ fun ProfileForm(user: User) {
                 )
                 // Last name
                 OutlinedTextField(
-                    value = user.lastname,
+                    value = lastname,
                     onValueChange = { /*TODO*/ },
                     label = { Text("Last name") },
                     modifier = Modifier
@@ -98,7 +100,7 @@ fun ProfileForm(user: User) {
                 )
                 // Email
                 OutlinedTextField(
-                    value = user.email,
+                    value = email,
                     onValueChange = { /*TODO*/ },
                     label = { Text("Email") },
                     modifier = Modifier
@@ -109,7 +111,7 @@ fun ProfileForm(user: User) {
 
                 // Profile picture
                 OutlinedTextField(
-                    value = user.avatarUrl,
+                    value = avatarUrl,
                     onValueChange = { /*TODO*/ },
                     label = { Text("Profile picture") },
                     modifier = Modifier

@@ -9,7 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.ui.SimulatedStore
+import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.ui.components.cards.RoutineCard
 
 @Composable
@@ -21,12 +21,13 @@ fun ExploreRoutines(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(SimulatedStore.myRoutines().size) {
+            val myRoutines = RoutineRepository().getMyRoutines() // TODO: REPLACE WITH EXPLORE ROUTINES
+            items(myRoutines.size) {
                 RoutineCard(
-                    name = SimulatedStore.myRoutines()[it].name,
-                    imageUrl = SimulatedStore.myRoutines()[it].imageUrl,
-                    tags = SimulatedStore.myRoutines()[it].tags,
-                    rating = SimulatedStore.myRoutines()[it].rating,
+                    name = myRoutines[it].name,
+                    imageUrl = myRoutines[it].imageUrl,
+                    tags = myRoutines[it].tags,
+                    rating = myRoutines[it].rating,
                     modifier = Modifier.clickable {
                         onItemClicked(it)
                     }

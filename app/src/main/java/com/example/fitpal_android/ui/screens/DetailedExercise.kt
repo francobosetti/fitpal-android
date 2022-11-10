@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.ui.SimulatedStore
+import com.example.fitpal_android.data.repository.ExerciseRepository
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedExerciseCard
 
 @Composable
@@ -17,7 +17,7 @@ fun DetailedExercise(
     exerciseId: Int?,
     onBackPressed: () -> Unit
 ) {
-    val exercise = SimulatedStore.myExercises()[exerciseId ?: 0]
+    val exercise = ExerciseRepository().getExercises()[exerciseId ?: 0]
 
 
     Surface(color = MaterialTheme.colors.background) {
