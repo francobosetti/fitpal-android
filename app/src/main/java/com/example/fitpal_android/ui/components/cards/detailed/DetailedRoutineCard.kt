@@ -74,7 +74,7 @@ fun DetailedRoutineCard(
                 )
 
                 // Row with fav and share buttons
-                Row() {
+                Row {
 
                     // Share button
                     IconButton(
@@ -175,7 +175,7 @@ fun DetailedRoutineCard(
                         backgroundColor = MaterialTheme.colors.secondary,
                         shape = RoundedCornerShape(8.dp),
                     ) {
-                        Column() {
+                        Column {
                             // Title
                             Text(
                                 text = stringResource(R.string.rating_title),

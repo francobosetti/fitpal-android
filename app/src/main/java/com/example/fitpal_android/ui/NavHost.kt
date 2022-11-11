@@ -12,6 +12,13 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.screens.*
+import com.example.fitpal_android.ui.screens.exercises.Exercises
+import com.example.fitpal_android.ui.screens.detailedExercise.DetailedExercise
+import com.example.fitpal_android.ui.screens.detailedRoutine.DetailedRoutine
+import com.example.fitpal_android.ui.screens.exploreRoutines.ExploreRoutines
+import com.example.fitpal_android.ui.screens.favRoutines.FavRoutines
+import com.example.fitpal_android.ui.screens.myRoutines.MyRoutines
+import com.example.fitpal_android.ui.screens.profile.Profile
 
 @Composable
 fun MyAppNavHost(

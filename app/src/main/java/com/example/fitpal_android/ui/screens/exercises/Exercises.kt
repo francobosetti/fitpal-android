@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens
+package com.example.fitpal_android.ui.screens.exercises
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,25 +9,28 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.data.repository.RoutineRepository
-import com.example.fitpal_android.ui.components.cards.RoutineCard
+import com.example.fitpal_android.ui.components.cards.ExerciseCard
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ExploreRoutines(
+fun Exercises(
     onItemClicked: (Int) -> Unit
 ) {
+    val viewModel = viewModel<ExercisesViewModel>()
+    val exercises = viewModel.getExercises()
+
+
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val myRoutines = RoutineRepository().getMyRoutines() // TODO: REPLACE WITH EXPLORE ROUTINES
-            items(myRoutines.size) {
-                RoutineCard(
-                    name = myRoutines[it].name,
-                    imageUrl = myRoutines[it].imageUrl,
-                    tags = myRoutines[it].tags,
-                    rating = myRoutines[it].rating,
+
+            items(exercises.size) {
+                ExerciseCard(
+                    name = exercises[it].name,
+                    videoUrl = exercises[it].imageUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
+                    tags = exercises[it].tags,
                     modifier = Modifier.clickable {
                         onItemClicked(it)
                     }
@@ -36,3 +39,4 @@ fun ExploreRoutines(
         }
     }
 }
+

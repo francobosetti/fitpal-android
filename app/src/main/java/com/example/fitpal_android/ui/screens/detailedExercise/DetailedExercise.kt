@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens
+package com.example.fitpal_android.ui.screens.detailedExercise
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.data.repository.ExerciseRepository
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedExerciseCard
 
 @Composable
@@ -17,8 +17,9 @@ fun DetailedExercise(
     exerciseId: Int?,
     onBackPressed: () -> Unit
 ) {
-    val exercise = ExerciseRepository().getExercises()[exerciseId ?: 0]
-
+    val viewModel = viewModel<DetailedExerciseViewModel>()
+    viewModel.initialize(exerciseId)
+    val exercise = viewModel.getExercise()
 
     Surface(color = MaterialTheme.colors.background) {
 

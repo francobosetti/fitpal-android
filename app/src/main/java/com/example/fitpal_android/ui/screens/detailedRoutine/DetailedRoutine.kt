@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens
+package com.example.fitpal_android.ui.screens.detailedRoutine
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.fitpal_android.data.repository.RoutineRepository
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedRoutineCard
 
 @Composable
@@ -24,7 +24,9 @@ fun DetailedRoutine(
     onRatingSubmit: (Int?, Double) -> Unit
 ) {
 
-    val routine = RoutineRepository().getMyRoutines()[routineId ?: 0]
+    val viewModel = viewModel<DetailedRoutineViewModel>()
+    viewModel.initialize(routineId)
+    val routine = viewModel.getRoutine()
 
 
     Surface(color = MaterialTheme.colors.background) {

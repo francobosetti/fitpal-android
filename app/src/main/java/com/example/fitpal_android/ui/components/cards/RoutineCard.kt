@@ -16,7 +16,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.fitpal_android.ui.theme.FitpalandroidTheme
 
 // Card for displaying a routine
 // It shows a routine image, the name of the routine, the routine description and the routine rating (stars)

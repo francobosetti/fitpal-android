@@ -1,7 +1,5 @@
 package com.example.fitpal_android.domain.use_case
 
-import android.util.Patterns
-
 class ValidatePassword {
     fun execute(password: String) : ValidationResult {
         if(password.isBlank()) {

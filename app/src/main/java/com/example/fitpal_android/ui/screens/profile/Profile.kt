@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens
+package com.example.fitpal_android.ui.screens.profile
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
