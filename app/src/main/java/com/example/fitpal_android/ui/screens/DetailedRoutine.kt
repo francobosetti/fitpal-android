@@ -19,7 +19,9 @@ fun DetailedRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
     onStartPressed: (Int?) -> Unit,
-    onSharePressed: (Int?) -> Unit
+    onSharePressed: (Int?) -> Unit,
+    onFavoritePressed: (Int?) -> Unit,
+    onRatingSubmit: (Int?, Double) -> Unit
 ) {
 
     val routine = RoutineRepository().getMyRoutines()[routineId ?: 0]
@@ -44,8 +46,11 @@ fun DetailedRoutine(
                 videoUrl = routine.imageUrl,
                 modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                 rating = routine.rating,
+                isFavorite = routine.isFavorite,
                 onStartPressedCallback = { onStartPressed(routineId) },
-                onSharePressedCallback = { onSharePressed(routineId) }
+                onSharePressedCallback = { onSharePressed(routineId) },
+                onFavoritePressedCallback = { onFavoritePressed(routineId) },
+                onRatingSubmitCallback = { rating -> onRatingSubmit(routineId, rating) }
             )
         }
 

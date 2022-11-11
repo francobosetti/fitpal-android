@@ -2,7 +2,7 @@ package com.example.fitpal_android.data.repository
 
 class RoutineRepository {
 
-    fun getMyRoutines() : List<MyRoutine> {
+    fun getMyRoutines(): List<MyRoutine> {
         val aux = ExerciseRepository().getExercises()
         return listOf(
             MyRoutine(
@@ -13,6 +13,7 @@ class RoutineRepository {
                 rating = 4.5,
                 tags = listOf("Chest", "Arms", "Shoulders"),
                 exercises = aux,
+                isFavorite = true
             ),
             MyRoutine(
                 name = "Legs",
@@ -22,6 +23,7 @@ class RoutineRepository {
                 rating = 3.5,
                 tags = listOf("Legs", "Arms"),
                 exercises = aux,
+                isFavorite = false
             ),
             MyRoutine(
                 name = "Back",
@@ -31,6 +33,7 @@ class RoutineRepository {
                 rating = 2.5,
                 tags = listOf("Back", "Arms"),
                 exercises = aux,
+                isFavorite = true
             ),
             MyRoutine(
                 name = "Arms",
@@ -40,6 +43,7 @@ class RoutineRepository {
                 rating = 1.5,
                 tags = listOf("Arms", "Shoulders"),
                 exercises = aux,
+                isFavorite = false
             ),
             MyRoutine(
                 name = "Shoulders",
@@ -49,6 +53,7 @@ class RoutineRepository {
                 rating = 0.5,
                 tags = listOf("Shoulders", "Arms"),
                 exercises = aux,
+                isFavorite = true
             ),
         )
     }
@@ -62,5 +67,6 @@ class MyRoutine(
     val imageUrl: String,
     val rating: Double,
     val tags: List<String>,
-    val exercises: List<Exercise>
+    val exercises: List<Exercise>,
+    val isFavorite: Boolean,
 )
