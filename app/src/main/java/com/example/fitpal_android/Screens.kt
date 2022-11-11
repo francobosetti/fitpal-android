@@ -13,4 +13,5 @@ sealed class Screens(val title: Int, val icon: Int, val iconDesc: String,  val r
     object DetailedRoutine: Screens(R.string.detailed_routine_screen, R.drawable.ic_baseline_explore_24, "DetailedRoutine", "DetailedRoutine/{routineId}")
     object ExecRoutine: Screens(R.string.exec_routine_screen, R.drawable.ic_baseline_explore_24, "ExecRoutine", "ExecRoutine/{routineId}")
     object LogIn: Screens(R.string.log_in_screen,R.drawable.ic_baseline_explore_24, "LogIn", "LogIn" )
+    object SignUp: Screens(R.string.sign_up_screen,R.drawable.ic_baseline_explore_24, "SignUp", "SignUp" )
 }

@@ -1,5 +1,6 @@
 package com.example.fitpal_android.ui.screens
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,7 +32,7 @@ import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
 
 @Composable
-fun LogIn(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
+fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,18 +40,21 @@ fun LogIn(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Image(
             painter = painterResource(id = R.drawable.fitpal_horizontallogo),
             contentDescription = "Fitpal Logo",
             modifier = Modifier.padding(16.dp),
 
-        )
-        Spacer(modifier = Modifier.height(70.dp))
-        val username = remember { mutableStateOf(TextFieldValue()) }
+            )
+        Spacer(modifier = Modifier.height(10.dp))
+        val firstName = remember { mutableStateOf(TextFieldValue()) }
+        val lastName = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
+        val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
+        val email = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(modifier = Modifier.padding(20.dp),text = stringResource(R.string.welcome_message), style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center), color= Color.White)
+        Text(modifier = Modifier.padding(10.dp),text = stringResource(R.string.create_account), style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center), color= Color.White)
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
@@ -58,21 +62,52 @@ fun LogIn(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
                 cursorColor = Orange500),
-            label = { Text(text = stringResource(R.string.log_in_username)) },
-            value = username.value,
-            onValueChange = { username.value = it })
+            label = { Text(text = stringResource(R.string.profile_first_name)) },
+            value = firstName.value,
+            onValueChange = { firstName.value = it })
+
+        Spacer(modifier = Modifier.height(20.dp))
+        TextField(
+            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                focusedIndicatorColor = Orange500,
+                focusedLabelColor = Orange500,
+                cursorColor = Orange500),
+            label = { Text(text = stringResource(R.string.profile_last_name)) },
+            value = lastName.value,
+            onValueChange = { lastName.value = it })
+
+        Spacer(modifier = Modifier.height(20.dp))
+        TextField(
+            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                focusedIndicatorColor = Orange500,
+                focusedLabelColor = Orange500,
+                cursorColor = Orange500),
+            label = { Text(text = stringResource(R.string.profile_email)) },
+            value = email.value,
+            onValueChange = { email.value = it })
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
             colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-           cursorColor = Orange500),
+                cursorColor = Orange500),
             label = { Text(text = stringResource(R.string.log_in_password)) },
             value = password.value,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = { password.value = it })
+        Spacer(modifier = Modifier.height(20.dp))
+        TextField(
+            colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                focusedIndicatorColor = Orange500,
+                focusedLabelColor = Orange500,
+                cursorColor = Orange500),
+            label = { Text(text = stringResource(R.string.confirm_password)) },
+            value = confirmPassword.value,
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            onValueChange = { confirmPassword.value = it })
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
@@ -85,7 +120,7 @@ fun LogIn(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
             ) {
                 Text(
-                    text = stringResource(R.string.log_in_button),
+                    text = stringResource(R.string.sign_up_button),
                     style = TextStyle(
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center
@@ -96,11 +131,11 @@ fun LogIn(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
         }
         Box(modifier = Modifier.fillMaxSize()) {
             ClickableText(
-                text = AnnotatedString(stringResource(R.string.sing_up_here)),
+                text = AnnotatedString(stringResource(R.string.log_in_link)),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(20.dp),
-                onClick = { onLinkClicked()},
+                onClick = { onLinkClicked() },
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = FontFamily.Default,

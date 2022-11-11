@@ -43,6 +43,10 @@ class MainActivity : ComponentActivity() {
                         topBarState.value=false
                         navBarState.value=false
                     }
+                    Screens.SignUp.route -> {
+                        topBarState.value=false
+                        navBarState.value=false
+                    }
                     else -> {
                         topBarState.value =true
                         navBarState.value= true

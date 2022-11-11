@@ -28,4 +28,10 @@
     <string name="rating_title">Puntuar Rutina</string>
     <string name="cancel_button_text">Cancelar</string>
     <string name="fav_routine_screen">Rutinas Favoritas</string>
+    <string name="sing_up_here">Registrate Aquí</string>
+    <string name="sign_up_screen">Registrarte</string>
+    <string name="log_in_link">Inicia sesion Aquí</string>
+    <string name="sign_up_button">Registrate</string>
+    <string name="create_account">Crea una cuenta</string>
+    <string name="confirm_password">Confirmar contraseña</string>
 </resources>
