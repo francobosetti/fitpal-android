@@ -17,8 +17,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 
 import com.example.fitpal_android.R
-import com.example.fitpal_android.ui.events.ProfileFormEvent
-import com.example.fitpal_android.ui.viewmodels.ProfileViewModel
+import com.example.fitpal_android.ui.screens.profile.ProfileFormEvent
+import com.example.fitpal_android.ui.screens.profile.ProfileViewModel
 
 
 // TODO: make resolve enter inside text field

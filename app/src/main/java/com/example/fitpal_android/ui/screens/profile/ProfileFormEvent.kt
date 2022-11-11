@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.events
+package com.example.fitpal_android.ui.screens.profile
 
 sealed class ProfileFormEvent {
     data class FirstnameChanged(val firstname: String): ProfileFormEvent()

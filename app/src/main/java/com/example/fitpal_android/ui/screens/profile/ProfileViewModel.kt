@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.viewmodels
+package com.example.fitpal_android.ui.screens.profile
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,30 +9,31 @@ import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateAvatarUrl
 import com.example.fitpal_android.domain.use_case.ValidateFirstname
 import com.example.fitpal_android.domain.use_case.ValidateLastname
-import com.example.fitpal_android.ui.events.ProfileFormEvent
-import com.example.fitpal_android.ui.states.ProfileFormState
-import com.example.fitpal_android.ui.states.ProfileState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
+// TODO: update state when routing
 class ProfileViewModel(private val validateFirstname: ValidateFirstname = ValidateFirstname(),
                        private val validateLastname: ValidateLastname = ValidateLastname(),
                        private val validateAvatarUrl: ValidateAvatarUrl = ValidateAvatarUrl()
 ) : ViewModel() {
-    var currentUser = UserRepository().getCurrentUser()
-    var profileState by mutableStateOf(ProfileState(
+    private var currentUser = UserRepository().getCurrentUser()
+    var profileState by mutableStateOf(
+        ProfileState(
         firstname = currentUser.firstname,
         lastname = currentUser.lastname,
         email = currentUser.email,
         avatarUrl = currentUser.avatarUrl
     )
     )
-    var formState by mutableStateOf(ProfileFormState(
+    var formState by mutableStateOf(
+        ProfileFormState(
         firstname = currentUser.firstname,
         lastname = currentUser.lastname,
         avatarUrl = currentUser.avatarUrl
-    ))
+    )
+    )
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()

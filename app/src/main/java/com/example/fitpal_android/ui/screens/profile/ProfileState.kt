@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.states
+package com.example.fitpal_android.ui.screens.profile
 
 data class ProfileState(
     val email: String,
