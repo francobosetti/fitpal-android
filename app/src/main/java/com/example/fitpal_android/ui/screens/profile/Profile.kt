@@ -17,9 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 
 import com.example.fitpal_android.R
-import com.example.fitpal_android.ui.screens.profile.ProfileFormEvent
-import com.example.fitpal_android.ui.screens.profile.ProfileViewModel
-
+import com.example.fitpal_android.ui.screens.ValidationEvent
 
 // TODO: make resolve enter inside text field
 @Composable
@@ -29,12 +27,12 @@ fun Profile() {
 
         val viewModel = viewModel<ProfileViewModel>()
         val profileState = viewModel.profileState
-        val formState = viewModel.formState
+        val profileFormState = viewModel.profileFormState
         val context = LocalContext.current
         LaunchedEffect(key1 = context) {
             viewModel.validationEvents.collect {
                 event -> when(event) {
-                    is ProfileViewModel.ValidationEvent.Success -> {
+                    is ValidationEvent.Success -> {
                         Toast.makeText(
                             context,
                             "Profile updated", //TODO: make spanish version
@@ -98,34 +96,34 @@ fun Profile() {
                 ) {
                     // First name
                     OutlinedTextField(
-                        value = formState.firstname,
+                        value = profileFormState.firstname,
                         onValueChange = { viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it)) },
-                        isError = formState.firstnameError != null,
+                        isError = profileFormState.firstnameError != null,
                         label = { Text(stringResource(R.string.profile_first_name)) },
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(formState.firstnameError != null) {
+                    if(profileFormState.firstnameError != null) {
                         Text(
-                            text = formState.firstnameError,
+                            text = profileFormState.firstnameError,
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )
                     }
                     // Last name
                     OutlinedTextField(
-                        value = formState.lastname,
+                        value = profileFormState.lastname,
                         onValueChange = { viewModel.onEvent(ProfileFormEvent.LastnameChanged(it)) },
-                        isError = formState.lastnameError != null,
+                        isError = profileFormState.lastnameError != null,
                         label = { Text(stringResource(R.string.profile_last_name)) },
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(formState.lastnameError != null) {
+                    if(profileFormState.lastnameError != null) {
                         Text(
-                            text = formState.lastnameError,
+                            text = profileFormState.lastnameError,
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )
@@ -144,17 +142,17 @@ fun Profile() {
 
                     // Profile picture
                     OutlinedTextField(
-                        value = formState.avatarUrl,
+                        value = profileFormState.avatarUrl,
                         onValueChange = { viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it)) },
-                        isError = formState.avatarUrlError != null,
+                        isError = profileFormState.avatarUrlError != null,
                         label = { Text(stringResource(R.string.Profile_pic)) },
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(formState.avatarUrlError != null) {
+                    if(profileFormState.avatarUrlError != null) {
                         Text(
-                            text = formState.avatarUrlError,
+                            text = profileFormState.avatarUrlError,
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )
