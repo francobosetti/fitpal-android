@@ -7,12 +7,14 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.data.repository.UserRepository
@@ -30,6 +32,11 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
         Screens.ExploreRoutines,
         Screens.Profile
     )
+
+    // Current route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
 
     return Column(
         modifier = Modifier
@@ -57,16 +64,8 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                     .fillMaxWidth()
                     .clickable {
                         navController.navigate(menuItem.route) {
-                            navController.graph.startDestinationRoute?.let { screenRoute ->
-                                popUpTo(screenRoute) {
-                                    // TODO: determinar si queremos que esto se limpie o no
-                                    // Si es true, si estoy en una detailed routine y voy al profile, cuando vuelvo sigo en la detailed routine
-                                    // Si es false cuando vuelvo aparece la lista de rutinas
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
                         onMenuClick()
                     }
@@ -83,7 +82,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
                 // Text
                 Text(
                     text = stringResource(menuItem.title),
-                    color = if (navController.backQueue.any { entry -> entry.destination.route == menuItem.route }) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+                    color = if ( currentRoute == menuItem.route || (!menuItems.any{ item -> currentRoute == item.route } && navController.backQueue.any { entry -> entry.destination.route == menuItem.route })) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }
         }
