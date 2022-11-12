@@ -8,21 +8,24 @@ class ExerciseRepository {
             imageUrl = "https://pbs.twimg.com/media/FgHUZjKX0AYlAjw?format=png&name=900x900",
             description = "The bench press is a strength training exercise that consists of pressing a weight upwards from a supine position. The exercise works the pectoralis major, anterior deltoids, and triceps brachii muscles.",
             tags = listOf("Chest", "Barbell"),
-            seconds = 5
+            seconds = 5,
+            reps = 0
         ),
         Exercise(
             name = "Squat",
             imageUrl = "https://pbs.twimg.com/media/FgHUZjKX0AYlAjw?format=png&name=900x900",
             description = "The squat is a compound, full body exercise that trains primarily the muscles of the thighs, hips, buttocks and quads. It is also considered to be an effective cardiovascular exercise.",
             tags = listOf("Legs", "Barbell"),
-            seconds = 6
+            seconds = 0,
+            reps = 2
         ),
         Exercise(
             name = "Skating",
             description = "Cute wooper skating",
             tags = listOf("Chest", "Barbell"),
             imageUrl = "https://pbs.twimg.com/media/FgHUZjKX0AYlAjw?format=png&name=900x900",
-            seconds = 4
+            seconds = 4,
+            reps = 0
         )
     )
 
@@ -42,5 +45,6 @@ class Exercise(
     val description: String,
     val imageUrl: String,
     val tags: List<String>,
-    val seconds : Int
+    val seconds : Long,
+    val reps : Int
 )

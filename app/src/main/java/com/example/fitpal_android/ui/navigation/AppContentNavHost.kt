@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.fitpal_android.Screens
-import com.example.fitpal_android.ui.screens.appContent.ExecRoutine
+import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutine
 import com.example.fitpal_android.ui.screens.appContent.exercises.Exercises
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExercise
 import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutine
