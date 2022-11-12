@@ -64,33 +64,42 @@ fun LogIn(onButtonClicked: () -> Unit,  onLinkClicked: () -> Unit){
         Text(modifier = Modifier.padding(20.dp),text = stringResource(R.string.welcome_message), style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center), color= Color.White)
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500),
-            label = { Text(text = stringResource(R.string.log_in_username)) },
-            value = formState.email,
-            onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) })
-        if(formState.emailError != null) {
-            Text(
-                text = formState.emailError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
+
+
+        Column {
+            TextField(
+                colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500),
+                label = { Text(text = stringResource(R.string.log_in_username)) },
+                value = formState.email,
+                onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) })
+            if(formState.emailError != null) {
+                Text(
+                    text = formState.emailError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-           cursorColor = Orange500),
-            label = { Text(text = stringResource(R.string.log_in_password)) },
-            value = formState.password,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) })
+
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500),
+                label = { Text(text = stringResource(R.string.log_in_password)) },
+                value = formState.password,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) })
+        }
+
+
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {

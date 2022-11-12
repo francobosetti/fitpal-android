@@ -77,104 +77,128 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500
-            ),
-            label = { Text(text = stringResource(R.string.profile_first_name)) },
-            value = signUpFormState.firstname,
-            onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstnameChanged(it)) })
-        if (signUpFormState.firstnameError != null) {
-            Text(
-                text = signUpFormState.firstnameError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500
-            ),
-            label = { Text(text = stringResource(R.string.profile_last_name)) },
-            value = signUpFormState.lastname,
-            onValueChange = { viewModel.onEvent(SignUpFormEvent.LastnameChanged(it)) })
-        if (signUpFormState.lastnameError != null) {
-            Text(
-                text = signUpFormState.lastnameError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500
-            ),
-            label = { Text(text = stringResource(R.string.profile_email)) },
-            value = signUpFormState.email,
-            onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) })
 
-        if (signUpFormState.emailError != null) {
-            Text(
-                text = signUpFormState.emailError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.profile_first_name)) },
+                value = signUpFormState.firstname,
+                onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstnameChanged(it)) })
+            if (signUpFormState.firstnameError != null) {
+                Text(
+                    text = signUpFormState.firstnameError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
         }
+
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500
-            ),
-            label = { Text(text = stringResource(R.string.log_in_password)) },
-            value = signUpFormState.password,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) })
 
-        if (signUpFormState.passwordError != null) {
-            Text(
-                text = signUpFormState.passwordError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.profile_last_name)) },
+                value = signUpFormState.lastname,
+                onValueChange = { viewModel.onEvent(SignUpFormEvent.LastnameChanged(it)) })
+            if (signUpFormState.lastnameError != null) {
+                Text(
+                    text = signUpFormState.lastnameError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
         }
+
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedLabelColor = Black000,
-                focusedIndicatorColor = Orange500,
-                focusedLabelColor = Orange500,
-                cursorColor = Orange500
-            ),
-            label = { Text(text = stringResource(R.string.confirm_password)) },
-            value = signUpFormState.confirmPassword,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it)) })
 
-        if (signUpFormState.confirmPasswordError != null) {
-            Text(
-                text = signUpFormState.confirmPasswordError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.profile_email)) },
+                value = signUpFormState.email,
+                onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) })
+
+            if (signUpFormState.emailError != null) {
+                Text(
+                    text = signUpFormState.emailError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
         }
+
+
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.log_in_password)) },
+                value = signUpFormState.password,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) })
+
+            if (signUpFormState.passwordError != null) {
+                Text(
+                    text = signUpFormState.passwordError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
+        }
+
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.confirm_password)) },
+                value = signUpFormState.confirmPassword,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                onValueChange = { viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it)) })
+
+            if (signUpFormState.confirmPasswordError != null) {
+                Text(
+                    text = signUpFormState.confirmPasswordError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
+        }
+
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {

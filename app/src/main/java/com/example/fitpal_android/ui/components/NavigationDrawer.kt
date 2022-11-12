@@ -79,10 +79,14 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.width(16.dp))
 
+                // If we are in a secondary screen we have to show the closest main screen in orange
+                val notInMenuItem = !menuItems.any{ item -> currentRoute == item.route }
+                val closestMenuItem = navController.backQueue.lastOrNull { entry -> menuItems.any{ item -> entry.destination.route == item.route } }?.destination?.route
+
                 // Text
                 Text(
                     text = stringResource(menuItem.title),
-                    color = if ( currentRoute == menuItem.route || (!menuItems.any{ item -> currentRoute == item.route } && navController.backQueue.any { entry -> entry.destination.route == menuItem.route })) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+                    color = if ( currentRoute == menuItem.route || (notInMenuItem && closestMenuItem == menuItem.route )) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
                 )
             }
         }
