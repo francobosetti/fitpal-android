@@ -76,7 +76,7 @@ fun ExecRoutine(
                     CountDownView(viewModel = viewModel)
                 else{
                     Text(
-                        text = viewModel.getReps().toString() + " reps",
+                        text = viewModel.getReps().toString() + stringResource(R.string.reps_exercise),
                         color = Color.White,
                         //fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                         style = MaterialTheme.typography.h2,
@@ -285,14 +285,14 @@ fun CountDownScreen(
 
         Row {
             if(isPaused)
-                CountDownButton(text = "Resume", optionSelected = start)
+                CountDownButton(text = stringResource(R.string.resume_exercise), optionSelected = start)
             else if(isPlaying)
-                CountDownButton(text = "Pause", optionSelected = pause)
+                CountDownButton(text = stringResource(R.string.pause_exercise), optionSelected = pause)
 
             if(isPaused || isPlaying)
-                CountDownButton(text = "Stop", optionSelected = stop)
+                CountDownButton(text = stringResource(R.string.stop_exercise), optionSelected = stop)
             else
-                CountDownButton(text = "Start", optionSelected = start)
+                CountDownButton(text = stringResource(R.string.start_exercise), optionSelected = start)
         }
 
     }
