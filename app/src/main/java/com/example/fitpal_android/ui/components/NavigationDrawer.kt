@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
+import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.ui.theme.White100
 
 @Composable
@@ -28,7 +29,6 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
         Screens.FavoriteRoutine,
         Screens.ExploreRoutines,
         Screens.Profile
-
     )
 
     return Column(
@@ -88,15 +88,12 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        Button(onClick = { navController.navigate(Screens.LogIn.route){
-            navController.graph.startDestinationRoute?.let { screenRoute ->
-                popUpTo(screenRoute) {
-                    saveState = true
-                }
-                launchSingleTop = true
-            }
-        };onMenuClick()},
-        Modifier.fillMaxWidth()) {
+        Button(
+            onClick = {
+                UserRepository().logOut()
+            },
+            Modifier.fillMaxWidth()
+        ) {
             Text(text = stringResource(R.string.log_out_button), color = White100)
         }
     }
