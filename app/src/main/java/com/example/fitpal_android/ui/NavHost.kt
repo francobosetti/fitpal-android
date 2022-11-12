@@ -114,7 +114,12 @@ fun MyAppNavHost(
             )
         }
         composable(Screens.LogIn.route) {
-            LogIn(onButtonClicked = { navController.navigate(Screens.Exercises.route) })
+            LogIn(onButtonClicked = { navController.navigate(Screens.Exercises.route) },
+                    onLinkClicked = {navController.navigate(Screens.SignUp.route)})
+        }
+        composable(Screens.SignUp.route) {
+            SignUp(onButtonClicked = { navController.navigate(Screens.Exercises.route) },
+                onLinkClicked = {navController.navigate(Screens.LogIn.route)})
         }
     }
 }

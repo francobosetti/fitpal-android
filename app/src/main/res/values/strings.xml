@@ -28,4 +28,10 @@
     <string name="rating_title">Rate Routine</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="fav_routine_screen">Favorite Routines</string>
+    <string name="sing_up_here">Sign up here</string>
+    <string name="sign_up_screen">Sign Up</string>
+    <string name="log_in_link">Log in Here</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="create_account">Create an account</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
