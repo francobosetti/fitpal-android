@@ -14,7 +14,7 @@ class ValidateVerificationCode {
                 errorMessage = "Code must be 6 digits long"
             )
         }
-        val onlyDigits = verificationCode.any { !it.isDigit() }
+        val onlyDigits = !verificationCode.any { !it.isDigit() }
         if(!onlyDigits) {
             return ValidationResult(
                 successful = false,
