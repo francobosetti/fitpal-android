@@ -1,6 +1,6 @@
-package com.example.fitpal_android.ui.screens
+package com.example.fitpal_android.ui.screens.authentication.signup
 
-
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,11 +9,11 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -21,18 +21,38 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
+import com.example.fitpal_android.ui.screens.ValidationEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
 
 @Composable
 fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
+    val viewModel = viewModel<SignUpViewModel>()
+    val signUpFormState = viewModel.signUpFormState
+    val context = LocalContext.current
+    LaunchedEffect(key1 = context) {
+        viewModel.validationEvents.collect { event ->
+            when (event) {
+                is ValidationEvent.Success -> {
+                    Toast.makeText(
+                        context,
+                        "THIS SHOULD ROUTE TO VERIFY",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // TODO: Route to verify
+                    // VVVVVVv
+                    onButtonClicked()
+                }
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,71 +68,118 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
 
             )
         Spacer(modifier = Modifier.height(10.dp))
-        val firstName = remember { mutableStateOf(TextFieldValue()) }
-        val lastName = remember { mutableStateOf(TextFieldValue()) }
-        val password = remember { mutableStateOf(TextFieldValue()) }
-        val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
-        val email = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(modifier = Modifier.padding(10.dp),text = stringResource(R.string.create_account), style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center), color= Color.White)
+        Text(
+            modifier = Modifier.padding(10.dp),
+            text = stringResource(R.string.create_account),
+            style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center),
+            color = Color.White
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
-            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-                cursorColor = Orange500),
+                cursorColor = Orange500
+            ),
             label = { Text(text = stringResource(R.string.profile_first_name)) },
-            value = firstName.value,
-            onValueChange = { firstName.value = it })
-
+            value = signUpFormState.firstname,
+            onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstnameChanged(it)) })
+        if (signUpFormState.firstnameError != null) {
+            Text(
+                text = signUpFormState.firstnameError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
-            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-                cursorColor = Orange500),
+                cursorColor = Orange500
+            ),
             label = { Text(text = stringResource(R.string.profile_last_name)) },
-            value = lastName.value,
-            onValueChange = { lastName.value = it })
-
+            value = signUpFormState.lastname,
+            onValueChange = { viewModel.onEvent(SignUpFormEvent.LastnameChanged(it)) })
+        if (signUpFormState.lastnameError != null) {
+            Text(
+                text = signUpFormState.lastnameError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
-            colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-                cursorColor = Orange500),
+                cursorColor = Orange500
+            ),
             label = { Text(text = stringResource(R.string.profile_email)) },
-            value = email.value,
-            onValueChange = { email.value = it })
+            value = signUpFormState.email,
+            onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) })
+
+        if (signUpFormState.emailError != null) {
+            Text(
+                text = signUpFormState.emailError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
-            colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-                cursorColor = Orange500),
+                cursorColor = Orange500
+            ),
             label = { Text(text = stringResource(R.string.log_in_password)) },
-            value = password.value,
+            value = signUpFormState.password,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { password.value = it })
+            onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) })
+
+        if (signUpFormState.passwordError != null) {
+            Text(
+                text = signUpFormState.passwordError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
+
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
-            colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedLabelColor = Black000,
                 focusedIndicatorColor = Orange500,
                 focusedLabelColor = Orange500,
-                cursorColor = Orange500),
+                cursorColor = Orange500
+            ),
             label = { Text(text = stringResource(R.string.confirm_password)) },
-            value = confirmPassword.value,
+            value = signUpFormState.confirmPassword,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { confirmPassword.value = it })
+            onValueChange = { viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it)) })
+
+        if (signUpFormState.confirmPasswordError != null) {
+            Text(
+                text = signUpFormState.confirmPasswordError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { onButtonClicked() },
+                onClick = { viewModel.onEvent(SignUpFormEvent.Submit) },
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
@@ -125,7 +192,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center
                     ),
-                    color= Color.White
+                    color = Color.White
                 )
             }
         }

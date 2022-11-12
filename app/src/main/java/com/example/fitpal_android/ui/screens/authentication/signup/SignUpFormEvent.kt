@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens.signup
+package com.example.fitpal_android.ui.screens.authentication.signup
 
 sealed class SignUpFormEvent {
     data class FirstnameChanged(val firstname: String): SignUpFormEvent()

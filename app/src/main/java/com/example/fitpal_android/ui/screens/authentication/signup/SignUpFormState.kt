@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens.signup
+package com.example.fitpal_android.ui.screens.authentication.signup
 
 
 data class SignUpFormState(
