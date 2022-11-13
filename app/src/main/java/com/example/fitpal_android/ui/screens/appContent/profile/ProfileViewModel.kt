@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fitpal_android.data.repository.UserRepository
+import com.example.fitpal_android.data.repository.DEPRECATED.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateAvatarUrl
 import com.example.fitpal_android.domain.use_case.ValidateFirstname
 import com.example.fitpal_android.domain.use_case.ValidateLastname
@@ -25,14 +25,14 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
             firstname = currentUser.firstname,
             lastname = currentUser.lastname,
             email = currentUser.email,
-            avatarUrl = currentUser.avatarUrl
+            avatarUrl = currentUser.avatarUrl!!
         )
     )
     var profileFormState by mutableStateOf(
         ProfileFormState(
             firstname = currentUser.firstname,
             lastname = currentUser.lastname,
-            avatarUrl = currentUser.avatarUrl
+            avatarUrl = currentUser.avatarUrl!!
         )
     )
 

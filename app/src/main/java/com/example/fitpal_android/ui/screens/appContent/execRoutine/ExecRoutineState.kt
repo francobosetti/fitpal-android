@@ -1,9 +1,9 @@
 package com.example.fitpal_android.ui.screens.appContent.execRoutine
 
 import android.os.CountDownTimer
-import com.example.fitpal_android.data.repository.Exercise
-import com.example.fitpal_android.data.repository.Routine
-import com.example.fitpal_android.data.repository.RoutineRepository
+import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
+import com.example.fitpal_android.data.repository.DEPRECATED.Routine
+import com.example.fitpal_android.data.repository.DEPRECATED.RoutineRepository
 import java.util.concurrent.TimeUnit
 
 data class ExecRoutineState(

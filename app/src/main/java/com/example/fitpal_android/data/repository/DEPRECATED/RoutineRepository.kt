@@ -1,4 +1,4 @@
-package com.example.fitpal_android.data.repository
+package com.example.fitpal_android.data.repository.DEPRECATED
 
 class RoutineRepository {
 

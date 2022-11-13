@@ -1,8 +1,8 @@
 package com.example.fitpal_android.ui.screens.appContent.exercises
 
 import androidx.lifecycle.ViewModel
-import com.example.fitpal_android.data.repository.Exercise
-import com.example.fitpal_android.data.repository.ExerciseRepository
+import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
+import com.example.fitpal_android.data.repository.DEPRECATED.ExerciseRepository
 
 class ExercisesViewModel : ViewModel() {
 

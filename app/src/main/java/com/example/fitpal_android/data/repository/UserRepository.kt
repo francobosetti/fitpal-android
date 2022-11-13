@@ -1,41 +1,39 @@
 package com.example.fitpal_android.data.repository
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+
 import com.example.fitpal_android.data.model.User
-import kotlin.random.Random
+import com.example.fitpal_android.data.remote.UserRemoteDataSource
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
-class UserRepository {
+class UserRepository(
+    private val remoteDataSource: UserRemoteDataSource
+) {
 
-    // Static variable to hold wether the user is logged in or not
-    companion object {
-        // TODO: ESTO ESTA MAL SEGURO
-        var isLoggedIn by mutableStateOf(Random(System.currentTimeMillis()).nextBoolean())
+    // Mutex to make writes to cached values thread-safe.
+    private val currentUserMutex = Mutex()
+    // Cache of the current user got from the network.
+    private var currentUser: User? = null
+
+    suspend fun login(username: String, password: String) {
+        remoteDataSource.login(username, password)
     }
 
-    private var user = User (
-        firstname = "Faker",
-        lastname = "Faker",
-        email = "faker@gmail.com",
-        avatarUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
-        id = ULong.MAX_VALUE,
-    )
-
-    fun getCurrentUser() : User {
-        return user
+    suspend fun logout() {
+        remoteDataSource.logout()
     }
 
-    fun isUserLoggedIn() : Boolean {
-        // TODO: implement
-        return isLoggedIn
+    suspend fun fetchUser(): Unit {
+        currentUserMutex.withLock {
+            currentUser = remoteDataSource.getCurrentUser().asModel()
+        }
     }
 
-    fun logIn() {
-        isLoggedIn = true
-    }
+    suspend fun getCurrentUser() : User? {
+        if (currentUser == null) {
+            fetchUser()
+        }
 
-    fun logOut() {
-        isLoggedIn = false
+        return currentUserMutex.withLock { this.currentUser }
     }
 }

@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.fitpal_android.data.repository.Exercise
-import com.example.fitpal_android.data.repository.RoutineRepository
+import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
+import com.example.fitpal_android.data.repository.DEPRECATED.RoutineRepository
 import com.example.fitpal_android.ui.screens.appContent.execRoutine.Utility.formatTime
 
 class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
