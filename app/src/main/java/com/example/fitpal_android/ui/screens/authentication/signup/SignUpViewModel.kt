@@ -19,6 +19,8 @@ class SignUpViewModel(
     private val validateConfirmPassword: ValidateConfirmPassword = ValidateConfirmPassword()
 ) : ViewModel() {
     var signUpFormState by mutableStateOf(SignUpFormState())
+        private set
+
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 

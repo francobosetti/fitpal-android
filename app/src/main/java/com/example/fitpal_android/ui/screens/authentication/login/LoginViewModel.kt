@@ -15,6 +15,7 @@ class LoginViewModel(
     private val validateEmail: ValidateEmail = ValidateEmail()
 ) : ViewModel() {
     var formState by mutableStateOf(LoginFormState())
+        private set
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()

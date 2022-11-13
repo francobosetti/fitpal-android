@@ -16,11 +16,13 @@ class VerifyViewModel(
 ) : ViewModel() {
 
     var verfyFormState by mutableStateOf(VerifyFromState())
+        private set
+
     var validationEventChannel = Channel<ValidationEvent>()
     var validationEvents = validationEventChannel.receiveAsFlow()
 
     fun onEvent(event: VerifyFormEvent) {
-        when(event) {
+        when (event) {
             is VerifyFormEvent.CodeChanged -> {
                 verfyFormState = verfyFormState.copy(verificationCode = event.code)
             }
@@ -40,14 +42,16 @@ class VerifyViewModel(
         val verificationCodeResult = validateVerificationCode.execute(verfyFormState.verificationCode)
 
         verfyFormState = verfyFormState.copy(
-            verificationCodeError =  verificationCodeResult.errorMessage,
+            verificationCodeError = verificationCodeResult.errorMessage,
         )
 
         val hasError = listOf(
             verificationCodeResult,
         ).any { !it.successful }
 
-        if(hasError) { return }
+        if (hasError) {
+            return
+        }
 
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
