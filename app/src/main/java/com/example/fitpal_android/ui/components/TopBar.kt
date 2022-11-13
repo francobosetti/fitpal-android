@@ -1,6 +1,7 @@
 package com.example.fitpal_android.ui.components
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -47,9 +49,10 @@ fun TopBar(
                 AsyncImage(
                     model = imageUrl,
                     contentDescription = "Profile",
-                    modifier = Modifier.clip( /* TODO: hacer que la forma sea circular y no ovalada */
-                        CircleShape
-                    ),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(40.dp),
                 )
             }
         }

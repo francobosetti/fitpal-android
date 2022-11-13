@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -61,12 +62,11 @@ fun Profile() {
                     AsyncImage(
                         model = profileState.avatarUrl,
                         contentDescription = "Profile picture",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .padding(8.dp)
-                            .clip(
-                                CircleShape /* TODO: hacer q sea un circulo */
-                            )
-                            .size(100.dp)
+                            .clip(CircleShape)
+                            .size(80.dp)
                     )
 
                     Column(
