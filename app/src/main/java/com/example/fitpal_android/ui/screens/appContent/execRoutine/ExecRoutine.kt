@@ -84,48 +84,74 @@ fun ExecRoutine(
                     )
                 }
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(0.5f))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.5f)
                     .padding(10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    onClick = { viewModel.previousExercise() },
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(120.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
-                ) {
-                    Text(
-                        text = stringResource(R.string.previous_button),
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center
-                        ),
-                        color= Color.White
-                    )
+                if(viewModel.getCurrentIndex() > 0){
+                    Button(
+                        onClick = { viewModel.previousExercise() },
+                        modifier = Modifier
+                            .padding(start = 30.dp, end = 30.dp)
+                            .height(50.dp)
+                            .width(120.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.previous_button),
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                textAlign = TextAlign.Center
+                            ),
+                            color= Color.White
+                        )
+                    }
                 }
-                Button(
-                    onClick = { viewModel.nextExercise() },
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(120.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
-                ) {
-                    Text(
-                        text = stringResource(R.string.next_button),
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center
-                        ),
-                        color= Color.White
-                    )
+                if(viewModel.getCurrentIndex() < viewModel.getSize() - 1){
+                    Button(
+                        onClick = { viewModel.nextExercise() },
+                        modifier = Modifier
+                            .padding(start = 30.dp, end = 30.dp)
+                            .height(50.dp)
+                            .width(120.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.next_button),
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                textAlign = TextAlign.Center
+                            ),
+                            color= Color.White
+                        )
+                    }
+                }
+                else{
+                    Button(
+                        onClick = { onBackPressed() },
+                        modifier = Modifier
+                            .padding(start = 30.dp, end = 30.dp)
+                            .height(50.dp)
+                            .width(120.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.finish_button),
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                textAlign = TextAlign.Center
+                            ),
+                            color= Color.White
+                        )
+                    }
                 }
             }
         }

@@ -95,4 +95,8 @@ class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
     fun getIsPaused() = uiState.isPaused
 
     fun getReps() = uiState.reps
+
+    fun getCurrentIndex() = uiState.currentExerciseIndex
+
+    fun getSize() = uiState.exercises.size
 }

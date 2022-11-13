@@ -40,4 +40,5 @@
     <string name="pause_exercise">Pausar</string>
     <string name="stop_exercise">Parar</string>
     <string name="start_exercise">Empezar</string>
+    <string name="finish_button">Finalizar</string>
 </resources>
