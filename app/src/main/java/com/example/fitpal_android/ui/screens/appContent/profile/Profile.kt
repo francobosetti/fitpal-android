@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +27,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 
 import com.example.fitpal_android.R
+import com.example.fitpal_android.ui.components.ProgressButton
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
 // TODO: make resolve enter inside text field
@@ -49,11 +52,6 @@ fun Profile(
             viewModel.validationEvents.collect {
                 event -> when(event) {
                     is ValidationEvent.Success -> {
-                        Toast.makeText(
-                            context,
-                            "Profile updated", //TODO: make spanish version
-                            Toast.LENGTH_LONG
-                        ).show()
                         onProfileUpdate()
                     }
                 }
@@ -211,11 +209,14 @@ fun Profile(
 
                 //  ----------------------- Buttons -----------------------
                 // Edit profile button
-                Button(
+                ProgressButton(
                     onClick = { viewModel.onEvent(ProfileFormEvent.EditProfile)},
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    loading = profileFormState.editLoading,
+                    color = Orange500,
+                    progressColor = Color.White
                 ) {
                     Text(stringResource(R.string.edit_profile_button))
                 }
