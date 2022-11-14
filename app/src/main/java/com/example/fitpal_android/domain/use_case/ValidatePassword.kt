@@ -17,7 +17,7 @@ class ValidatePassword {
         val containsUpperAndLowerAndDigit = password.any { it.isDigit()} &&
                                             password.any { it.isLowerCase() } &&
                                             password.any { it.isUpperCase() }
-        if(containsUpperAndLowerAndDigit) {
+        if(!containsUpperAndLowerAndDigit) {
             return ValidationResult(
                 successful = false,
                 errorMessage = "The password must contain at least a number an uppercase letter and a lowecase letter" // TODO: make spanish version
