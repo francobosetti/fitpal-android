@@ -89,7 +89,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 label = { Text(text = stringResource(R.string.profile_first_name)) },
                 value = signUpFormState.firstname,
                 onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstnameChanged(it)) })
-            if (signUpFormState.firstnameError != null) {
+            signUpFormState.firstnameError?.let {
                 Text(
                     text = signUpFormState.firstnameError,
                     color = MaterialTheme.colors.error,
@@ -112,7 +112,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 label = { Text(text = stringResource(R.string.profile_last_name)) },
                 value = signUpFormState.lastname,
                 onValueChange = { viewModel.onEvent(SignUpFormEvent.LastnameChanged(it)) })
-            if (signUpFormState.lastnameError != null) {
+            signUpFormState.lastnameError?.let {
                 Text(
                     text = signUpFormState.lastnameError,
                     color = MaterialTheme.colors.error,
@@ -136,7 +136,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 value = signUpFormState.email,
                 onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) })
 
-            if (signUpFormState.emailError != null) {
+            signUpFormState.emailError?.let {
                 Text(
                     text = signUpFormState.emailError,
                     color = MaterialTheme.colors.error,
@@ -164,7 +164,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) })
 
-            if (signUpFormState.passwordError != null) {
+            signUpFormState.passwordError?.let {
                 Text(
                     text = signUpFormState.passwordError,
                     color = MaterialTheme.colors.error,
@@ -190,7 +190,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 onValueChange = { viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it)) })
 
-            if (signUpFormState.confirmPasswordError != null) {
+            signUpFormState.confirmPasswordError?.let {
                 Text(
                     text = signUpFormState.confirmPasswordError,
                     color = MaterialTheme.colors.error,

@@ -76,7 +76,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                 label = { Text(text = stringResource(R.string.log_in_email)) },
                 value = formState.email,
                 onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) })
-            if(formState.emailError != null) {
+            formState.emailError?.let {
                 Text(
                     text = formState.emailError,
                     color = MaterialTheme.colors.error,

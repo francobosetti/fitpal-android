@@ -104,7 +104,7 @@ fun Profile() {
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(profileFormState.firstnameError != null) {
+                    profileFormState.firstnameError?.let {
                         Text(
                             text = profileFormState.firstnameError,
                             color = MaterialTheme.colors.error,
@@ -121,7 +121,7 @@ fun Profile() {
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(profileFormState.lastnameError != null) {
+                    profileFormState.lastnameError?.let {
                         Text(
                             text = profileFormState.lastnameError,
                             color = MaterialTheme.colors.error,
@@ -150,7 +150,7 @@ fun Profile() {
                             .padding(8.dp)
                             .fillMaxWidth()
                     )
-                    if(profileFormState.avatarUrlError != null) {
+                    profileFormState.avatarUrlError?.let {
                         Text(
                             text = profileFormState.avatarUrlError,
                             color = MaterialTheme.colors.error,

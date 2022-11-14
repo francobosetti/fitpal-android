@@ -68,7 +68,7 @@ fun Verify(onAuthentication: () -> Unit){
             value = verfyFormState.verificationCode,
             onValueChange = { viewModel.onEvent(VerifyFormEvent.CodeChanged(it)) })
 
-        if(verfyFormState.verificationCodeError != null) {
+        verfyFormState.verificationCodeError?.let {
             Text(
                 text = verfyFormState.verificationCodeError,
                 color = MaterialTheme.colors.error,
