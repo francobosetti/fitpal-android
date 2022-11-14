@@ -119,7 +119,6 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
         }
     }
 
-    // TODO: CHECK IN BACKEND
     private fun editProfile() {
         // Remove trailing spaces
         profileFormState = profileFormState.copy(

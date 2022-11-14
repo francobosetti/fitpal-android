@@ -19,13 +19,15 @@ class UserRepository(
 
     suspend fun login(username: String, password: String) {
         remoteDataSource.login(username, password)
+        fetchUser()
     }
 
     suspend fun logout() {
         remoteDataSource.logout()
+        currentUser = null
     }
 
-    suspend fun fetchUser(): Unit {
+    suspend fun fetchUser() {
         currentUserMutex.withLock {
             currentUser = remoteDataSource.getCurrentUser().asModel()
         }
