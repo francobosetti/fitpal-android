@@ -203,7 +203,7 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit){
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { viewModel.onEvent(SignUpFormEvent.Submit) },
+                onClick = { viewModel.onEvent(SignUpFormEvent.SignUp) },
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),

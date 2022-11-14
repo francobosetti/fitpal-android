@@ -41,13 +41,13 @@ class SignUpViewModel(
             is SignUpFormEvent.ConfirmPasswordChanged -> {
                 signUpFormState = signUpFormState.copy(confirmPassword = event.confirmPassword)
             }
-            is SignUpFormEvent.Submit -> {
-                submitForm()
+            is SignUpFormEvent.SignUp -> {
+                signUp()
             }
         }
     }
 
-    private fun submitForm() {
+    private fun signUp() {
         val firstnameResult = validateFirstname.execute(signUpFormState.firstname)
         val lastnameResult = validateLastname.execute(signUpFormState.lastname)
         val emailResult = validateEmail.execute(signUpFormState.email)
