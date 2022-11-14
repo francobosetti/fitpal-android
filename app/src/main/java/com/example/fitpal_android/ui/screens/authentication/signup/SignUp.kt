@@ -5,10 +5,12 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +47,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+    val scrollState= rememberScrollState()
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
@@ -63,8 +66,8 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         }
     }
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
+            .verticalScroll(scrollState)
             .background(Gray400),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally

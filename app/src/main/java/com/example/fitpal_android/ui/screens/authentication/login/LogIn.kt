@@ -3,11 +3,15 @@ package com.example.fitpal_android.ui.screens.authentication.login
 import android.view.KeyEvent.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,6 +50,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+    val scrollState= rememberScrollState()
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect {
@@ -57,8 +62,8 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
         }
     }
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
+            .verticalScroll(scrollState)
             .background(Gray400),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
