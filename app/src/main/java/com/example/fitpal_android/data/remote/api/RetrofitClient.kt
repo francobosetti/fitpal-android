@@ -29,6 +29,7 @@ object RetrofitClient {
             .build()
 
         val gson = GsonBuilder()
+            .registerTypeAdapter(Date::class.java, ApiDateTypeAdapter())
             .create()
 
         return Retrofit.Builder()

@@ -1,8 +1,8 @@
 package com.example.fitpal_android.data.remote
 
 import com.example.fitpal_android.data.remote.api.ApiExerciseService
-import com.example.fitpal_android.data.remote.model.NetworkExercise
-import com.example.fitpal_android.data.remote.model.NetworkExerciseVideo
+import com.example.fitpal_android.data.remote.model.exercise.NetworkExercise
+import com.example.fitpal_android.data.remote.model.exercise.NetworkExerciseVideo
 import com.example.fitpal_android.data.remote.model.NetworkPagedContent
 
 class ExerciseRemoteDataSource(

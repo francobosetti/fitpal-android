@@ -1,4 +1,4 @@
-package com.example.fitpal_android.data.remote.model
+package com.example.fitpal_android.data.remote.model.exercise
 
 import com.example.fitpal_android.data.model.Exercise
 import com.google.gson.annotations.SerializedName

@@ -1,7 +1,7 @@
 package com.example.fitpal_android.data.remote
 
 import com.example.fitpal_android.data.remote.api.ApiUserService
-import com.example.fitpal_android.data.remote.model.*
+import com.example.fitpal_android.data.remote.model.user.*
 import com.example.fitpal_android.util.SessionManager
 
 class UserRemoteDataSource(

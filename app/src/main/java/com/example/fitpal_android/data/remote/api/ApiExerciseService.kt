@@ -1,7 +1,7 @@
 package com.example.fitpal_android.data.remote.api
 
-import com.example.fitpal_android.data.remote.model.NetworkExercise
-import com.example.fitpal_android.data.remote.model.NetworkExerciseVideo
+import com.example.fitpal_android.data.remote.model.exercise.NetworkExercise
+import com.example.fitpal_android.data.remote.model.exercise.NetworkExerciseVideo
 import com.example.fitpal_android.data.remote.model.NetworkPagedContent
 import retrofit2.Response
 import retrofit2.http.GET
