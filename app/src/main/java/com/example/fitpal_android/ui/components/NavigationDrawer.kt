@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fitpal_android.R
 import com.example.fitpal_android.Screens
-import com.example.fitpal_android.data.repository.DEPRECATED.UserRepository
 import com.example.fitpal_android.ui.theme.White100
 
 @Composable
