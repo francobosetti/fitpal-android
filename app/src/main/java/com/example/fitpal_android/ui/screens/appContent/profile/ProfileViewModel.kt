@@ -50,14 +50,14 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
             is ProfileFormEvent.AvatarUrlChanged -> {
                 profileFormState = profileFormState.copy(avatarUrl = event.avatarUrl)
             }
-            is ProfileFormEvent.Submit -> {
-                submitForm()
+            is ProfileFormEvent.EditProfile -> {
+                editProfile()
             }
         }
     }
 
     // TODO: CHECK IN BACKEND
-    private fun submitForm() {
+    private fun editProfile() {
         val firstnameResult = validateFirstname.execute(profileFormState.firstname)
         val lastnameResult = validateLastname.execute(profileFormState.lastname)
         val avatarUrlResult = validateAvatarUrl.execute(profileFormState.avatarUrl)

@@ -163,7 +163,7 @@ fun Profile() {
                 //  ----------------------- Buttons -----------------------
                 // Edit profile button
                 Button(
-                    onClick = { viewModel.onEvent(ProfileFormEvent.Submit)},
+                    onClick = { viewModel.onEvent(ProfileFormEvent.EditProfile)},
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()

@@ -5,5 +5,5 @@ sealed class ProfileFormEvent {
     data class LastnameChanged(val lastname: String): ProfileFormEvent()
     data class AvatarUrlChanged(val avatarUrl: String): ProfileFormEvent()
 
-    object Submit: ProfileFormEvent()
+    object EditProfile: ProfileFormEvent()
 }
