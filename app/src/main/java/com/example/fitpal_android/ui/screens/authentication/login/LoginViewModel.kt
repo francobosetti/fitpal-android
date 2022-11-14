@@ -16,7 +16,7 @@ class LoginViewModel(
     private val validateEmail: ValidateEmail = ValidateEmail(),
     private val userRepository: UserRepository
 ) : ViewModel() {
-    var formState by mutableStateOf(LoginFormState())
+    var loginFormState by mutableStateOf(LoginFormState())
         private set
 
     private val validationEventChannel = Channel<ValidationEvent>()
@@ -25,10 +25,10 @@ class LoginViewModel(
     fun onEvent(event: LoginFormEvent) {
         when(event) {
             is LoginFormEvent.EmailChanged -> {
-                formState = formState.copy(email = event.email)
+                loginFormState = loginFormState.copy(email = event.email)
             }
             is LoginFormEvent.PasswordChanged -> {
-                formState = formState.copy(password = event.password)
+                loginFormState = loginFormState.copy(password = event.password)
             }
             is LoginFormEvent.Login -> {
                 login()
@@ -38,9 +38,13 @@ class LoginViewModel(
 
     // TODO: CHECK IN BACKEND
     private fun login() {
-        val emailResult = validateEmail.execute(formState.email)
+        // Remove trailing spaces
+        loginFormState = loginFormState.copy(
+            email = loginFormState.email.trimEnd(' ')
+        )
+        val emailResult = validateEmail.execute(loginFormState.email)
 
-        formState = formState.copy(
+        loginFormState = loginFormState.copy(
             emailError = emailResult.errorMessage
         )
 
@@ -53,12 +57,12 @@ class LoginViewModel(
         viewModelScope.launch {
 
             try {
-                userRepository.login(formState.email, formState.password)
+                userRepository.login(loginFormState.email, loginFormState.password)
                 validationEventChannel.send(ValidationEvent.Success)
             } catch (e: Exception) {
 
                 // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
-                formState = formState.copy(
+                loginFormState = loginFormState.copy(
                     emailError = e.message //TODO: Usar otra variable (esta es la del email)
                 )
 

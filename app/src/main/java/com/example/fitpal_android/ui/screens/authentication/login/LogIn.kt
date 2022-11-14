@@ -36,7 +36,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
 
     val viewModel = viewModel<LoginViewModel>(factory = getViewModelFactory())
-    val formState = viewModel.formState
+    val formState = viewModel.loginFormState
     val context = LocalContext.current
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect {

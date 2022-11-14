@@ -39,6 +39,10 @@ class VerifyViewModel(
 
     // TODO: ADD BACKEND
     private fun verifyCode() {
+        // Remove trailing spaces
+        verfyFormState = verfyFormState.copy(
+            verificationCode = verfyFormState.verificationCode.trimEnd(' ')
+        )
         val verificationCodeResult = validateVerificationCode.execute(verfyFormState.verificationCode)
 
         verfyFormState = verfyFormState.copy(

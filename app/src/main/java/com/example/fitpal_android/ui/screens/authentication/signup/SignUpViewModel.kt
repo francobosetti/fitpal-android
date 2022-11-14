@@ -48,6 +48,12 @@ class SignUpViewModel(
     }
 
     private fun signUp() {
+        // Remove trailing spaces
+        signUpFormState = signUpFormState.copy(
+            firstname = signUpFormState.firstname.trimEnd(' '),
+            lastname = signUpFormState.lastname.trimEnd(' '),
+            email = signUpFormState.email.trimEnd(' ')
+        )
         val firstnameResult = validateFirstname.execute(signUpFormState.firstname)
         val lastnameResult = validateLastname.execute(signUpFormState.lastname)
         val emailResult = validateEmail.execute(signUpFormState.email)
