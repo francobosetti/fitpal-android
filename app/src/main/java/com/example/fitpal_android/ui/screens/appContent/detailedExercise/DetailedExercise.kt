@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedExerciseCard
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun DetailedExercise(
     exerciseId: Int?,
     onBackPressed: () -> Unit
 ) {
-    val viewModel = viewModel<DetailedExerciseViewModel>()
-    viewModel.initialize(exerciseId)
-    val exercise = viewModel.getExercise()
+    val viewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory(exerciseId))
+    val detailedExerciseState = viewModel.detailedExerciseState
 
     Surface(color = MaterialTheme.colors.background) {
 
@@ -34,12 +34,15 @@ fun DetailedExercise(
 
             // Exercise details
             Box(modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp)) {
-                DetailedExerciseCard(
-                    name = exercise.name,
-                    description = exercise.description,
-                    tags = exercise.tags,
-                    videoUrl = exercise.imageUrl
-                )
+
+                if (detailedExerciseState.exercise != null) {
+                    DetailedExerciseCard(
+                        name = detailedExerciseState.exercise.name,
+                        videoUrl = detailedExerciseState.exercise.videoUrl,
+                        tags = detailedExerciseState.exercise.tags,
+                        description = detailedExerciseState.exercise.description
+                    )
+                }
             }
         }
 

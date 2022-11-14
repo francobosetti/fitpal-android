@@ -1,23 +1,44 @@
 package com.example.fitpal_android.ui.screens.appContent.detailedExercise
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
-import com.example.fitpal_android.data.repository.DEPRECATED.ExerciseRepository
+import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.data.repository.ExerciseRepository
+import kotlinx.coroutines.launch
 
-class DetailedExerciseViewModel : ViewModel() {
-    private val defaultId = 1
-    private var started = false
+class DetailedExerciseViewModel(
+    private val exerciseRepository: ExerciseRepository,
+    private val exerciseId: Int
+) : ViewModel() {
 
-    private var exercise = ExerciseRepository().getExerciseById(defaultId)
+    var detailedExerciseState by mutableStateOf(
+        DetailedExerciseState(
+            exercise = null,
+            isFetching = false,
+            error = ""
+        )
+    )
 
-    fun initialize(exerciseId: Int?) {
-        if (exerciseId != null && !started) {
-            started = true
-            exercise = ExerciseRepository().getExerciseById(exerciseId)
+    init {
+        viewModelScope.launch {
+            detailedExerciseState = detailedExerciseState.copy(isFetching = true, error = "")
+
+            try {
+                val exercise = exerciseRepository.getExercise(exerciseId)
+                detailedExerciseState = detailedExerciseState.copy(
+                    exercise = exercise,
+                    isFetching = false,
+                    error = ""
+                )
+            } catch (e: Exception) {
+                detailedExerciseState = detailedExerciseState.copy(
+                    isFetching = false,
+                    error = e.message ?: "Unknown error"
+                )
+            }
+
         }
-    }
-
-    fun getExercise() : Exercise {
-        return exercise
     }
 }

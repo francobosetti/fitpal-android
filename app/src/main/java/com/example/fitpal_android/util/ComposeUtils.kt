@@ -11,7 +11,34 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     val application = (LocalContext.current.applicationContext as FitpalApplication)
     val sessionManager = application.sessionManager
     val userRepository = application.userRepository
+    val exerciseRepository = application.exerciseRepository
 
 
-    return ViewModelFactory(sessionManager, userRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
+    return ViewModelFactory(
+        sessionManager = sessionManager,
+        userRepository = userRepository,
+        exerciseRepository = exerciseRepository,
+        owner = LocalSavedStateRegistryOwner.current,
+        defaultArgs = defaultArgs
+    )
+}
+
+@Composable
+fun getViewModelFactory(exerciseId: Int?, defaultArgs: Bundle? = null): ViewModelFactory {
+    val application = (LocalContext.current.applicationContext as FitpalApplication)
+    val sessionManager = application.sessionManager
+    val userRepository = application.userRepository
+    val exerciseRepository = application.exerciseRepository
+
+
+    return ViewModelFactory(
+        sessionManager = sessionManager,
+        userRepository = userRepository,
+        exerciseRepository = exerciseRepository,
+
+        exerciseId = exerciseId,
+
+        owner = LocalSavedStateRegistryOwner.current,
+        defaultArgs = defaultArgs
+    )
 }

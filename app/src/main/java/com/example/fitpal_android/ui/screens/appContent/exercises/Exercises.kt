@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.fitpal_android.ui.components.cards.ExerciseCard
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun Exercises(
     onItemClicked: (Int) -> Unit
 ) {
-    val viewModel = viewModel<ExercisesViewModel>()
-    val exercises = viewModel.getExercises()
+    val viewModel = viewModel<ExercisesViewModel>(factory = getViewModelFactory())
+    val exercisesState = viewModel.exercisesState
 
 
     Surface(color = MaterialTheme.colors.background) {
@@ -26,13 +27,13 @@ fun Exercises(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            items(exercises.size) {
+            items(exercisesState.exercises.size) {
                 ExerciseCard(
-                    name = exercises[it].name,
-                    videoUrl = exercises[it].imageUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
-                    tags = exercises[it].tags,
+                    name = exercisesState.exercises[it].name,
+                    videoUrl = exercisesState.exercises[it].videoUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
+                    tags = exercisesState.exercises[it].tags,
                     modifier = Modifier.clickable {
-                        onItemClicked(it)
+                        onItemClicked(exercisesState.exercises[it].id)
                     }
                 )
             }
