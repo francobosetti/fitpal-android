@@ -1,24 +1,33 @@
 package com.example.fitpal_android.ui.screens.appContent.profile
 
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import com.example.fitpal_android.ui.screens.authentication.login.LoginFormEvent
 
 // TODO: make resolve enter inside text field
 @Composable
@@ -30,6 +39,9 @@ fun Profile() {
         val profileState = viewModel.profileState
         val profileFormState = viewModel.profileFormState
         val context = LocalContext.current
+        val focusManager = LocalFocusManager.current
+        val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+
         LaunchedEffect(key1 = context) {
             viewModel.validationEvents.collect {
                 event -> when(event) {
@@ -97,12 +109,23 @@ fun Profile() {
                     // First name
                     OutlinedTextField(
                         value = profileFormState.firstname,
-                        onValueChange = { viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it)) },
                         isError = profileFormState.firstnameError != null,
                         label = { Text(stringResource(R.string.profile_first_name)) },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
+                        onValueChange = {
+                            if (it.matches(noEnterNoTabRegex)) {
+                                viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it))
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
+                        keyboardActions = KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                        ),
+                        modifier = Modifier.onKeyEvent {
+                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }
+                            false
+                        }.padding(8.dp).fillMaxWidth(),
                     )
                     profileFormState.firstnameError?.let {
                         Text(
@@ -114,12 +137,23 @@ fun Profile() {
                     // Last name
                     OutlinedTextField(
                         value = profileFormState.lastname,
-                        onValueChange = { viewModel.onEvent(ProfileFormEvent.LastnameChanged(it)) },
                         isError = profileFormState.lastnameError != null,
                         label = { Text(stringResource(R.string.profile_last_name)) },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
+                        onValueChange = {
+                            if (it.matches(noEnterNoTabRegex)) {
+                                viewModel.onEvent(ProfileFormEvent.LastnameChanged(it))
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
+                        keyboardActions = KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                        ),
+                        modifier = Modifier.onKeyEvent {
+                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }
+                            false
+                        }.padding(8.dp).fillMaxWidth(),
                     )
                     profileFormState.lastnameError?.let {
                         Text(
@@ -143,12 +177,23 @@ fun Profile() {
                     // Profile picture
                     OutlinedTextField(
                         value = profileFormState.avatarUrl,
-                        onValueChange = { viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it)) },
                         isError = profileFormState.avatarUrlError != null,
                         label = { Text(stringResource(R.string.Profile_pic)) },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
+                        onValueChange = {
+                            if (it.matches(noEnterNoTabRegex)) {
+                                viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it))
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next), //TODO: elegir la accion
+                        keyboardActions = KeyboardActions(
+                            onNext = { focusManager.clearFocus() }
+                        ),
+                        modifier = Modifier.onKeyEvent {
+                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                focusManager.clearFocus()
+                            }
+                            false
+                        }.padding(8.dp).fillMaxWidth(),
                     )
                     profileFormState.avatarUrlError?.let {
                         Text(
