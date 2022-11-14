@@ -67,5 +67,5 @@ sealed class Screens(val title: Int, val icon: Int, val iconDesc: String, val ro
         Screens(R.string.sign_up_screen, R.drawable.ic_baseline_explore_24, "SignUp", "SignUp")
 
     object Verify :
-        Screens(R.string.verify_screen, R.drawable.ic_baseline_explore_24, "Verify", "Verify")
+        Screens(R.string.verify_screen, R.drawable.ic_baseline_explore_24, "Verify", "Verify/{email}/{password}")
 }

@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.*
-import com.example.fitpal_android.ui.screens.ValidationEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -16,12 +16,13 @@ class SignUpViewModel(
     private val validateLastname: ValidateLastname = ValidateLastname(),
     private val validateEmail: ValidateEmail = ValidateEmail(),
     private val validatePassword: ValidatePassword = ValidatePassword(),
-    private val validateConfirmPassword: ValidateConfirmPassword = ValidateConfirmPassword()
+    private val validateConfirmPassword: ValidateConfirmPassword = ValidateConfirmPassword(),
+    private val userRepository: UserRepository
 ) : ViewModel() {
     var signUpFormState by mutableStateOf(SignUpFormState())
         private set
 
-    private val validationEventChannel = Channel<ValidationEvent>()
+    private val validationEventChannel = Channel<SignUpValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
     fun onEvent(event : SignUpFormEvent) {
@@ -79,7 +80,25 @@ class SignUpViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
+            try {
+                userRepository.registerUser(
+                    firstname = signUpFormState.firstname,
+                    lastname = signUpFormState.lastname,
+                    email = signUpFormState.email,
+                    password = signUpFormState.password
+                )
+                validationEventChannel.send(SignUpValidationEvent.Success(signUpFormState.email, signUpFormState.password))
+            } catch (e: Exception) {
+                signUpFormState = signUpFormState.copy(
+                    firstnameError = null,
+                    lastnameError = null,
+                    emailError = null,
+                    passwordError = null,
+                    confirmPasswordError = null,
+                    serverError = e.message
+                )
+            }
+
         }
     }
 }

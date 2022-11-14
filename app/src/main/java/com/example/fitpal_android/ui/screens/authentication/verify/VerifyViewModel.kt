@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateVerificationCode
 import com.example.fitpal_android.ui.screens.ValidationEvent
 import kotlinx.coroutines.channels.Channel
@@ -12,40 +13,43 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class VerifyViewModel(
-    private val validateVerificationCode : ValidateVerificationCode = ValidateVerificationCode()
+    private val validateVerificationCode: ValidateVerificationCode = ValidateVerificationCode(),
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    var verfyFormState by mutableStateOf(VerifyFromState())
+    var verifyFormState by mutableStateOf(VerifyFromState())
         private set
 
-    var validationEventChannel = Channel<ValidationEvent>()
+    private var validationEventChannel = Channel<ValidationEvent>()
     var validationEvents = validationEventChannel.receiveAsFlow()
 
-    fun onEvent(event: VerifyFormEvent) {
+    fun onEvent(event: VerifyFormEvent, email: String? = null, password: String? = null) {
         when (event) {
             is VerifyFormEvent.CodeChanged -> {
-                verfyFormState = verfyFormState.copy(verificationCode = event.code)
+                verifyFormState = verifyFormState.copy(verificationCode = event.code)
             }
 
             is VerifyFormEvent.ResendCode -> {
-                resendCode()
+                if (email != null) {
+                    resendCode(email)
+                }
             }
 
+
             is VerifyFormEvent.VerifyCode -> {
-                verifyCode()
+                if (email != null && password != null) {
+                    verifyCode(email, password)
+                }
             }
         }
     }
 
-    // TODO: ADD BACKEND
-    private fun verifyCode() {
-        // Remove trailing spaces
-        verfyFormState = verfyFormState.copy(
-            verificationCode = verfyFormState.verificationCode.trimEnd(' ')
-        )
-        val verificationCodeResult = validateVerificationCode.execute(verfyFormState.verificationCode)
 
-        verfyFormState = verfyFormState.copy(
+    private fun verifyCode(email: String, password: String) {
+        val verificationCodeResult =
+            validateVerificationCode.execute(verifyFormState.verificationCode)
+
+        verifyFormState = verifyFormState.copy(
             verificationCodeError = verificationCodeResult.errorMessage,
         )
 
@@ -58,12 +62,30 @@ class VerifyViewModel(
         }
 
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
+            try {
+                userRepository.verifyEmail(email, verifyFormState.verificationCode)
+                userRepository.login(email, password)
+                validationEventChannel.send(ValidationEvent.Success)
+            } catch (e: Exception) {
+                verifyFormState = verifyFormState.copy(
+                    verificationCodeError = e.message,
+                )
+            }
         }
     }
 
-    // TODO: ADD BACKEND
-    private fun resendCode() {
-        return
+    private fun resendCode(email: String) {
+        viewModelScope.launch {
+            try {
+                userRepository.resendVerification(email)
+                verifyFormState = verifyFormState.copy(
+                    verificationCodeError = "Verification code sent",
+                )
+            } catch (e: Exception) {
+                verifyFormState = verifyFormState.copy(
+                    verificationCodeError = e.message
+                )
+            }
+        }
     }
 }

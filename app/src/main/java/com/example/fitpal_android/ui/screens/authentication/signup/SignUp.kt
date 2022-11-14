@@ -33,14 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
-import com.example.fitpal_android.ui.screens.ValidationEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
-fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit) {
-    val viewModel = viewModel<SignUpViewModel>()
+fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit) {
+    val viewModel = viewModel<SignUpViewModel>(factory = getViewModelFactory())
     val signUpFormState = viewModel.signUpFormState
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -49,15 +49,15 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit) {
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
-                is ValidationEvent.Success -> {
+                is SignUpValidationEvent.Success -> {
                     Toast.makeText(
                         context,
-                        "THIS SHOULD ROUTE TO VERIFY",
+                        "Account created successfully",
                         Toast.LENGTH_LONG
                     ).show()
-                    // TODO: Route to verify
-                    // VVVVVVv
-                    onButtonClicked()
+
+                    onSignUpClicked(event.email, event.password)
+
                 }
             }
         }
@@ -245,85 +245,93 @@ fun SignUp(onButtonClicked: () -> Unit, onLinkClicked: () -> Unit) {
         }
 
 
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-            Column {
-                TextField(
-                    colors = TextFieldDefaults.textFieldColors(
-                        unfocusedLabelColor = Black000,
-                        focusedIndicatorColor = Orange500,
-                        focusedLabelColor = Orange500,
-                        cursorColor = Orange500
-                    ),
-                    label = { Text(text = stringResource(R.string.confirm_password)) },
-                    value = signUpFormState.confirmPassword,
-                    visualTransformation = PasswordVisualTransformation(),
-                    onValueChange = {
-                        if (it.matches(noEnterNoTabRegex)) {
-                            viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it))
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = { focusManager.clearFocus() }
-                    ),
-                    modifier = Modifier.onKeyEvent {
-                        if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
-                            focusManager.clearFocus()
-                        }
-                        false
+        Column {
+            TextField(
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Black000,
+                    focusedIndicatorColor = Orange500,
+                    focusedLabelColor = Orange500,
+                    cursorColor = Orange500
+                ),
+                label = { Text(text = stringResource(R.string.confirm_password)) },
+                value = signUpFormState.confirmPassword,
+                visualTransformation = PasswordVisualTransformation(),
+                onValueChange = {
+                    if (it.matches(noEnterNoTabRegex)) {
+                        viewModel.onEvent(SignUpFormEvent.ConfirmPasswordChanged(it))
                     }
-                )
-
-                signUpFormState.confirmPasswordError?.let {
-                    Text(
-                        text = signUpFormState.confirmPasswordError,
-                        color = MaterialTheme.colors.error,
-                        modifier = Modifier.align(Alignment.End)
-                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.clearFocus() }
+                ),
+                modifier = Modifier.onKeyEvent {
+                    if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                        focusManager.clearFocus()
+                    }
+                    false
                 }
-            }
+            )
 
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                Button(
-                    onClick = { viewModel.onEvent(SignUpFormEvent.SignUp) },
-                    modifier = Modifier
-                        .height(50.dp)
-                        .width(140.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
-                ) {
-                    Text(
-                        text = stringResource(R.string.sign_up_button),
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center
-                        ),
-                        color = Color.White
-                    )
-                }
-            }
-            Box(modifier = Modifier.fillMaxSize()) {
-                ClickableText(
-                    text = AnnotatedString(stringResource(R.string.log_in_link)),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(20.dp),
-                    onClick = { onLinkClicked() },
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily.Default,
-                        textDecoration = TextDecoration.Underline,
-                        color = Orange500
-                    )
+            signUpFormState.confirmPasswordError?.let {
+                Text(
+                    text = signUpFormState.confirmPasswordError,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.align(Alignment.End)
                 )
             }
-
-
         }
+
+        if (signUpFormState.serverError != null) {
+            Text(
+                text = signUpFormState.serverError,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
+
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+            Button(
+                onClick = { viewModel.onEvent(SignUpFormEvent.SignUp) },
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(140.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
+            ) {
+                Text(
+                    text = stringResource(R.string.sign_up_button),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                    color = Color.White
+                )
+            }
+        }
+        Box(modifier = Modifier.fillMaxSize()) {
+            ClickableText(
+                text = AnnotatedString(stringResource(R.string.log_in_link)),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(20.dp),
+                onClick = { onLinkClicked() },
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily.Default,
+                    textDecoration = TextDecoration.Underline,
+                    color = Orange500
+                )
+            )
+        }
+
+
+    }
 }
