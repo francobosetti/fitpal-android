@@ -14,10 +14,15 @@ class NetworkUser (
     @SerializedName("email")
     var email: String,
     @SerializedName("avatarUrl")
-    var avatarUrl: String? = null,
+    var avatarUrl: String?,
     @SerializedName("verified")
     var verified: Boolean
 ) {
+
+    // Default avatar
+    companion object {
+        const val DEFAULT_AVATAR_URL = "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg"
+    }
 
     fun asModel() : User {
         return User(
@@ -25,7 +30,7 @@ class NetworkUser (
             firstname = firstName,
             lastname = lastName,
             email = email,
-            avatarUrl = avatarUrl
+            avatarUrl = avatarUrl?: DEFAULT_AVATAR_URL
         )
     }
 }

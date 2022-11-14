@@ -54,4 +54,10 @@ class UserRepository(
     suspend fun resendVerification(email: String) {
         remoteDataSource.resendVerification(email)
     }
+
+    suspend fun updateUser(firstname: String, lastname: String, avatarUrl: String) {
+        currentUserMutex.withLock {
+            currentUser = remoteDataSource.updateUser(firstname, lastname, avatarUrl).asModel()
+        }
+    }
 }
