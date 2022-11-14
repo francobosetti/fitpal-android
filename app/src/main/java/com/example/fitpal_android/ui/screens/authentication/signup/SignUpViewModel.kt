@@ -43,7 +43,9 @@ class SignUpViewModel(
                 signUpFormState = signUpFormState.copy(confirmPassword = event.confirmPassword)
             }
             is SignUpFormEvent.SignUp -> {
+                signUpFormState = signUpFormState.copy(loading = true)
                 signUp()
+                signUpFormState = signUpFormState.copy(loading = false)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.fitpal_android.ui.screens.authentication.signup
 
 
 data class SignUpFormState(
+    val loading: Boolean = false,
     val firstname : String = "",
     val firstnameError : String?  = null,
     val lastname : String = "",

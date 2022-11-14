@@ -31,12 +31,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
     val viewModel = viewModel<VerifyViewModel>(factory = getViewModelFactory())
     val verifyFormState = viewModel.verifyFormState
     val context = LocalContext.current
-    var verifyLoading by remember{
-        mutableStateOf(false)
-    }
-    var resendLoading by remember{
-        mutableStateOf(false)
-    }
+
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
@@ -94,12 +89,11 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             ProgressButton(
-                onClick = { viewModel.onEvent(VerifyFormEvent.VerifyCode, email = email, password = password) ;
-                          verifyLoading=!verifyLoading },//TODO ver tema de loading con viewmodel
+                onClick = { viewModel.onEvent(VerifyFormEvent.VerifyCode, email = email, password = password)},
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
-                loading= verifyLoading,
+                loading= verifyFormState.verifyLoading,
                 color = Orange500,
                 progressColor = Color.White
             ) {
@@ -116,12 +110,11 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             ProgressButton(
-                onClick = { viewModel.onEvent(VerifyFormEvent.ResendCode, email = email) ;
-                    verifyLoading=!verifyLoading },//TODO ver tema de loading con viewmodel},
+                onClick = { viewModel.onEvent(VerifyFormEvent.ResendCode, email = email)},
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
-                loading= verifyLoading,
+                loading= verifyFormState.resendLoading,
                 color = Orange500,
                 progressColor = Color.White
 

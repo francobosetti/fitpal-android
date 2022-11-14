@@ -48,9 +48,6 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
     val focusManager = LocalFocusManager.current
     val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
     val scrollState= rememberScrollState()
-    var loading by remember{
-        mutableStateOf(false)
-    }
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
@@ -305,11 +302,11 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             ProgressButton(
-                onClick = { viewModel.onEvent(SignUpFormEvent.SignUp); loading=!loading }, //TODO ver tema loading con viewmodel
+                onClick = { viewModel.onEvent(SignUpFormEvent.SignUp) },
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
-                loading= loading,
+                loading= signUpFormState.loading,
                 color = Orange500,
                 progressColor = Color.White
             ) {

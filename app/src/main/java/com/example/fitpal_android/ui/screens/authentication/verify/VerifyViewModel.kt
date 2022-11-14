@@ -31,14 +31,17 @@ class VerifyViewModel(
 
             is VerifyFormEvent.ResendCode -> {
                 if (email != null) {
+                    verifyFormState = verifyFormState.copy(resendLoading = true)
                     resendCode(email)
+                    verifyFormState = verifyFormState.copy(resendLoading = false)
                 }
             }
 
-
             is VerifyFormEvent.VerifyCode -> {
                 if (email != null && password != null) {
+                    verifyFormState = verifyFormState.copy(verifyLoading = true)
                     verifyCode(email, password)
+                    verifyFormState = verifyFormState.copy(verifyLoading = false)
                 }
             }
         }

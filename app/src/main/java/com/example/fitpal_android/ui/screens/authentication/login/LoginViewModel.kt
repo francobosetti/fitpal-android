@@ -31,7 +31,9 @@ class LoginViewModel(
                 loginFormState = loginFormState.copy(password = event.password)
             }
             is LoginFormEvent.Login -> {
+                loginFormState = loginFormState.copy(loading = true)
                 login()
+                loginFormState = loginFormState.copy(loading = true)
             }
         }
     }
