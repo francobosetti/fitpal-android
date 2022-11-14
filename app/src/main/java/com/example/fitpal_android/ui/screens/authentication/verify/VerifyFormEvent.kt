@@ -4,5 +4,5 @@ sealed class VerifyFormEvent {
     data class CodeChanged(val code : String) : VerifyFormEvent()
 
     object ResendCode : VerifyFormEvent()
-    object Submit : VerifyFormEvent()
+    object VerifyCode : VerifyFormEvent()
 }

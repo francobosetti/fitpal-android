@@ -31,14 +31,14 @@ class VerifyViewModel(
                 resendCode()
             }
 
-            is VerifyFormEvent.Submit -> {
-                submitForm()
+            is VerifyFormEvent.VerifyCode -> {
+                verifyCode()
             }
         }
     }
 
     // TODO: ADD BACKEND
-    private fun submitForm() {
+    private fun verifyCode() {
         val verificationCodeResult = validateVerificationCode.execute(verfyFormState.verificationCode)
 
         verfyFormState = verfyFormState.copy(

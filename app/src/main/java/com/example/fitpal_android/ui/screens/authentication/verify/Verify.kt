@@ -79,7 +79,7 @@ fun Verify(onAuthentication: () -> Unit){
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { viewModel.onEvent(VerifyFormEvent.Submit) },
+                onClick = { viewModel.onEvent(VerifyFormEvent.VerifyCode) },
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
