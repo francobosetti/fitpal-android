@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -54,10 +55,9 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
         )
         Spacer(modifier = Modifier.height(70.dp))
 
-        // TODO: add spanish version
         Text(
             modifier = Modifier.padding(20.dp),
-            text = "Verify",
+            text = stringResource(R.string.verify),
             style = TextStyle(fontSize = 40.sp, textAlign = TextAlign.Center),
             color = Color.White
         )
@@ -72,7 +72,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                     focusedLabelColor = Orange500,
                     cursorColor = Orange500
                 ),
-                label = { Text(text = "Verification code") }, // TODO: add spanish
+                label = { Text(text = stringResource(R.string.verification_code)) },
                 value = verifyFormState.verificationCode,
                 onValueChange = { viewModel.onEvent(VerifyFormEvent.CodeChanged(it)) })
 
@@ -96,7 +96,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
             ) {
                 Text(
-                    text = "Verify", //TODO: add spanish version
+                    text = stringResource(R.string.verify),
                     style = TextStyle(
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center
@@ -116,7 +116,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
             ) {
                 Text(
-                    text = "Resend Code", //TODO: add spanish version
+                    text = stringResource(R.string.resend_code),
                     style = TextStyle(
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center
