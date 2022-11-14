@@ -1,6 +1,6 @@
 package com.example.fitpal_android.data.model
 
-data class User (
+class User (
     val id: Int,
     val firstname: String,
     val lastname: String,

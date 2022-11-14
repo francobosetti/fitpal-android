@@ -42,4 +42,16 @@ class UserRepository(
     fun isLoggedIn() : Boolean {
         return sessionManager.loadAuthToken() != null
     }
+
+    suspend fun registerUser(email: String, password: String, firstname: String, lastname: String) : User {
+        return remoteDataSource.registerUser(email, password, firstname, lastname).asModel()
+    }
+
+    suspend fun verifyEmail(email: String, code: String) {
+        remoteDataSource.verifyEmail(email, code)
+    }
+
+    suspend fun resendVerification(email: String) {
+        remoteDataSource.resendVerification(email)
+    }
 }

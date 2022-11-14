@@ -1,8 +1,7 @@
 package com.example.fitpal_android.data.remote
 
 import com.example.fitpal_android.data.remote.api.ApiUserService
-import com.example.fitpal_android.data.remote.model.NetworkCredentials
-import com.example.fitpal_android.data.remote.model.NetworkUser
+import com.example.fitpal_android.data.remote.model.*
 import com.example.fitpal_android.util.SessionManager
 
 class UserRemoteDataSource(
@@ -24,5 +23,31 @@ class UserRemoteDataSource(
 
     suspend fun getCurrentUser() : NetworkUser {
         return handleApiResponse { apiUserService.getCurrentUser() }
+    }
+
+    suspend fun registerUser(email: String, password: String, firstname: String, lastname: String) : NetworkUser {
+        return handleApiResponse {
+            apiUserService.registerUser(
+                NetworkRegistrationInfo(
+                    password = password,
+                    email = email,
+                    firstName = firstname,
+                    lastName = lastname
+                )
+            )
+        }
+    }
+
+    suspend fun verifyEmail(email: String, code: String) {
+        handleApiResponse { apiUserService.verifyEmail(
+            NetworkVerification(
+                email = email,
+                code = code
+            )
+        ) }
+    }
+
+    suspend fun resendVerification(email: String) {
+        handleApiResponse { apiUserService.resendVerification(NetworkEmail(email)) }
     }
 }
