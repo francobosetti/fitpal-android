@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val validateEmail: ValidateEmail = ValidateEmail()
+    private val validateEmail: ValidateEmail = ValidateEmail(),
+    private val userRepository: UserRepository
 ) : ViewModel() {
     var formState by mutableStateOf(LoginFormState())
         private set
@@ -50,7 +51,19 @@ class LoginViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
+
+            try {
+                userRepository.login(formState.email, formState.password)
+                validationEventChannel.send(ValidationEvent.Success)
+            } catch (e: Exception) {
+
+                // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
+                formState = formState.copy(
+                    emailError = e.message
+                )
+
+            }
+
         }
     }
 }

@@ -25,7 +25,7 @@ import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
 
 @Composable
-fun Verify(onButtonClicked: () -> Unit){
+fun Verify(onAuthentication: () -> Unit){
 
     val viewModel = viewModel<VerifyViewModel>()
     val verfyFormState = viewModel.verfyFormState
@@ -34,7 +34,7 @@ fun Verify(onButtonClicked: () -> Unit){
         viewModel.validationEvents.collect{
             event -> when(event) {
                 is ValidationEvent.Success -> {
-                    onButtonClicked() // THIS SHOULD SEND TO HOMEPAGE
+                    onAuthentication()
                 }
             }
         }

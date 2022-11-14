@@ -21,7 +21,7 @@ import com.example.fitpal_android.data.repository.DEPRECATED.UserRepository
 import com.example.fitpal_android.ui.theme.White100
 
 @Composable
-fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
+fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit, onLogOutClick: () -> Unit) {
 
 
     // Items for nav menu
@@ -93,7 +93,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit) {
         Spacer(modifier = Modifier.weight(1f))
         Button(
             onClick = {
-                UserRepository().logOut()
+                onLogOutClick()
             },
             Modifier.fillMaxWidth()
         ) {

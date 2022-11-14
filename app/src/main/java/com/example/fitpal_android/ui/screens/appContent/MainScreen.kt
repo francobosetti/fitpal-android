@@ -9,9 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.navigation.AppContentNavHost
 import com.example.fitpal_android.ui.components.NavigationDrawer
@@ -21,24 +23,26 @@ import kotlinx.coroutines.launch
 // TODO: Ver Que onda con este warning
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
+fun MainScreen(onLoggedOut: () -> Unit) {
     // A surface container using the 'background' color from the theme
     // TODO: Viewmodel de esto
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-    val topBarState= rememberSaveable{(mutableStateOf(true))}
-    val navBarState= rememberSaveable{(mutableStateOf(true))}
+    val topBarState = rememberSaveable { (mutableStateOf(true)) }
+    val navBarState = rememberSaveable { (mutableStateOf(true)) }
+    val application = (LocalContext.current.applicationContext as FitpalApplication)
+
     // Router current route
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    when(navBackStackEntry?.destination?.route){
+    when (navBackStackEntry?.destination?.route) {
         Screens.LogIn.route -> {
-            topBarState.value=false
-            navBarState.value=false
+            topBarState.value = false
+            navBarState.value = false
         }
         else -> {
-            topBarState.value =true
-            navBarState.value= true
+            topBarState.value = true
+            navBarState.value = true
         }
     }
 
@@ -69,7 +73,9 @@ fun MainScreen() {
             AnimatedVisibility(visible = navBarState.value) {
                 NavigationDrawer(
                     navController = navController,
-                    onMenuClick = { scope.launch { state.drawerState.close() } }
+                    onMenuClick = { scope.launch { state.drawerState.close() } },
+                    // TODO: creo que esto esta mal
+                    onLogOutClick = { scope.launch { application.userRepository.logout(); onLoggedOut() } }
                 )
             }
         },

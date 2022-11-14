@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
-import com.example.fitpal_android.MyApplication
+import com.example.fitpal_android.FitpalApplication
 
 @Composable
 fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
-    val application = (LocalContext.current.applicationContext as MyApplication)
+    val application = (LocalContext.current.applicationContext as FitpalApplication)
     val sessionManager = application.sessionManager
     val userRepository = application.userRepository
 

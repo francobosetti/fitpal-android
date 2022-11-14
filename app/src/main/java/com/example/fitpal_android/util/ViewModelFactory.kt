@@ -5,7 +5,9 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.fitpal_android.MainActivityViewModel
 import com.example.fitpal_android.data.repository.UserRepository
+import com.example.fitpal_android.ui.screens.authentication.login.LoginViewModel
 
 
 class ViewModelFactory constructor(
@@ -25,8 +27,9 @@ class ViewModelFactory constructor(
         // Aca hay que poner todos los viewmodels que se necesiten, y lo construimos a partir de los parametros que necesite
         when {
             // Asi: isAssignableFrom(MyViewModel::class.java) -> MyViewModel( ... parametros que necesite ...)
-            else ->
-                throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+            isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(userRepository =  userRepository)
+            isAssignableFrom(MainActivityViewModel::class.java) -> MainActivityViewModel(userRepository =  userRepository)
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     } as T
 }

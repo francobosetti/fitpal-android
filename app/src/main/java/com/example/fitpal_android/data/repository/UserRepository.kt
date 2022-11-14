@@ -3,11 +3,13 @@ package com.example.fitpal_android.data.repository
 
 import com.example.fitpal_android.data.model.User
 import com.example.fitpal_android.data.remote.UserRemoteDataSource
+import com.example.fitpal_android.util.SessionManager
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 class UserRepository(
-    private val remoteDataSource: UserRemoteDataSource
+    private val remoteDataSource: UserRemoteDataSource,
+    private val sessionManager: SessionManager
 ) {
 
     // Mutex to make writes to cached values thread-safe.
@@ -35,5 +37,9 @@ class UserRepository(
         }
 
         return currentUserMutex.withLock { this.currentUser }
+    }
+
+    fun isLoggedIn() : Boolean {
+        return sessionManager.loadAuthToken() != null
     }
 }

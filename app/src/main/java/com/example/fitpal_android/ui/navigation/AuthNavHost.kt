@@ -13,7 +13,8 @@ import com.example.fitpal_android.ui.screens.authentication.verify.Verify
 
 @Composable
 fun AuthNavHost(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    onAuthentication: () -> Unit,
 ) {
 
     NavHost(navController = navController, startDestination = Screens.LogIn.route) {
@@ -21,7 +22,7 @@ fun AuthNavHost(
         // Login
         composable(Screens.LogIn.route) {
             LogIn(
-                onButtonClicked = { UserRepository().logIn() },
+                onAuthentication = onAuthentication,
                 onLinkClicked = {
                     navController.navigate(Screens.SignUp.route) {
                         popUpTo(Screens.LogIn.route)
@@ -52,7 +53,7 @@ fun AuthNavHost(
         // Verify
         composable(Screens.Verify.route) {
             Verify(
-                onButtonClicked = { UserRepository().logIn() },
+                onAuthentication = onAuthentication,
             )
         }
 

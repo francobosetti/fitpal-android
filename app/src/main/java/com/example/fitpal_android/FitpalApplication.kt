@@ -7,7 +7,7 @@ import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.util.SessionManager
 
 
-class MyApplication : Application() {
+class FitpalApplication : Application() {
 
     private val userRemoteDataSource: UserRemoteDataSource
         get() = UserRemoteDataSource(sessionManager, RetrofitClient.getApiUserService(this))
@@ -16,6 +16,6 @@ class MyApplication : Application() {
         get() = SessionManager(this)
 
     val userRepository: UserRepository
-        get() = UserRepository(userRemoteDataSource)
+        get() = UserRepository(userRemoteDataSource, sessionManager)
 
 }

@@ -30,18 +30,19 @@ import com.example.fitpal_android.ui.screens.ValidationEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
-fun LogIn(onButtonClicked: () -> Unit,  onLinkClicked: () -> Unit){
+fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
 
-    val viewModel = viewModel<LoginViewModel>()
+    val viewModel = viewModel<LoginViewModel>(factory = getViewModelFactory())
     val formState = viewModel.formState
     val context = LocalContext.current
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect {
             event -> when(event) {
                 is ValidationEvent.Success -> {
-                    onButtonClicked()
+                    onAuthentication()
                 }
             }
         }
