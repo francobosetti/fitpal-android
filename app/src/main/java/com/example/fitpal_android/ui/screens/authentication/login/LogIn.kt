@@ -105,7 +105,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { viewModel.onEvent(LoginFormEvent.Submit) },
+                onClick = { viewModel.onEvent(LoginFormEvent.Login) },
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),

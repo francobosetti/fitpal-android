@@ -30,14 +30,14 @@ class LoginViewModel(
             is LoginFormEvent.PasswordChanged -> {
                 formState = formState.copy(password = event.password)
             }
-            is LoginFormEvent.Submit -> {
-                submitForm()
+            is LoginFormEvent.Login -> {
+                login()
             }
         }
     }
 
     // TODO: CHECK IN BACKEND
-    private fun submitForm() {
+    private fun login() {
         val emailResult = validateEmail.execute(formState.email)
 
         formState = formState.copy(
@@ -59,7 +59,7 @@ class LoginViewModel(
 
                 // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
                 formState = formState.copy(
-                    emailError = e.message
+                    emailError = e.message //TODO: Usar otra variable (esta es la del email)
                 )
 
             }
