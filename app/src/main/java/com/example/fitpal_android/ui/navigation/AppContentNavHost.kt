@@ -23,6 +23,7 @@ import com.example.fitpal_android.ui.screens.appContent.profile.Profile
 @Composable
 fun AppContentNavHost(
     navController: NavHostController = rememberNavController(),
+    onProfileUpdate: () -> Unit,
 ) {
 
     val currentContext = LocalContext.current
@@ -61,7 +62,7 @@ fun AppContentNavHost(
 
         // Profile
         composable(Screens.Profile.route) {
-            Profile()
+            Profile(onProfileUpdate = onProfileUpdate)
         }
 
         // ------------ Secondary screens -------------

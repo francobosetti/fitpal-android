@@ -1,4 +1,4 @@
-package com.example.fitpal_android.ui.screens.appContent
+package com.example.fitpal_android.ui.screens.appContent.mainScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fitpal_android.FitpalApplication
@@ -18,6 +19,8 @@ import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.navigation.AppContentNavHost
 import com.example.fitpal_android.ui.components.NavigationDrawer
 import com.example.fitpal_android.ui.components.TopBar
+import com.example.fitpal_android.ui.screens.appContent.mainScreen.MainScreenViewModel
+import com.example.fitpal_android.util.getViewModelFactory
 import kotlinx.coroutines.launch
 
 // TODO: Ver Que onda con este warning
@@ -25,13 +28,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(onLoggedOut: () -> Unit) {
     // A surface container using the 'background' color from the theme
-    // TODO: Viewmodel de esto
+    // TODO: MAndar al Viewmodel esto?
     val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val topBarState = rememberSaveable { (mutableStateOf(true)) }
     val navBarState = rememberSaveable { (mutableStateOf(true)) }
-    val application = (LocalContext.current.applicationContext as FitpalApplication)
 
     // Router current route
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -45,6 +47,11 @@ fun MainScreen(onLoggedOut: () -> Unit) {
             navBarState.value = true
         }
     }
+
+    val viewModel = viewModel<MainScreenViewModel>(
+        factory = getViewModelFactory()
+    )
+    val mainScreenState = viewModel.mainScreenState
 
     Scaffold(
         scaffoldState = state,
@@ -62,7 +69,7 @@ fun MainScreen(onLoggedOut: () -> Unit) {
                         Screens.FavoriteRoutine.route -> stringResource(Screens.FavoriteRoutine.title)
                         else -> "FitPal"
                     },
-                    imageUrl = "https://pbs.twimg.com/media/Ffn_6FDX0AAe8hk?format=jpg&name=small",
+                    imageUrl = mainScreenState.avatarUrl,
                     onMenuClick = { scope.launch { state.drawerState.open() } },
                     navController = navController
                 )
@@ -74,14 +81,14 @@ fun MainScreen(onLoggedOut: () -> Unit) {
                 NavigationDrawer(
                     navController = navController,
                     onMenuClick = { scope.launch { state.drawerState.close() } },
-                    // TODO: creo que esto esta mal
-                    onLogOutClick = { scope.launch { application.userRepository.logout(); onLoggedOut() } }
+                    onLogOutClick = { scope.launch { viewModel.logout(); onLoggedOut() } }
                 )
             }
         },
     ) {
         AppContentNavHost(
             navController = navController,
+            onProfileUpdate = { scope.launch { viewModel.updateAvatarUrl() } },
         )
     }
 }

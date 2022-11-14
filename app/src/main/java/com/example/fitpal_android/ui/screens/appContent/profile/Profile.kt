@@ -27,15 +27,18 @@ import coil.compose.AsyncImage
 
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.screens.ValidationEvent
-import com.example.fitpal_android.ui.screens.authentication.login.LoginFormEvent
+import com.example.fitpal_android.util.getViewModelFactory
 
 // TODO: make resolve enter inside text field
 @Composable
-fun Profile() {
+fun Profile(
+    onProfileUpdate: () -> Unit,
+) {
 
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
 
-        val viewModel = viewModel<ProfileViewModel>()
+        val viewModel = viewModel<ProfileViewModel>(factory = getViewModelFactory())
+
         val profileState = viewModel.profileState
         val profileFormState = viewModel.profileFormState
         val context = LocalContext.current
@@ -51,6 +54,7 @@ fun Profile() {
                             "Profile updated", //TODO: make spanish version
                             Toast.LENGTH_LONG
                         ).show()
+                        onProfileUpdate()
                     }
                 }
             }

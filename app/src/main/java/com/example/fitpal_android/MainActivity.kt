@@ -4,14 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.navigation.AuthNavHost
-import com.example.fitpal_android.ui.screens.appContent.MainScreen
+import com.example.fitpal_android.ui.screens.appContent.mainScreen.MainScreen
 import com.example.fitpal_android.ui.theme.FitpalandroidTheme
 import com.example.fitpal_android.util.getViewModelFactory
-import com.example.fitpal_android.MainActivityViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
