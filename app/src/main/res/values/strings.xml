@@ -9,7 +9,7 @@
     <string name="exec_routine_screen">Exec Routine</string>
     <string name="log_in_screen">Log In</string>
     <string name="welcome_message">Welcome to your exercise companion</string>
-    <string name="log_in_username">Username</string>
+    <string name="log_in_email">Email</string>
     <string name="log_in_password">Password</string>
     <string name="log_in_button">Log In</string>
     <string name="log_out_button">Log Out</string>

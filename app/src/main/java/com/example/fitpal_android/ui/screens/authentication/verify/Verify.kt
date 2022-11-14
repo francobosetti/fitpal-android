@@ -64,7 +64,7 @@ fun Verify(onButtonClicked: () -> Unit){
                 focusedLabelColor = Orange500,
                 cursorColor = Orange500
             ),
-            label = { Text(text = stringResource(R.string.log_in_username)) },
+            label = { Text(text = "Verification code") }, // TODO: add spanish
             value = verfyFormState.verificationCode,
             onValueChange = { viewModel.onEvent(VerifyFormEvent.CodeChanged(it)) })
 

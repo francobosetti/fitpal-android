@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateEmail
 import com.example.fitpal_android.ui.screens.ValidationEvent
 import kotlinx.coroutines.channels.Channel

@@ -9,7 +9,7 @@
     <string name="exec_routine_screen">Ejecutar Rutina</string>
     <string name="log_in_screen">Iniciar Sesion</string>
     <string name="welcome_message">Bienvenido a tu compañero de ejercicio</string>
-    <string name="log_in_username">Nombre de Usuario</string>
+    <string name="log_in_email">Correo electronico</string>
     <string name="log_in_password">Contraseña</string>
     <string name="log_in_button">Iniciar Sesion</string>
     <string name="log_out_button">Cerrar Sesion</string>

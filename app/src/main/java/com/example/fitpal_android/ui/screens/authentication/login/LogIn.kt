@@ -72,7 +72,7 @@ fun LogIn(onButtonClicked: () -> Unit,  onLinkClicked: () -> Unit){
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
                     cursorColor = Orange500),
-                label = { Text(text = stringResource(R.string.log_in_username)) },
+                label = { Text(text = stringResource(R.string.log_in_email)) },
                 value = formState.email,
                 onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) })
             if(formState.emailError != null) {
