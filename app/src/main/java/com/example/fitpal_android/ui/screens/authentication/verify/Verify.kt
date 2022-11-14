@@ -5,8 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
+import com.example.fitpal_android.ui.components.ProgressButton
 import com.example.fitpal_android.ui.screens.ValidationEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
@@ -31,6 +31,12 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
     val viewModel = viewModel<VerifyViewModel>(factory = getViewModelFactory())
     val verifyFormState = viewModel.verifyFormState
     val context = LocalContext.current
+    var verifyLoading by remember{
+        mutableStateOf(false)
+    }
+    var resendLoading by remember{
+        mutableStateOf(false)
+    }
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
             when (event) {
@@ -87,13 +93,15 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-            Button(
-                onClick = { viewModel.onEvent(VerifyFormEvent.VerifyCode, email = email, password = password) },
+            ProgressButton(
+                onClick = { viewModel.onEvent(VerifyFormEvent.VerifyCode, email = email, password = password) ;
+                          verifyLoading=!verifyLoading },//TODO ver tema de loading con viewmodel
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
+                loading= verifyLoading,
+                color = Orange500,
+                progressColor = Color.White
             ) {
                 Text(
                     text = stringResource(R.string.verify),
@@ -107,13 +115,16 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
         }
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-            Button(
-                onClick = { viewModel.onEvent(VerifyFormEvent.ResendCode, email = email) },
+            ProgressButton(
+                onClick = { viewModel.onEvent(VerifyFormEvent.ResendCode, email = email) ;
+                    verifyLoading=!verifyLoading },//TODO ver tema de loading con viewmodel},
                 modifier = Modifier
                     .height(50.dp)
                     .width(140.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
+                loading= verifyLoading,
+                color = Orange500,
+                progressColor = Color.White
+
             ) {
                 Text(
                     text = stringResource(R.string.resend_code),
