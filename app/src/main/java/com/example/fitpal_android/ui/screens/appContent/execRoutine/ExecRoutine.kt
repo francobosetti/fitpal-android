@@ -46,7 +46,7 @@ fun ExecRoutine(
                 IconButton(onClick = { onBackPressed() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(R.string.back),
                         modifier = Modifier.padding(8.dp)
                     )
                 }

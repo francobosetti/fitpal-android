@@ -41,4 +41,11 @@
     <string name="stop_exercise">Parar</string>
     <string name="start_exercise">Empezar</string>
     <string name="finish_button">Finalizar</string>
+    <string name="order_by">Ordenar Por</string>
+    <string name="date">Fecha</string>
+    <string name="difficulty">Dificultad</string>
+    <string name="score">Puntuación</string>
+    <string name="category">Categoría</string>
+    <string name="back">Atrás</string>
+    <string name="advanced_search">Búsqueda Avanzada</string>
 </resources>
