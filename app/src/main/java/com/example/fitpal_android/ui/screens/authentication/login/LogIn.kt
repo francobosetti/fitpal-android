@@ -1,23 +1,29 @@
 package com.example.fitpal_android.ui.screens.authentication.login
 
+import android.view.KeyEvent.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -38,6 +44,9 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
     val viewModel = viewModel<LoginViewModel>(factory = getViewModelFactory())
     val formState = viewModel.loginFormState
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect {
             event -> when(event) {
@@ -75,7 +84,22 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                     cursorColor = Orange500),
                 label = { Text(text = stringResource(R.string.log_in_email)) },
                 value = formState.email,
-                onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) })
+                onValueChange = {
+                    if (it.matches(noEnterNoTabRegex)) {
+                        viewModel.onEvent(LoginFormEvent.EmailChanged(it))
+                    }
+                },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                ),
+                modifier = Modifier.onKeyEvent {
+                    if(it.nativeKeyEvent.keyCode == KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KEYCODE_TAB) {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                    false
+                }
+            )
             formState.emailError?.let {
                 Text(
                     text = formState.emailError,
@@ -96,8 +120,25 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                 label = { Text(text = stringResource(R.string.log_in_password)) },
                 value = formState.password,
                 visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) })
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next
+                ),
+                onValueChange = {
+                    if (it.matches(noEnterNoTabRegex)) {
+                        viewModel.onEvent(LoginFormEvent.PasswordChanged(it))
+                    }
+                },
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.clearFocus()}
+                ),
+                modifier = Modifier.onKeyEvent {
+                    if(it.nativeKeyEvent.keyCode == KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KEYCODE_TAB) {
+                        focusManager.clearFocus()
+                    }
+                    false
+                }
+            )
         }
 
 
