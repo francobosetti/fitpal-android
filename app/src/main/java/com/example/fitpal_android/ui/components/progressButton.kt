@@ -15,6 +15,7 @@ fun ProgressButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     loading: Boolean = false,
+    enabled: Boolean =true,
     color: Color,
     progressColor: Color,
     content: @Composable () -> Unit,
@@ -25,6 +26,7 @@ fun ProgressButton(
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(backgroundColor = color),
+        enabled = enabled
     ) {
         Box(
             modifier = Modifier

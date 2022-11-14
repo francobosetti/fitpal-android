@@ -94,6 +94,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                     .height(50.dp)
                     .width(140.dp),
                 loading= verifyFormState.verifyLoading,
+                enabled = !verifyFormState.verifyLoading, //TODO VER EL ENABLED EN VIEW MODEL
                 color = Orange500,
                 progressColor = Color.White
             ) {
@@ -115,6 +116,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                     .height(50.dp)
                     .width(140.dp),
                 loading= verifyFormState.resendLoading,
+                enabled = !verifyFormState.resendLoading, //TODO VER EL ENABLED EN VIEW MODEL
                 color = Orange500,
                 progressColor = Color.White
 

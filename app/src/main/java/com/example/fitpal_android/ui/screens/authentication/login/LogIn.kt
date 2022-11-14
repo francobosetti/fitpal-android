@@ -1,17 +1,14 @@
 package com.example.fitpal_android.ui.screens.authentication.login
 
 import android.view.KeyEvent.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -159,6 +156,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                     .height(50.dp)
                     .width(140.dp),
                 loading = formState.loading,
+                enabled = !formState.loading, //TODO VER EL ENABLED EN VIEW MODEL
                 color = Orange500,
                 progressColor = Color.White
             ) {
