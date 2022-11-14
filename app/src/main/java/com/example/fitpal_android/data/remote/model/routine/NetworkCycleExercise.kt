@@ -15,12 +15,12 @@ class NetworkCycleExercise (
     @SerializedName("exercise")
         var exercise: NetworkExercise,
 ) {
-    fun asModel(exercise: Exercise) : CycleExercise {
+    fun asModel(videoUrl: String) : CycleExercise {
         return CycleExercise(
             order = order,
             duration = duration,
             repetitions = repetitions,
-            exercise = exercise,
+            exercise = exercise.asModel(videoUrl),
         )
     }
 }
