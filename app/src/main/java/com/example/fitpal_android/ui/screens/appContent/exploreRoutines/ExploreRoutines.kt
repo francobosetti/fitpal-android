@@ -11,15 +11,17 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.TopOrderAndSearch
 import com.example.fitpal_android.ui.components.cards.RoutineCard
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun ExploreRoutines(
     onItemClicked: (Int) -> Unit
 ) {
-    val viewModel = ExploreRoutinesViewModel()
-    val otherRoutines = viewModel.getOtherRoutines()
+    val viewModel = viewModel<ExploreRoutinesViewModel>(factory = getViewModelFactory() )
+    val exploreRoutinesState = viewModel.exploreRoutinesState
 
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn(
@@ -29,14 +31,14 @@ fun ExploreRoutines(
             item {
                 TopOrderAndSearch()
             }
-            items(otherRoutines.size) {
+            items(exploreRoutinesState.otherRoutines.size) {
                 RoutineCard(
-                    name = otherRoutines[it].name,
-                    imageUrl = otherRoutines[it].imageUrl,
-                    tags = otherRoutines[it].tags,
-                    rating = otherRoutines[it].rating,
+                    name = exploreRoutinesState.otherRoutines[it].name,
+                    imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
+                    tags = exploreRoutinesState.otherRoutines[it].tags,
+                    rating = exploreRoutinesState.otherRoutines[it].rating,
                     modifier = Modifier.clickable {
-                        onItemClicked(otherRoutines[it].id)
+                        onItemClicked(exploreRoutinesState.otherRoutines[it].id)
                     }
                 )
             }

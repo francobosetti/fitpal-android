@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.fitpal_android.MainActivityViewModel
 import com.example.fitpal_android.data.repository.ExerciseRepository
+import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExerciseViewModel
 import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
+import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.mainScreen.MainScreenViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
 import com.example.fitpal_android.ui.screens.authentication.login.LoginViewModel
@@ -22,6 +24,7 @@ class ViewModelFactory constructor(
     private val sessionManager: SessionManager,
     private val userRepository: UserRepository,
     private val exerciseRepository: ExerciseRepository,
+    private val routineRepository: RoutineRepository,
 
     // Ids para los viewmodels que necesiten
     private val exerciseId: Int? = null,
@@ -51,6 +54,8 @@ class ViewModelFactory constructor(
             isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(userRepository =  userRepository)
             isAssignableFrom(ExercisesViewModel::class.java) -> ExercisesViewModel(exerciseRepository =  exerciseRepository)
             isAssignableFrom(DetailedExerciseViewModel::class.java) -> DetailedExerciseViewModel(exerciseRepository = exerciseRepository, exerciseId = exerciseId!!)
+            isAssignableFrom(ExploreRoutinesViewModel::class.java) -> ExploreRoutinesViewModel(routineRepository =  routineRepository)
+
 
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
