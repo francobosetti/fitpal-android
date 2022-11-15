@@ -9,15 +9,15 @@ class RoutineRemoteDataSource(
 ) : RemoteDataSource() {
 
     suspend fun getCurrentUserRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getOrderedCurrentUserRoutines(page, size, orderBy, direction) }
+        return handleApiResponse { apiRoutineService.getCurrentUserRoutines(page, size, orderBy, direction) }
     }
 
     suspend fun getRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getOrderedRoutines(page, size, orderBy, direction) }
+        return handleApiResponse { apiRoutineService.getRoutines(page, size, orderBy, direction) }
     }
 
     suspend fun getFavoriteRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getOrderedFavoriteRoutines(page, size, orderBy, direction) }
+        return handleApiResponse { apiRoutineService.getFavoriteRoutines(page, size, orderBy, direction) }
     }
 
     suspend fun addFavoriteRoutine(routineId: Int) {

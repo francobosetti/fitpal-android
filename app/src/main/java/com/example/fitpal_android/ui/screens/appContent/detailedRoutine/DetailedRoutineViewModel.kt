@@ -57,7 +57,7 @@ class DetailedRoutineViewModel(
             try {
                 routineRepository.rateRoutine(routineId, rating)
 
-                routineRepository.fetchRoutines()
+                //routineRepository.fetchRoutines()
                 val routine = routineRepository.getRoutine(routineId)
 
 
@@ -89,8 +89,8 @@ class DetailedRoutineViewModel(
                     routineRepository.addFavoriteRoutine(routineId)
                 }
 
-                routineRepository.fetchRoutines()
-                routineRepository.fetchFavoriteRoutines()
+                routineRepository.fetchRoutines(null, null)
+                routineRepository.fetchFavoriteRoutines(null, null)
 
                 val routine = routineRepository.getRoutine(routineId)
 

@@ -28,7 +28,7 @@ class ExploreRoutinesViewModel(
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true, error = "")
 
             try {
-                //routineRepository.fetchRoutines()
+                routineRepository.fetchRoutines(null, null)
                 val routines = routineRepository.getRoutines(null, null)
                 exploreRoutinesState = exploreRoutinesState.copy(
                     otherRoutines = routines,
