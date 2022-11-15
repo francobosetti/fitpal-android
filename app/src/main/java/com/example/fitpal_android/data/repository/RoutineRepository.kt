@@ -18,7 +18,7 @@ class RoutineRepository(
 
     //Constants for default ordering values
     private val defaultOrdering = "date"
-    private val defaultDirection = "asc"
+    private val defaultDirection = "asc" // TODO: CHECK
 
     // Mutex to make writes to cached values thread-safe.
     private val routineMutex = Mutex()
@@ -39,7 +39,7 @@ class RoutineRepository(
         val resp = handleParameters(orderBy, direction)
 
         // Get favorite routines from the network.
-        val favoriteRoutines = routineRemoteDataSource.getFavoriteRoutines(page, pageSize, resp.first, resp.second).content
+        val favoriteRoutines = routineRemoteDataSource.getFavoriteRoutines(page, pageSize).content
 
         routineMutex.lock()
 
@@ -85,8 +85,6 @@ class RoutineRepository(
     val favoriteRoutines = routineRemoteDataSource.getFavoriteRoutines(
             page,
             pageSize,
-            resp.first,
-            resp.second
         ).content.map { networkRoutine ->
             networkRoutine.id
         }

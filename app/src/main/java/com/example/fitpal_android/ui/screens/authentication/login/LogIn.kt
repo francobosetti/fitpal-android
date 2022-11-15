@@ -156,7 +156,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                     .height(50.dp)
                     .width(140.dp),
                 loading = formState.loading,
-                enabled = !formState.loading, //TODO VER EL ENABLED EN VIEW MODEL
+                enabled = !formState.loading,
                 color = Orange500,
                 progressColor = Color.White
             ) {

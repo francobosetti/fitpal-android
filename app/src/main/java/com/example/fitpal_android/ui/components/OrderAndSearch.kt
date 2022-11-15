@@ -91,7 +91,7 @@ private fun OrderByDropdown(
                 DropdownMenuItem(
                     onClick = {
                         selectedItem = selectedOption
-                        orderBy(selectedItem.lowercase(), "asc")
+                        orderBy(selectedItem.lowercase(), "desc") // TODO: check direction
                         expanded = false
                     }) {
                     Text(

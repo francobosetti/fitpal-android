@@ -306,7 +306,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
                     .height(50.dp)
                     .width(140.dp),
                 loading= signUpFormState.loading,
-                enabled = !signUpFormState.loading, //TODO VER EL ENABLED EN VIEW MODEL
+                enabled = !signUpFormState.loading,
                 color = Orange500,
                 progressColor = Color.White
             ) {

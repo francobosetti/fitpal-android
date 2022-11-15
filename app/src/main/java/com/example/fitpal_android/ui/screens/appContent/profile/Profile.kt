@@ -215,7 +215,7 @@ fun Profile(
                         .padding(16.dp)
                         .fillMaxWidth(),
                     loading = profileFormState.editLoading,
-                    enabled = !profileFormState.editLoading, //TODO VER EL ENABLED EN VIEW MODEL
+                    enabled = !profileFormState.editLoading,
                     color = Orange500,
                     progressColor = Color.White
                 ) {
