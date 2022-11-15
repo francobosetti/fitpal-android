@@ -25,7 +25,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 }
 
 @Composable
-fun getViewModelFactory(exerciseId: Int?, defaultArgs: Bundle? = null): ViewModelFactory {
+fun getViewModelFactory(id: Int?, defaultArgs: Bundle? = null): ViewModelFactory {
     val sessionManager = FitpalApplication.sessionManager
     val userRepository = FitpalApplication.userRepository
     val exerciseRepository = FitpalApplication.exerciseRepository
@@ -39,7 +39,7 @@ fun getViewModelFactory(exerciseId: Int?, defaultArgs: Bundle? = null): ViewMode
         routineRepository = routineRepository,
 
 
-        exerciseId = exerciseId,
+        id = id,
 
         owner = LocalSavedStateRegistryOwner.current,
         defaultArgs = defaultArgs

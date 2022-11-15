@@ -15,9 +15,9 @@ import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun MyRoutines(
-    onItemClicked: (Int) -> Unit
+    onItemClicked: (Int) -> Unit,
+    viewModel: MyRoutinesViewModel = viewModel(factory = getViewModelFactory())
 ) {
-    val viewModel = viewModel<MyRoutinesViewModel>(factory = getViewModelFactory() )
     val myRoutinesState = viewModel.myRoutinesState
 
     Surface(color = MaterialTheme.colors.background) {
@@ -32,7 +32,7 @@ fun MyRoutines(
                 RoutineCard(
                     name = myRoutinesState.myRoutines[it].name,
                     imageUrl = myRoutinesState.myRoutines[it].imageUrl,
-                    tags = myRoutinesState.myRoutines[it].tags,
+                    difficulty = myRoutinesState.myRoutines[it].difficulty,
                     rating = myRoutinesState.myRoutines[it].rating,
                     modifier = Modifier.clickable {
                         onItemClicked(myRoutinesState.myRoutines[it].id)

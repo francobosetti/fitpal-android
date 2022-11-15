@@ -16,9 +16,9 @@ import com.example.fitpal_android.util.getViewModelFactory
 @Composable
 fun DetailedExercise(
     exerciseId: Int?,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    viewModel: DetailedExerciseViewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory(exerciseId))
 ) {
-    val viewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory(exerciseId))
     val detailedExerciseState = viewModel.detailedExerciseState
 
     Surface(color = MaterialTheme.colors.background) {

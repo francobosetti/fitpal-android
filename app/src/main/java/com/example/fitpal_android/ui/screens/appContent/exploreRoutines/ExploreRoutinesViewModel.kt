@@ -20,10 +20,15 @@ class ExploreRoutinesViewModel(
     )
 
     init {
+        updateRoutines()
+    }
+
+    fun updateRoutines() {
         viewModelScope.launch {
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true, error = "")
 
             try {
+                routineRepository.fetchRoutines()
                 val routines = routineRepository.getRoutines()
                 exploreRoutinesState = exploreRoutinesState.copy(
                     otherRoutines = routines,

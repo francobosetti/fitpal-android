@@ -19,6 +19,10 @@ class MyRoutinesViewModel(
     )
 
     init {
+        updateRoutines()
+    }
+
+    fun updateRoutines() {
         viewModelScope.launch {
             myRoutinesState = myRoutinesState.copy(isFetching = true, error = "")
 

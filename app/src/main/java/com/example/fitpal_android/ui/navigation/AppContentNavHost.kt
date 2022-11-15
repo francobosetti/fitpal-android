@@ -3,6 +3,7 @@ package com.example.fitpal_android.ui.navigation
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,9 +17,13 @@ import com.example.fitpal_android.ui.screens.appContent.exercises.Exercises
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExercise
 import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutine
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutines
+import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutines
+import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutines
+import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.Profile
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun AppContentNavHost(
@@ -27,6 +32,12 @@ fun AppContentNavHost(
 ) {
 
     val currentContext = LocalContext.current
+
+    // View models for main routines screens TODO: nose si esto esta bien
+    val myRoutinesViewModel = viewModel<MyRoutinesViewModel>(factory = getViewModelFactory())
+    val favRoutinesViewModel = viewModel<FavRoutinesViewModel>(factory = getViewModelFactory())
+    val exploreRoutinesViewModel =
+        viewModel<ExploreRoutinesViewModel>(factory = getViewModelFactory())
 
     NavHost(navController = navController, startDestination = Screens.Exercises.route) {
 
@@ -41,23 +52,32 @@ fun AppContentNavHost(
 
         // Explore Routines
         composable(Screens.ExploreRoutines.route) {
-            ExploreRoutines(onItemClicked = { routineId ->
-                navController.navigate("DetailedRoutine/$routineId")
-            })
+            ExploreRoutines(
+                onItemClicked = { routineId ->
+                    navController.navigate("DetailedRoutine/$routineId")
+                },
+                viewModel = exploreRoutinesViewModel
+            )
         }
 
         // Favorite Routines
         composable(Screens.FavoriteRoutine.route) {
-            FavRoutines(onItemClicked = { routineId ->
-                navController.navigate("DetailedRoutine/$routineId")
-            })
+            FavRoutines(
+                onItemClicked = { routineId ->
+                    navController.navigate("DetailedRoutine/$routineId")
+                },
+                viewModel = favRoutinesViewModel
+            )
         }
 
         // My Routines
         composable(Screens.Routines.route) {
-            MyRoutines(onItemClicked = { routineId ->
-                navController.navigate("DetailedRoutine/$routineId")
-            })
+            MyRoutines(
+                onItemClicked = { routineId ->
+                    navController.navigate("DetailedRoutine/$routineId")
+                },
+                viewModel = myRoutinesViewModel
+            )
         }
 
         // Profile
@@ -112,10 +132,14 @@ fun AppContentNavHost(
                     currentContext.startActivity(shareIntent)
                 },
                 onFavoritePressed = {
-                    // TODO: implementar favoritos
+                    myRoutinesViewModel.updateRoutines()
+                    exploreRoutinesViewModel.updateRoutines()
+                    favRoutinesViewModel.updateRoutines()
                 },
-                onRatingSubmit = { routineId, rating ->
-                    // TODO: impementar submit ratings
+                onRatingSubmit = {
+                    myRoutinesViewModel.updateRoutines()
+                    exploreRoutinesViewModel.updateRoutines()
+                    favRoutinesViewModel.updateRoutines()
                 }
             )
         }

@@ -25,10 +25,11 @@ import com.example.fitpal_android.R
 fun DetailedRoutineCard(
     name: String,
     description: String,
-    tags: List<String>,
+    difficulty: String,
     videoUrl: String,
     modifier: Modifier,
     rating: Double,
+    userRating: Double?,
     isFavorite: Boolean,
     onStartPressedCallback: () -> Unit,
     onSharePressedCallback: () -> Unit,
@@ -36,7 +37,7 @@ fun DetailedRoutineCard(
     onRatingSubmitCallback: (Double) -> Unit
 ) {
     var showPopup by remember { mutableStateOf(false) }
-    var selectedRating by remember { mutableStateOf(0.0) }
+    var selectedRating by remember { mutableStateOf(userRating ?: 0.0) }
 
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -116,37 +117,21 @@ fun DetailedRoutineCard(
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             )
 
-            // Essence of the routine
+            // difficulty of the routine
             Text(
-                text = stringResource(R.string.essence_routine_title),
+                text = stringResource(R.string.difficulty_title),
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
             )
 
-            // Shows tags in a checklist
-            Column {
-                tags.forEach { tag ->
-                    // Tag
-                    Row {
-                        // Check icon
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Check icon",
-                            tint = MaterialTheme.colors.primary,
-                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
-                        )
+            Text(
+                text = difficulty,
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
+            )
 
-                        // Tag text
-                        Text(
-                            text = tag,
-                            style = MaterialTheme.typography.body1,
-                            color = MaterialTheme.colors.onPrimary,
-                            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
-                        )
-                    }
-                }
-            }
 
             // Rating
             RatingRow(
@@ -187,7 +172,7 @@ fun DetailedRoutineCard(
                             // Rating options
                             RatingRow(
                                 rating = selectedRating,
-                                onRatingPressed = { onRatingSubmitCallback(selectedRating) },
+                                onRatingPressed = { onRatingSubmitCallback(selectedRating); showPopup = false },
                                 onStarPressed = { rating -> selectedRating = rating },
                                 starPressable = true
                             )
