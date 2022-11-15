@@ -1,10 +1,7 @@
 package com.example.fitpal_android.data.remote.api
 
 import com.example.fitpal_android.data.remote.model.NetworkPagedContent
-import com.example.fitpal_android.data.remote.model.routine.NetworkCycle
-import com.example.fitpal_android.data.remote.model.routine.NetworkCycleExercise
-import com.example.fitpal_android.data.remote.model.routine.NetworkReview
-import com.example.fitpal_android.data.remote.model.routine.NetworkRoutine
+import com.example.fitpal_android.data.remote.model.routine.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -16,13 +13,13 @@ interface ApiRoutineService {
     @GET("routines")
     suspend fun getRoutines(@Query("page") page: Int, @Query("size") size: Int): Response<NetworkPagedContent<NetworkRoutine>>
 
-    @GET("favorites")
+    @GET("favourites")
     suspend fun getFavoriteRoutines(@Query("page") page: Int, @Query("size") size: Int): Response<NetworkPagedContent<NetworkRoutine>>
 
-    @POST("favorites/{routineId}")
+    @POST("favourites/{routineId}")
     suspend fun addFavoriteRoutine(@Path("routineId") routineId: Int): Response<Unit>
 
-    @DELETE("favorites/{routineId}")
+    @DELETE("favourites/{routineId}")
     suspend fun removeFavoriteRoutine(@Path("routineId") routineId: Int): Response<Unit>
 
     @GET("routines/{routineId}/cycles")
@@ -31,10 +28,10 @@ interface ApiRoutineService {
     @GET("cycles/{cycleId}/exercises")
     suspend fun getCycleExercises(@Path("cycleId") cycleId: Int): Response<NetworkPagedContent<NetworkCycleExercise>>
 
-    @GET("/reviews/{routineId}")
-    suspend fun getRoutineReviews(@Path("routineId") routineId: Int): Response<NetworkPagedContent<NetworkReview>>
+    @GET("reviews/{routineId}")
+    suspend fun getRoutineReviews(@Path("routineId") routineId: Int): Response<NetworkPagedContent<NetworkReviewResponse>>
 
-    @POST("/reviews/{routineId}")
-    suspend fun addRoutineReview(@Path("routineId") routineId: Int, @Body review: NetworkReview): Response<Unit>
+    @POST("reviews/{routineId}")
+    suspend fun addRoutineReview(@Path("routineId") routineId: Int, @Body review: NetworkReviewBody): Response<Unit>
 
 }

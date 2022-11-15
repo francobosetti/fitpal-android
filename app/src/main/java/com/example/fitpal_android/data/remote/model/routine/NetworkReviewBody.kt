@@ -2,9 +2,9 @@ package com.example.fitpal_android.data.remote.model.routine
 
 import com.google.gson.annotations.SerializedName
 
-class NetworkReview(
+class NetworkReviewBody(
     @SerializedName("score")
-    val score: Int,
+    val score: Double,
     @SerializedName("review")
     val review: String
 )

@@ -2,10 +2,7 @@ package com.example.fitpal_android.data.remote
 
 import com.example.fitpal_android.data.remote.api.ApiRoutineService
 import com.example.fitpal_android.data.remote.model.NetworkPagedContent
-import com.example.fitpal_android.data.remote.model.routine.NetworkCycle
-import com.example.fitpal_android.data.remote.model.routine.NetworkCycleExercise
-import com.example.fitpal_android.data.remote.model.routine.NetworkReview
-import com.example.fitpal_android.data.remote.model.routine.NetworkRoutine
+import com.example.fitpal_android.data.remote.model.routine.*
 
 class RoutineRemoteDataSource(
     private val apiRoutineService: ApiRoutineService
@@ -39,15 +36,15 @@ class RoutineRemoteDataSource(
         return handleApiResponse { apiRoutineService.getCycleExercises(cycleId) }
     }
 
-    suspend fun getRoutineReviews(routineId: Int): NetworkPagedContent<NetworkReview> {
+    suspend fun getRoutineReviews(routineId: Int): NetworkPagedContent<NetworkReviewResponse> {
         return handleApiResponse { apiRoutineService.getRoutineReviews(routineId) }
     }
 
-    suspend fun addRoutineReview(routineId: Int, review: Int) {
+    suspend fun addRoutineReview(routineId: Int, review: Double) {
         return handleApiResponse {
             apiRoutineService.addRoutineReview(
                 routineId,
-                NetworkReview(review, "")
+                NetworkReviewBody(review, "")
             )
         }
 
