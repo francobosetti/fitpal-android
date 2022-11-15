@@ -115,9 +115,6 @@ fun AppContentNavHost(
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de rutinas
 
             DetailedRoutine(it.arguments?.getInt("routineId"),
-                onBackPressed = {
-                    navController.popBackStack()
-                },
                 onStartPressed = { routineId ->
                     navController.navigate("ExecRoutine/$routineId")
                 },

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,7 +22,6 @@ import com.example.fitpal_android.util.getViewModelFactory
 @Composable
 fun DetailedRoutine(
     routineId: Int?,
-    onBackPressed: () -> Unit,
     onStartPressed: (Int?) -> Unit,
     onSharePressed: (Int?) -> Unit,
     onFavoritePressed: () -> Unit,
@@ -64,14 +64,9 @@ fun DetailedRoutine(
 
     Surface(color = MaterialTheme.colors.background) {
 
-        Column {
-            // Back button
-            IconButton(onClick = { onBackPressed() }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
+        Column(
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
 
             if (routineId != null && detailedRoutineState.routine != null) {
                 detailedRoutineState.routine

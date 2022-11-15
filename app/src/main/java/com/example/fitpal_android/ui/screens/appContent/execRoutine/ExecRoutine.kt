@@ -43,15 +43,6 @@ fun ExecRoutine(
                 .fillMaxHeight(),
         ) {
             Row{
-                IconButton(onClick = { onBackPressed() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(R.string.back),
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-            }
-            Row{
                 Text(
                     text = viewModel.getCurrentExercise().name,
                     modifier = Modifier
