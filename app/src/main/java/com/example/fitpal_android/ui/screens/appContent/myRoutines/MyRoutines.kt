@@ -11,13 +11,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.TopOrderAndSearch
 import com.example.fitpal_android.ui.components.cards.RoutineCard
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun MyRoutines(
     onItemClicked: (Int) -> Unit
 ) {
-    val viewModel = viewModel<MyRoutinesViewModel>()
-    val myRoutines = viewModel.getMyRoutines()
+    val viewModel = viewModel<MyRoutinesViewModel>(factory = getViewModelFactory() )
+    val myRoutinesState = viewModel.myRoutinesState
 
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn(
@@ -27,14 +28,14 @@ fun MyRoutines(
            item {
                TopOrderAndSearch()
            }
-            items(myRoutines.size) {
+            items(myRoutinesState.myRoutines.size) {
                 RoutineCard(
-                    name = myRoutines[it].name,
-                    imageUrl = myRoutines[it].imageUrl,
-                    tags = myRoutines[it].tags,
-                    rating = myRoutines[it].rating,
+                    name = myRoutinesState.myRoutines[it].name,
+                    imageUrl = myRoutinesState.myRoutines[it].imageUrl,
+                    tags = myRoutinesState.myRoutines[it].tags,
+                    rating = myRoutinesState.myRoutines[it].rating,
                     modifier = Modifier.clickable {
-                        onItemClicked(myRoutines[it].id)
+                        onItemClicked(myRoutinesState.myRoutines[it].id)
                     }
                 )
             }

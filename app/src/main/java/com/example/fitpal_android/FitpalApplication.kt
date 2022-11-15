@@ -13,29 +13,36 @@ import com.example.fitpal_android.util.SessionManager
 
 class FitpalApplication : Application() {
 
-    // -------- REMOTE DATA SOURCES --------
-    private val userRemoteDataSource: UserRemoteDataSource
-        get() = UserRemoteDataSource(sessionManager, RetrofitClient.getApiUserService(this))
+    // Initialize repositories when application starts
+    override fun onCreate() {
+        super.onCreate()
 
-    private val exerciseRemoteDataSource: ExerciseRemoteDataSource
-        get() = ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this))
+        sessionManager = SessionManager(this)
 
-    private val routineRemoteDataSource: RoutineRemoteDataSource
-        get() = RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this))
-
-    // -------- REPOSITORIES --------
-    val userRepository: UserRepository
-        get() = UserRepository(userRemoteDataSource, sessionManager)
-
-    val exerciseRepository: ExerciseRepository
-        get() = ExerciseRepository(exerciseRemoteDataSource)
-
-    val routineRepository: RoutineRepository
-        get() = RoutineRepository(routineRemoteDataSource, exerciseRemoteDataSource)
+        userRemoteDataSource = UserRemoteDataSource(sessionManager, RetrofitClient.getApiUserService(this))
+        exerciseRemoteDataSource = ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this))
+        routineRemoteDataSource = RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this))
 
 
-    // -------- OTHERS --------
-    val sessionManager: SessionManager
-        get() = SessionManager(this)
+        userRepository = UserRepository(userRemoteDataSource, sessionManager)
+        exerciseRepository = ExerciseRepository(ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this)))
+        routineRepository = RoutineRepository(RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this)), exerciseRemoteDataSource)
 
+    }
+
+    // Access repositories from anywhere in the app
+    companion object {
+        // -------- OTHERS --------
+        lateinit var sessionManager: SessionManager
+
+        // -------- REPOSITORIES --------
+        lateinit var userRepository: UserRepository
+        lateinit var exerciseRepository: ExerciseRepository
+        lateinit var routineRepository: RoutineRepository
+
+        // -------- REMOTE DATA SOURCES --------
+        private lateinit var userRemoteDataSource: UserRemoteDataSource
+        private lateinit var exerciseRemoteDataSource: ExerciseRemoteDataSource
+        private lateinit var routineRemoteDataSource: RoutineRemoteDataSource
+    }
 }
