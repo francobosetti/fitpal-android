@@ -27,7 +27,7 @@ fun FavRoutines(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
-                TopOrderAndSearch()
+                TopOrderAndSearch { order: String, dir: String -> viewModel.orderBy(order, dir) }
             }
             items(favRoutinesState.favRoutines.size) {
                 RoutineCard(

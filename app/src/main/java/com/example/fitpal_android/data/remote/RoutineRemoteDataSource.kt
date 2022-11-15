@@ -11,16 +11,16 @@ class RoutineRemoteDataSource(
     private val apiRoutineService: ApiRoutineService
 ) : RemoteDataSource() {
 
-    suspend fun getCurrentUserRoutines(page: Int, size: Int): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getCurrentUserRoutines(page, size) }
+    suspend fun getCurrentUserRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
+        return handleApiResponse { apiRoutineService.getOrderedCurrentUserRoutines(page, size, orderBy, direction) }
     }
 
-    suspend fun getRoutines(page: Int, size: Int): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getRoutines(page, size) }
+    suspend fun getRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
+        return handleApiResponse { apiRoutineService.getOrderedRoutines(page, size, orderBy, direction) }
     }
 
-    suspend fun getFavoriteRoutines(page: Int, size: Int): NetworkPagedContent<NetworkRoutine> {
-        return handleApiResponse { apiRoutineService.getFavoriteRoutines(page, size) }
+    suspend fun getFavoriteRoutines(page: Int, size: Int, orderBy : String, direction : String): NetworkPagedContent<NetworkRoutine> {
+        return handleApiResponse { apiRoutineService.getOrderedFavoriteRoutines(page, size, orderBy, direction) }
     }
 
     suspend fun addFavoriteRoutine(routineId: Int) {

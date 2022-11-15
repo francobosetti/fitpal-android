@@ -10,15 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.fitpal_android.R
+import kotlinx.coroutines.Job
+import java.util.*
 
 @Composable
-fun TopOrderAndSearch(){
+fun TopOrderAndSearch(
+    orderBy: (String, String) -> Unit,
+){
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        OrderByDropdown()
+        OrderByDropdown(orderBy)
         //TODO: Agregar pop-up para busqueda avanzada
         IconButton(
             onClick = { }) {
@@ -36,7 +40,9 @@ fun TopOrderAndSearch(){
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun OrderByDropdown() {
+private fun OrderByDropdown(
+    orderBy : (String, String) -> Unit,
+) {
 
     val listItems = arrayOf(
         stringResource(R.string.date),
@@ -83,9 +89,9 @@ private fun OrderByDropdown() {
             listItems.forEach { selectedOption ->
                 // menu item
                 DropdownMenuItem(
-                    //TODO: agregar comportamiento de ordenamiento en onClick
                     onClick = {
                         selectedItem = selectedOption
+                        orderBy(selectedItem.lowercase(), "asc")
                         expanded = false
                     }) {
                     Text(

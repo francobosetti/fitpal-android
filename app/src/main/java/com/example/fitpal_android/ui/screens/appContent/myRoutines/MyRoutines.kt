@@ -26,7 +26,7 @@ fun MyRoutines(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
            item {
-               TopOrderAndSearch()
+               TopOrderAndSearch { order: String, dir: String -> viewModel.orderBy(order, dir) }
            }
             items(myRoutinesState.myRoutines.size) {
                 RoutineCard(

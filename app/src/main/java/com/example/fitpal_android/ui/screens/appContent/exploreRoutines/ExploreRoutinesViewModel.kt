@@ -24,7 +24,8 @@ class ExploreRoutinesViewModel(
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true, error = "")
 
             try {
-                val routines = routineRepository.getRoutines()
+                //val routines = routineRepository.getRoutines(exploreRoutinesState.orderBy, exploreRoutinesState.direction)
+                val routines = routineRepository.getRoutines(null, null)
                 exploreRoutinesState = exploreRoutinesState.copy(
                     otherRoutines = routines,
                     isFetching = false,
@@ -36,6 +37,13 @@ class ExploreRoutinesViewModel(
                     error = e.message ?: "Unknown error"
                 )
             }
+        }
+    }
+
+    fun orderBy(orderBy: String, direction: String) {
+        viewModelScope.launch {
+            val routines = routineRepository.getRoutines(orderBy, direction)
+            exploreRoutinesState = exploreRoutinesState.copy(otherRoutines = routines)
         }
     }
 }

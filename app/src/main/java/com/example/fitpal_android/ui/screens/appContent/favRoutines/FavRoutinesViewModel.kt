@@ -23,9 +23,8 @@ class FavRoutinesViewModel(
     init {
         viewModelScope.launch {
             favRoutinesState = favRoutinesState.copy(isFetching = true, error = "")
-
             try {
-                val routines = routineRepository.getFavoriteRoutines()
+                val routines = routineRepository.getFavoriteRoutines(null, null)
                 favRoutinesState = favRoutinesState.copy(
                     favRoutines = routines,
                     isFetching = false,
@@ -37,6 +36,13 @@ class FavRoutinesViewModel(
                     error = e.message ?: "Unknown error"
                 )
             }
+        }
+    }
+
+    fun orderBy(orderBy: String, direction: String) {
+        viewModelScope.launch {
+            val routines = routineRepository.getFavoriteRoutines(orderBy, direction)
+            favRoutinesState = favRoutinesState.copy(favRoutines = routines)
         }
     }
 }
