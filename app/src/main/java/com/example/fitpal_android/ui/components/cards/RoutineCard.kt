@@ -60,72 +60,22 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
 
 
                 Row(
+                    modifier = Modifier.padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-
-
                     Text(
                         text = rating.toString(),
-                        textAlign = TextAlign.End,
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.body2,
                         color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier.padding(8.dp)
                     )
-                    // Routine rating
-                    // 5 stars (1 star = 1 rating)
-                    Row(
+                    Icon(
+                        Icons.Filled.Star,
+                        contentDescription = "Star",
+                        tint = MaterialTheme.colors.primary,
                         modifier = Modifier
-                            .padding(bottom = 8.dp, top = 8.dp, end = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        // Star 1
-
-
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = "Star 1",
-                            tint = if (rating >= 1) MaterialTheme.colors.primary else MaterialTheme.colors.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(15.dp)
-                        )
-                        // Star 2
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = "Star 2",
-                            tint = if (rating >= 2) MaterialTheme.colors.primary else MaterialTheme.colors.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(15.dp)
-                        )
-                        // Star 3
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = "Star 3",
-                            tint = if (rating >= 3) MaterialTheme.colors.primary else MaterialTheme.colors.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(15.dp)
-                        )
-                        // Star 4
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = "Star 4",
-                            tint = if (rating >= 4) MaterialTheme.colors.primary else MaterialTheme.colors.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(15.dp)
-                        )
-                        // Star 5
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = "Star 5",
-                            tint = if (rating >= 5) MaterialTheme.colors.primary else MaterialTheme.colors.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(15.dp)
-                        )
-                    }
+                            .padding(4.dp)
+                            .size(15.dp)
+                    )
                 }
             }
 
@@ -134,22 +84,8 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
                 text = difficulty,
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
             )
-
-            // Routine description
-            /*Text(
-                text = "Description",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(8.dp)
-            )
-            Text(
-                text = description,
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-            )*/
         }
     }
 }
