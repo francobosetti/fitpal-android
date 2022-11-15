@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -64,7 +65,7 @@ fun DetailedRoutineCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .padding(bottom = 8.dp, start = 12.dp, end = 12.dp)
+                    .padding(start = 12.dp, end = 12.dp)
                     .fillMaxWidth()
             ) {
                 // Routine name
@@ -103,6 +104,26 @@ fun DetailedRoutineCard(
                 }
             }
 
+
+            Row(
+                modifier = Modifier.padding(start = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = rating.toString(),
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onPrimary,
+                )
+                Icon(
+                    Icons.Filled.Star,
+                    contentDescription = "Star",
+                    tint = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .size(15.dp)
+                )
+            }
+
             // Routine description
             Text(
                 text = stringResource(R.string.description_title),
@@ -134,12 +155,28 @@ fun DetailedRoutineCard(
 
 
             // Rating
+            /*
             RatingRow(
                 rating = rating,
                 onRatingPressed = { showPopup = true },
                 onStarPressed = { },
                 starPressable = false
             )
+             */
+
+            // Rating text button
+            TextButton(
+                onClick = { showPopup = true },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.rating_button_text),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.body1,
+                    textDecoration = TextDecoration.Underline,
+                    color = MaterialTheme.colors.primary,
+                )
+            }
 
 
             // Start routine button
