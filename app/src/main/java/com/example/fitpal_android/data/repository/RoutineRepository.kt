@@ -17,6 +17,7 @@ class RoutineRepository(
     // Mutex to make writes to cached values thread-safe.
     private val routineMutex = Mutex()
     private val favoriteRoutineMutex = Mutex()
+    private val currentRoutineMutex = Mutex()
 
     // Cache of the latest routines got from the network.
     private var routines: List<Routine> = emptyList()
@@ -63,7 +64,7 @@ class RoutineRepository(
 
     // Fetches the latest user routines from the network.
     suspend fun fetchCurrentUserRoutines() {
-        favoriteRoutineMutex.lock()
+        currentRoutineMutex.lock()
 
         val currentUserRoutines = routineRemoteDataSource.getCurrentUserRoutines(page, pageSize).content.map { networkRoutine ->
             networkRoutine.id
@@ -71,7 +72,7 @@ class RoutineRepository(
 
         this.userRoutines = currentUserRoutines
 
-        favoriteRoutineMutex.unlock()
+        currentRoutineMutex.unlock()
     }
 
     // Returns the cached routines.
@@ -85,6 +86,10 @@ class RoutineRepository(
 
     // Returns the cached favorite routines.
     suspend fun getFavoriteRoutines(): List<Routine> {
+        if (routines.isEmpty()) {
+            fetchRoutines()
+        }
+
         if (favoriteRoutines.isEmpty()) {
             fetchFavoriteRoutines()
         }
@@ -95,6 +100,10 @@ class RoutineRepository(
 
     // Returns the cached user routines.
     suspend fun getCurrentUserRoutines(): List<Routine> {
+        if (routines.isEmpty()) {
+            fetchRoutines()
+        }
+
         if (userRoutines.isEmpty()) {
             fetchCurrentUserRoutines()
         }
