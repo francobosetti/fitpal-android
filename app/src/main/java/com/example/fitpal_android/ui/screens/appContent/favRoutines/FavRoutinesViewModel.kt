@@ -21,6 +21,10 @@ class FavRoutinesViewModel(
     )
 
     init {
+        updateRoutines()
+    }
+
+    fun updateRoutines() {
         viewModelScope.launch {
             favRoutinesState = favRoutinesState.copy(isFetching = true, error = "")
             try {

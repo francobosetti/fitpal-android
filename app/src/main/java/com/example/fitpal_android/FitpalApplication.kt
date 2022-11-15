@@ -26,7 +26,7 @@ class FitpalApplication : Application() {
 
         userRepository = UserRepository(userRemoteDataSource, sessionManager)
         exerciseRepository = ExerciseRepository(ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this)))
-        routineRepository = RoutineRepository(RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this)), exerciseRemoteDataSource)
+        routineRepository = RoutineRepository(RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this)), exerciseRemoteDataSource, userRemoteDataSource)
 
     }
 

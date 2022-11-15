@@ -19,9 +19,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ExploreRoutines(
-    onItemClicked: (Int) -> Unit
+    onItemClicked: (Int) -> Unit,
+    viewModel: ExploreRoutinesViewModel = viewModel(factory = getViewModelFactory())
 ) {
-    val viewModel = viewModel<ExploreRoutinesViewModel>(factory = getViewModelFactory() )
     val exploreRoutinesState = viewModel.exploreRoutinesState
 
     Surface(color = MaterialTheme.colors.background) {
@@ -36,8 +36,8 @@ fun ExploreRoutines(
                 RoutineCard(
                     name = exploreRoutinesState.otherRoutines[it].name,
                     imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
-                    tags = exploreRoutinesState.otherRoutines[it].tags,
                     rating = exploreRoutinesState.otherRoutines[it].rating,
+                    difficulty = exploreRoutinesState.otherRoutines[it].difficulty,
                     modifier = Modifier.clickable {
                         onItemClicked(exploreRoutinesState.otherRoutines[it].id)
                     }

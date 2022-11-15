@@ -8,6 +8,7 @@ class Routine(
     val description: String,
     val imageUrl: String,
     var rating: Double,
-    val tags: List<String>,
+    val difficulty: String,
     val cycles: List<Cycle>,
+    val isFavorite: Boolean,
 )

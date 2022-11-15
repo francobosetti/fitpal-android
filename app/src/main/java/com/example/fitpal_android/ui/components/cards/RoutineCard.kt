@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 // It shows a routine image, the name of the routine, the routine description and the routine rating (stars)
 
 @Composable
-fun RoutineCard(name: String, tags: List<String>, imageUrl: String, rating: Double, modifier: Modifier) {
+fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Double, modifier: Modifier) {
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(12.dp),
@@ -129,16 +129,13 @@ fun RoutineCard(name: String, tags: List<String>, imageUrl: String, rating: Doub
                 }
             }
 
-
-            // Exercise tags
-            Row(
-                modifier = Modifier.padding(bottom = 8.dp)
-            ) {
-                tags.forEach { tag ->
-                    // Tag
-                    BuildChip(label = tag)
-                }
-            }
+            // Routine difficulty
+            Text(
+                text = difficulty,
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.onPrimary,
+                modifier = Modifier.padding(8.dp)
+            )
 
             // Routine description
             /*Text(
