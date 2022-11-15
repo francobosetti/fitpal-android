@@ -34,7 +34,7 @@ class RoutineRepository(
             val routineCycles = routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
 
                 val cycleExercises = routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
-                    val videoUrl = exerciseRemoteDataSource.getExerciseVideo(networkCycleExercise.exercise.id).content[0].url
+                    val videoUrl = exerciseRemoteDataSource.getExerciseVideo(networkCycleExercise.exercise.id).content.first().url
 
                     networkCycleExercise.asModel(videoUrl)
                 }
