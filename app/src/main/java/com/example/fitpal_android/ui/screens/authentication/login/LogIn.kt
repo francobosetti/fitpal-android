@@ -107,7 +107,7 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
             )
             formState.emailError?.let {
                 Text(
-                    text = formState.emailError,
+                    text = stringResource(formState.emailError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )

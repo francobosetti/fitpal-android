@@ -1,17 +1,19 @@
 package com.example.fitpal_android.domain.use_case
 
+import com.example.fitpal_android.R
+
 class ValidateVerificationCode {
     fun execute(verificationCode: String) : ValidationResult{
         if(verificationCode.isBlank()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Code can not be black"
+                errorMessage = R.string.code_not_blank
             )
         }
         if(verificationCode.length != 6) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Code must be 6 characters long"
+                errorMessage = R.string.code_6_long
             )
         }
 

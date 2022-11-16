@@ -52,4 +52,20 @@
     <string name="verification_code">Codigo de Verificación</string>
     <string name="resend_code">Reenviar Codigo</string>
     <string name="difficulty_title">Dificultad</string>
+    <string name="code_not_blank">El codigo no puede estar vacio</string>
+    <string name="code_6_long">El codigo debe tener 6 caracteres</string>
+    <string name="pass_empty">La contraseña no puede estar vacia</string>
+    <string name="pass_8_char">La contraseña debe contener al menos 8 caracteres</string>
+    <string name="pass_parameters">La contraseña debe contener al menos un numero, una minuscula y una mayuscula</string>
+    <string name="lastname_empty">El apellido no puede estar vacio</string>
+    <string name="lastName_leters">El apellido debe contener solo letras</string>
+    <string name="firstName_empty">El nombre no puede estar vacio</string>
+    <string name="firstName_leters">El nombre puede contener solo letras</string>
+    <string name="email_empty">El correo no puede estar vacio</string>
+    <string name="email_format">Correo invalido</string>
+    <string name="pass_notMatch">Las contraseñas no coinciden</string>
+    <string name="verif_sent">Codigo de verificación enviado</string>
+    <string name="error_log_in">Error iniciando sesion</string>
+    <string name="error_resend_verif">Error al reenviar verificación de email</string>
+    <string name="error_verify_mail">Error verificando email</string>
 </resources>

@@ -79,7 +79,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
 
             verifyFormState.verificationCodeError?.let {
                 Text(
-                    text = verifyFormState.verificationCodeError,
+                    text = stringResource(verifyFormState.verificationCodeError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )

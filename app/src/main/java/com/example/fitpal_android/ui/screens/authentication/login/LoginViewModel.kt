@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.R
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateEmail
 import com.example.fitpal_android.ui.screens.ValidationEvent
@@ -65,7 +66,8 @@ class LoginViewModel(
 
                 // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
                 loginFormState = loginFormState.copy(
-                    emailError = e.message //TODO: Usar otra variable (esta es la del email)
+                    emailError = R.string.error_log_in
+                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
 
             }

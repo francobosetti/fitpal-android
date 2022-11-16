@@ -117,7 +117,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
             )
             signUpFormState.firstnameError?.let {
                 Text(
-                    text = signUpFormState.firstnameError,
+                    text = stringResource(signUpFormState.firstnameError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )
@@ -155,7 +155,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
             )
             signUpFormState.lastnameError?.let {
                 Text(
-                    text = signUpFormState.lastnameError,
+                    text = stringResource(signUpFormState.lastnameError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )
@@ -194,7 +194,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
 
             signUpFormState.emailError?.let {
                 Text(
-                    text = signUpFormState.emailError,
+                    text = stringResource(signUpFormState.emailError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )
@@ -239,7 +239,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
 
             signUpFormState.passwordError?.let {
                 Text(
-                    text = signUpFormState.passwordError,
+                    text = stringResource(signUpFormState.passwordError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )
@@ -282,7 +282,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
 
             signUpFormState.confirmPasswordError?.let {
                 Text(
-                    text = signUpFormState.confirmPasswordError,
+                    text = stringResource(signUpFormState.confirmPasswordError),
                     color = MaterialTheme.colors.error,
                     modifier = Modifier.align(Alignment.End)
                 )

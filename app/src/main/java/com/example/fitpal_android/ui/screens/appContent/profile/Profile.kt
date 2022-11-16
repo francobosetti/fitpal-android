@@ -131,7 +131,7 @@ fun Profile(
                     )
                     profileFormState.firstnameError?.let {
                         Text(
-                            text = profileFormState.firstnameError,
+                            text = stringResource(profileFormState.firstnameError),
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )
@@ -159,7 +159,7 @@ fun Profile(
                     )
                     profileFormState.lastnameError?.let {
                         Text(
-                            text = profileFormState.lastnameError,
+                            text = stringResource(profileFormState.lastnameError),
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )
@@ -199,7 +199,7 @@ fun Profile(
                     )
                     profileFormState.avatarUrlError?.let {
                         Text(
-                            text = profileFormState.avatarUrlError,
+                            text = stringResource(profileFormState.avatarUrlError),
                             color = MaterialTheme.colors.error,
                             modifier = Modifier.align(Alignment.End)
                         )

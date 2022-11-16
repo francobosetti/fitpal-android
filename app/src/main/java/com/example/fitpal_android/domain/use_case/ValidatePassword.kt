@@ -1,17 +1,19 @@
 package com.example.fitpal_android.domain.use_case
 
+import com.example.fitpal_android.R
+
 class ValidatePassword {
     fun execute(password: String) : ValidationResult {
         if(password.isBlank()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "The password cant be empty" // TODO: make spanish version
+                errorMessage = R.string.pass_empty
             )
         }
         if(password.length < 8) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "The password must contain at least 8 characters" // TODO: make spanish version
+                errorMessage = R.string.pass_8_char
             )
         }
         val containsUpperAndLowerAndDigit = password.any { it.isDigit()} &&
@@ -20,7 +22,7 @@ class ValidatePassword {
         if(!containsUpperAndLowerAndDigit) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "The password must contain at least a number an uppercase letter and a lowecase letter" // TODO: make spanish version
+                errorMessage = R.string.pass_parameters
             )
         }
         return ValidationResult(

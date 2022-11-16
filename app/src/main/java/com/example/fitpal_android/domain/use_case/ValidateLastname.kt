@@ -1,18 +1,20 @@
 package com.example.fitpal_android.domain.use_case
 
+import com.example.fitpal_android.R
+
 class ValidateLastname {
     fun execute(lastname: String) : ValidationResult {
         if(lastname.isBlank()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Lastname can't be empty" // TODO: make spanish version
+                errorMessage = R.string.lastname_empty
             )
         }
         val containsOnlyLetters = lastname.all { it.isLetter() }
         if(!containsOnlyLetters) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Lastname must contain letters only" // TODO: make spanish version
+                errorMessage = R.string.lastName_leters
             )
         }
         return ValidationResult(

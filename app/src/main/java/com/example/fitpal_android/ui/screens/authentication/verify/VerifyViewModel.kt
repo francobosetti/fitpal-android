@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.R
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ValidateVerificationCode
 import com.example.fitpal_android.ui.screens.ValidationEvent
@@ -71,7 +72,8 @@ class VerifyViewModel(
                 validationEventChannel.send(ValidationEvent.Success)
             } catch (e: Exception) {
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = e.message,
+                    verificationCodeError = R.string.error_verify_mail
+                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
             }
         }
@@ -82,11 +84,12 @@ class VerifyViewModel(
             try {
                 userRepository.resendVerification(email)
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = "Verification code sent",
+                    verificationCodeError = R.string.verif_sent,
                 )
             } catch (e: Exception) {
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = e.message
+                    verificationCodeError = R.string.error_resend_verif
+                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
             }
         }

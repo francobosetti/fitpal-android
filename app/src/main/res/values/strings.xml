@@ -52,4 +52,20 @@
     <string name="verification_code">Verification code</string>
     <string name="resend_code">Resend Code</string>
     <string name="difficulty_title">Difficulty</string>
+    <string name="code_not_blank">Code can not be blank</string>
+    <string name="code_6_long">Code must be 6 characters long</string>
+    <string name="pass_empty">The password cant be empty</string>
+    <string name="pass_8_char">The password must contain at least 8 characters</string>
+    <string name="pass_parameters">The password must contain at least a number an uppercase letter and a lowecase letter</string>
+    <string name="lastname_empty">Lastname can\'t be empty</string>
+    <string name="lastName_leters">Lastname must contain letters only</string>
+    <string name="firstName_empty">Firstname can\'t be empty</string>
+    <string name="firstName_leters">Firstname must contain letters only</string>
+    <string name="email_empty">The email can\'t be blank</string>
+    <string name="email_format">Invalid email</string>
+    <string name="pass_notMatch">The passwords do not match</string>
+    <string name="verif_sent">Verification code sent</string>
+    <string name="error_log_in">Error Loggin In</string>
+    <string name="error_resend_verif">Error when resending verification</string>
+    <string name="error_verify_mail">Error verifying mail</string>
 </resources>
