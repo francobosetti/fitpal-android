@@ -16,6 +16,10 @@ class RoutineRemoteDataSource(
         return handleApiResponse { apiRoutineService.getRoutines(page, size, orderBy, direction) }
     }
 
+    suspend fun getRoutine(routineId: Int): NetworkRoutine {
+        return handleApiResponse { apiRoutineService.getRoutine(routineId) }
+    }
+
     suspend fun getFavoriteRoutines(page: Int, size: Int): NetworkPagedContent<NetworkRoutine> {
         return handleApiResponse { apiRoutineService.getFavoriteRoutines(page, size) }
     }

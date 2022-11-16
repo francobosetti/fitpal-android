@@ -1,5 +1,6 @@
 package com.example.fitpal_android.ui.screens.appContent.detailedRoutine
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -57,9 +58,10 @@ class DetailedRoutineViewModel(
             try {
                 routineRepository.rateRoutine(routineId, rating)
 
-                //routineRepository.fetchRoutines()
+                routineRepository.fetchRoutine(routineId)
                 val routine = routineRepository.getRoutine(routineId)
 
+                Log.d("Routine", routine.rating.toString())
 
                 detailedRoutineState = detailedRoutineState.copy(
                     routine = routine,
@@ -89,9 +91,7 @@ class DetailedRoutineViewModel(
                     routineRepository.addFavoriteRoutine(routineId)
                 }
 
-                routineRepository.fetchRoutines(null, null)
-                routineRepository.fetchFavoriteRoutines(null, null)
-
+                routineRepository.fetchRoutine(routineId)
                 val routine = routineRepository.getRoutine(routineId)
 
                 detailedRoutineState = detailedRoutineState.copy(

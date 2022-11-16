@@ -12,6 +12,9 @@ interface ApiRoutineService {
     @GET("routines")
     suspend fun getRoutines(@Query("page") page: Int, @Query("size") size: Int, @Query("orderBy") orderBy : String, @Query("direction") direction : String): Response<NetworkPagedContent<NetworkRoutine>>
 
+    @GET("routines/{routineId}")
+    suspend fun getRoutine(@Path("routineId") routineId: Int): Response<NetworkRoutine>
+
     @GET("favourites")
     suspend fun getFavoriteRoutines(@Query("page") page: Int, @Query("size") size: Int): Response<NetworkPagedContent<NetworkRoutine>>
 
