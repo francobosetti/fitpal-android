@@ -23,14 +23,8 @@ fun DetailedExercise(
 
     Surface(color = MaterialTheme.colors.background) {
 
-        Column {
-            // Back button
-            IconButton(onClick = { onBackPressed() }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
+        Column(modifier = Modifier.padding(top = 8.dp)) {
+
 
             // Exercise details
             Box(modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp)) {

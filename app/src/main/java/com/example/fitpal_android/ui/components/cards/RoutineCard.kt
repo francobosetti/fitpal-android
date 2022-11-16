@@ -38,7 +38,7 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
-                    .height(175.dp)
+                    .height(150.dp)
                     .clip(
                         RoundedCornerShape(percent = 5)
                     ),
