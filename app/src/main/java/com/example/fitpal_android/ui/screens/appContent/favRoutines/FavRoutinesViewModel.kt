@@ -42,11 +42,4 @@ class FavRoutinesViewModel(
             }
         }
     }
-
-    fun orderBy(orderBy: String, direction: String) {
-        viewModelScope.launch {
-            val routines = routineRepository.getFavoriteRoutines(orderBy, direction)
-            favRoutinesState = favRoutinesState.copy(favRoutines = routines)
-        }
-    }
 }

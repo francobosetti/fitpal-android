@@ -44,12 +44,14 @@ private fun OrderByDropdown(
     orderBy : (String, String) -> Unit,
 ) {
 
-    val listItems = arrayOf(
-        stringResource(R.string.date),
-        stringResource(R.string.score),
-        stringResource(R.string.difficulty),
-        stringResource(R.string.category)
+    val mapItems = mapOf(
+        stringResource(R.string.date) to "date",
+        stringResource(R.string.score) to "score",
+        stringResource(R.string.difficulty) to "difficulty",
+        stringResource(R.string.category) to "category",
     )
+
+    val listItems = mapItems.keys.toList()
 
     var selectedItem by remember {
         mutableStateOf(listItems[0])
@@ -91,7 +93,7 @@ private fun OrderByDropdown(
                 DropdownMenuItem(
                     onClick = {
                         selectedItem = selectedOption
-                        orderBy(selectedItem.lowercase(), "desc") // TODO: check direction
+                        orderBy(mapItems.getValue(selectedItem), "desc") // TODO: check direction
                         expanded = false
                     }) {
                     Text(
