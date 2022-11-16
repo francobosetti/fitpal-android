@@ -9,6 +9,7 @@ import com.example.fitpal_android.data.repository.ExerciseRepository
 import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.util.SessionManager
+import com.example.fitpal_android.util.SettingsManager
 
 
 class FitpalApplication : Application() {
@@ -18,6 +19,7 @@ class FitpalApplication : Application() {
         super.onCreate()
 
         sessionManager = SessionManager(this)
+        settingsManager = SettingsManager(this)
 
         userRemoteDataSource = UserRemoteDataSource(sessionManager, RetrofitClient.getApiUserService(this))
         exerciseRemoteDataSource = ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this))
@@ -34,6 +36,7 @@ class FitpalApplication : Application() {
     companion object {
         // -------- OTHERS --------
         lateinit var sessionManager: SessionManager
+        lateinit var settingsManager: SettingsManager
 
         // -------- REPOSITORIES --------
         lateinit var userRepository: UserRepository

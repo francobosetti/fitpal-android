@@ -11,12 +11,14 @@ import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExerciseViewModel
 import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutineViewModel
+import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutineViewModel
 import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.mainScreen.MainScreenViewModel
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
+import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
 import com.example.fitpal_android.ui.screens.authentication.login.LoginViewModel
 import com.example.fitpal_android.ui.screens.authentication.signup.SignUpViewModel
 import com.example.fitpal_android.ui.screens.authentication.verify.VerifyViewModel
@@ -25,6 +27,7 @@ import com.example.fitpal_android.ui.screens.authentication.verify.VerifyViewMod
 class ViewModelFactory constructor(
     // Aca hay que poner todos los repositorios que se necesiten
     private val sessionManager: SessionManager,
+    private val settingsManager: SettingsManager,
     private val userRepository: UserRepository,
     private val exerciseRepository: ExerciseRepository,
     private val routineRepository: RoutineRepository,
@@ -55,12 +58,14 @@ class ViewModelFactory constructor(
             // AppContent
             isAssignableFrom(MainScreenViewModel::class.java) -> MainScreenViewModel(userRepository =  userRepository)
             isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(userRepository =  userRepository)
+            isAssignableFrom(SettingsViewModel::class.java) -> SettingsViewModel(settingsManager =  settingsManager)
             isAssignableFrom(ExercisesViewModel::class.java) -> ExercisesViewModel(exerciseRepository =  exerciseRepository)
             isAssignableFrom(DetailedExerciseViewModel::class.java) -> DetailedExerciseViewModel(exerciseRepository = exerciseRepository, exerciseId = id!!)
             isAssignableFrom(ExploreRoutinesViewModel::class.java) -> ExploreRoutinesViewModel(routineRepository =  routineRepository)
             isAssignableFrom(MyRoutinesViewModel::class.java) -> MyRoutinesViewModel(routineRepository =  routineRepository)
             isAssignableFrom(FavRoutinesViewModel::class.java) -> FavRoutinesViewModel(routineRepository =  routineRepository)
             isAssignableFrom(DetailedRoutineViewModel::class.java) -> DetailedRoutineViewModel(routineRepository =  routineRepository, id!!)
+            isAssignableFrom(ExecRoutineViewModel::class.java) -> ExecRoutineViewModel(routineId = id!!, settingsManager = settingsManager)
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

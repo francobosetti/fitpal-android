@@ -36,6 +36,9 @@ sealed class Screens(val title: Int, val icon: Int, val iconDesc: String, val ro
     object Profile :
         Screens(R.string.profile_screen, R.drawable.ic_baseline_person_24, "Profile", "Profile")
 
+    object Settings :
+        Screens(R.string.settings_screen, R.drawable.ic_baseline_settings_24, "Settings", "Settings")
+
     // TODO : make icons optional
     // ---- Secondary Screens ----
     object DetailedExercise : Screens(

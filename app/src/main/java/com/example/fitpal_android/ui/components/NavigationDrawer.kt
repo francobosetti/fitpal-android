@@ -29,7 +29,8 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit, onLo
         Screens.Routines,
         Screens.FavoriteRoutine,
         Screens.ExploreRoutines,
-        Screens.Profile
+        Screens.Profile,
+        Screens.Settings
     )
 
     // Current route

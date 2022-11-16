@@ -9,6 +9,7 @@ import com.example.fitpal_android.FitpalApplication
 @Composable
 fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     val sessionManager = FitpalApplication.sessionManager
+    val settingsManager = FitpalApplication.settingsManager
     val userRepository = FitpalApplication.userRepository
     val exerciseRepository = FitpalApplication.exerciseRepository
     val routineRepository = FitpalApplication.routineRepository
@@ -16,6 +17,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 
     return ViewModelFactory(
         sessionManager = sessionManager,
+        settingsManager = settingsManager,
         userRepository = userRepository,
         exerciseRepository = exerciseRepository,
         routineRepository = routineRepository,
@@ -27,6 +29,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 @Composable
 fun getViewModelFactory(id: Int?, defaultArgs: Bundle? = null): ViewModelFactory {
     val sessionManager = FitpalApplication.sessionManager
+    val settingsManager = FitpalApplication.settingsManager
     val userRepository = FitpalApplication.userRepository
     val exerciseRepository = FitpalApplication.exerciseRepository
     val routineRepository = FitpalApplication.routineRepository
@@ -34,6 +37,7 @@ fun getViewModelFactory(id: Int?, defaultArgs: Bundle? = null): ViewModelFactory
 
     return ViewModelFactory(
         sessionManager = sessionManager,
+        settingsManager = settingsManager,
         userRepository = userRepository,
         exerciseRepository = exerciseRepository,
         routineRepository = routineRepository,

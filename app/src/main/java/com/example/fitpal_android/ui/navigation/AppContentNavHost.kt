@@ -23,6 +23,7 @@ import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesV
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutines
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.Profile
+import com.example.fitpal_android.ui.screens.appContent.settings.Settings
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
@@ -83,6 +84,11 @@ fun AppContentNavHost(
         // Profile
         composable(Screens.Profile.route) {
             Profile(onProfileUpdate = onProfileUpdate)
+        }
+
+        // Settings
+        composable(Screens.Settings.route) {
+            Settings()
         }
 
         // ------------ Secondary screens -------------

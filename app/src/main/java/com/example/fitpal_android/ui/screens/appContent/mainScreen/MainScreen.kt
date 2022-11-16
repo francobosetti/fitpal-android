@@ -67,6 +67,7 @@ fun MainScreen(onLoggedOut: () -> Unit) {
                         Screens.DetailedRoutine.route -> stringResource(Screens.DetailedRoutine.title)
                         Screens.ExecRoutine.route -> stringResource(Screens.ExecRoutine.title)
                         Screens.FavoriteRoutine.route -> stringResource(Screens.FavoriteRoutine.title)
+                        Screens.Settings.route -> stringResource(Screens.Settings.title)
                         else -> "FitPal"
                     },
                     imageUrl = mainScreenState.avatarUrl,
