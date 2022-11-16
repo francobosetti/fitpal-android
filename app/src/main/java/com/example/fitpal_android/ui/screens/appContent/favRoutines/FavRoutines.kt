@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -30,9 +32,11 @@ fun FavRoutines(
     when(configuration.orientation){
         Configuration.ORIENTATION_LANDSCAPE ->{
             Surface(color = MaterialTheme.colors.background) {
-                LazyRow(
+                LazyVerticalGrid(
                     modifier = Modifier.padding(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    columns = GridCells.Adaptive(250.dp)
                 ) {
                     item {
                         TopOrderAndSearch { order: String, dir: String -> viewModel.orderBy(order, dir) }

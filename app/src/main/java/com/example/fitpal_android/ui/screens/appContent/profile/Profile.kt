@@ -32,7 +32,6 @@ import com.example.fitpal_android.ui.screens.ValidationEvent
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
-// TODO: make resolve enter inside text field
 @Composable
 fun Profile(
     onProfileUpdate: () -> Unit,
@@ -102,109 +101,232 @@ fun Profile(
                 }
 
                 //  ----------------------- Text fields -----------------------
+                BoxWithConstraints() {
+                    if(maxWidth<700.dp){
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            // First name
+                            OutlinedTextField(
+                                value = profileFormState.firstname,
+                                isError = profileFormState.firstnameError != null,
+                                label = { Text(stringResource(R.string.profile_first_name)) },
+                                onValueChange = {
+                                    if (it.matches(noEnterNoTabRegex)) {
+                                        viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it))
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                                keyboardActions = KeyboardActions(
+                                    onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                                ),
+                                modifier = Modifier
+                                    .onKeyEvent {
+                                        if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                            focusManager.moveFocus(FocusDirection.Next)
+                                        }
+                                        false
+                                    }
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                            )
+                            profileFormState.firstnameError?.let {
+                                Text(
+                                    text = stringResource(profileFormState.firstnameError),
+                                    color = MaterialTheme.colors.error,
+                                    modifier = Modifier.align(Alignment.End)
+                                )
+                            }
+                            // Last name
+                            OutlinedTextField(
+                                value = profileFormState.lastname,
+                                isError = profileFormState.lastnameError != null,
+                                label = { Text(stringResource(R.string.profile_last_name)) },
+                                onValueChange = {
+                                    if (it.matches(noEnterNoTabRegex)) {
+                                        viewModel.onEvent(ProfileFormEvent.LastnameChanged(it))
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                                keyboardActions = KeyboardActions(
+                                    onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                                ),
+                                modifier = Modifier
+                                    .onKeyEvent {
+                                        if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                            focusManager.moveFocus(FocusDirection.Next)
+                                        }
+                                        false
+                                    }
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                            )
+                            profileFormState.lastnameError?.let {
+                                Text(
+                                    text = stringResource(profileFormState.lastnameError),
+                                    color = MaterialTheme.colors.error,
+                                    modifier = Modifier.align(Alignment.End)
+                                )
+                            }
+                            // Email
+                            OutlinedTextField(
+                                value = profileState.email,
+                                // Value cant be changed
+                                onValueChange = { /*TODO*/ }, //
+                                label = { Text(stringResource(R.string.profile_email)) },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                                enabled = false
+                            )
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    // First name
-                    OutlinedTextField(
-                        value = profileFormState.firstname,
-                        isError = profileFormState.firstnameError != null,
-                        label = { Text(stringResource(R.string.profile_first_name)) },
-                        onValueChange = {
-                            if (it.matches(noEnterNoTabRegex)) {
-                                viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it))
+                            // Profile picture
+                            OutlinedTextField(
+                                value = profileFormState.avatarUrl,
+                                isError = profileFormState.avatarUrlError != null,
+                                label = { Text(stringResource(R.string.Profile_pic)) },
+                                onValueChange = {
+                                    if (it.matches(noEnterNoTabRegex)) {
+                                        viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it))
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next),
+                                keyboardActions = KeyboardActions(
+                                    onNext = { focusManager.clearFocus() }
+                                ),
+                                modifier = Modifier
+                                    .onKeyEvent {
+                                        if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                            focusManager.clearFocus()
+                                        }
+                                        false
+                                    }
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                            )
+                            profileFormState.avatarUrlError?.let {
+                                Text(
+                                    text = stringResource(profileFormState.avatarUrlError),
+                                    color = MaterialTheme.colors.error,
+                                    modifier = Modifier.align(Alignment.End)
+                                )
                             }
-                        },
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Next) }
-                        ),
-                        modifier = Modifier.onKeyEvent {
-                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }
-                            false
-                        }.padding(8.dp).fillMaxWidth(),
-                    )
-                    profileFormState.firstnameError?.let {
-                        Text(
-                            text = stringResource(profileFormState.firstnameError),
-                            color = MaterialTheme.colors.error,
-                            modifier = Modifier.align(Alignment.End)
-                        )
+                        }
                     }
-                    // Last name
-                    OutlinedTextField(
-                        value = profileFormState.lastname,
-                        isError = profileFormState.lastnameError != null,
-                        label = { Text(stringResource(R.string.profile_last_name)) },
-                        onValueChange = {
-                            if (it.matches(noEnterNoTabRegex)) {
-                                viewModel.onEvent(ProfileFormEvent.LastnameChanged(it))
+                    else{
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Row(modifier = Modifier.fillMaxWidth()){
+                                OutlinedTextField(
+                                    value = profileFormState.firstname,
+                                    isError = profileFormState.firstnameError != null,
+                                    label = { Text(stringResource(R.string.profile_first_name)) },
+                                    onValueChange = {
+                                        if (it.matches(noEnterNoTabRegex)) {
+                                            viewModel.onEvent(ProfileFormEvent.FirstnameChanged(it))
+                                        }
+                                    },
+                                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                                    keyboardActions = KeyboardActions(
+                                        onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                                    ),
+                                    modifier = Modifier
+                                        .onKeyEvent {
+                                            if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                                focusManager.moveFocus(FocusDirection.Next)
+                                            }
+                                            false
+                                        }
+                                        .padding(8.dp)
+                                )
+                                profileFormState.firstnameError?.let {
+                                    Text(
+                                        text = stringResource(profileFormState.firstnameError),
+                                        color = MaterialTheme.colors.error,
+                                    )
+                                }
+                                // Last name
+                                OutlinedTextField(
+                                    value = profileFormState.lastname,
+                                    isError = profileFormState.lastnameError != null,
+                                    label = { Text(stringResource(R.string.profile_last_name)) },
+                                    onValueChange = {
+                                        if (it.matches(noEnterNoTabRegex)) {
+                                            viewModel.onEvent(ProfileFormEvent.LastnameChanged(it))
+                                        }
+                                    },
+                                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                                    keyboardActions = KeyboardActions(
+                                        onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                                    ),
+                                    modifier = Modifier
+                                        .onKeyEvent {
+                                            if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                                focusManager.moveFocus(FocusDirection.Next)
+                                            }
+                                            false
+                                        }
+                                        .padding(8.dp)
+                                )
+                                profileFormState.lastnameError?.let {
+                                    Text(
+                                        text = stringResource(profileFormState.lastnameError),
+                                        color = MaterialTheme.colors.error,
+                                    )
+                                }
                             }
-                        },
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Next) }
-                        ),
-                        modifier = Modifier.onKeyEvent {
-                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }
-                            false
-                        }.padding(8.dp).fillMaxWidth(),
-                    )
-                    profileFormState.lastnameError?.let {
-                        Text(
-                            text = stringResource(profileFormState.lastnameError),
-                            color = MaterialTheme.colors.error,
-                            modifier = Modifier.align(Alignment.End)
-                        )
-                    }
-                    // Email
-                    OutlinedTextField(
-                        value = profileState.email,
-                        // Value cant be changed
-                        onValueChange = { /*TODO*/ }, //
-                        label = { Text(stringResource(R.string.profile_email)) },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth(),
-                        enabled = false
-                    )
+                            // Email
+                            OutlinedTextField(
+                                value = profileState.email,
+                                // Value cant be changed
+                                onValueChange = { /*TODO*/ }, //
+                                label = { Text(stringResource(R.string.profile_email)) },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                                enabled = false
+                            )
 
-                    // Profile picture
-                    OutlinedTextField(
-                        value = profileFormState.avatarUrl,
-                        isError = profileFormState.avatarUrlError != null,
-                        label = { Text(stringResource(R.string.Profile_pic)) },
-                        onValueChange = {
-                            if (it.matches(noEnterNoTabRegex)) {
-                                viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it))
+                            // Profile picture
+                            OutlinedTextField(
+                                value = profileFormState.avatarUrl,
+                                isError = profileFormState.avatarUrlError != null,
+                                label = { Text(stringResource(R.string.Profile_pic)) },
+                                onValueChange = {
+                                    if (it.matches(noEnterNoTabRegex)) {
+                                        viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it))
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next), //TODO: elegir la accion
+                                keyboardActions = KeyboardActions(
+                                    onNext = { focusManager.clearFocus() }
+                                ),
+                                modifier = Modifier
+                                    .onKeyEvent {
+                                        if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
+                                            focusManager.clearFocus()
+                                        }
+                                        false
+                                    }
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                            )
+                            profileFormState.avatarUrlError?.let {
+                                Text(
+                                    text = stringResource(profileFormState.avatarUrlError),
+                                    color = MaterialTheme.colors.error,
+                                    modifier = Modifier.align(Alignment.End)
+                                )
                             }
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next), //TODO: elegir la accion
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.clearFocus() }
-                        ),
-                        modifier = Modifier.onKeyEvent {
-                            if(it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER || it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_TAB) {
-                                focusManager.clearFocus()
-                            }
-                            false
-                        }.padding(8.dp).fillMaxWidth(),
-                    )
-                    profileFormState.avatarUrlError?.let {
-                        Text(
-                            text = stringResource(profileFormState.avatarUrlError),
-                            color = MaterialTheme.colors.error,
-                            modifier = Modifier.align(Alignment.End)
-                        )
+
+
+                        }
                     }
                 }
+
 
 
                 //  ----------------------- Buttons -----------------------
@@ -236,113 +358,3 @@ fun Profile(
     }
 
 }
-
-/*
-@Composable
-fun ProfileForm(firstname: String, lastname: String, email: String, avatarUrl: String) {
-    Card(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        backgroundColor = MaterialTheme.colors.secondary,
-        contentColor = MaterialTheme.colors.onPrimary,
-        shape = RoundedCornerShape(12.dp),
-    ) {
-        Column {
-            // Profile picture & name/email
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                // Show profile picture
-                AsyncImage(
-                    model = avatarUrl,
-                    contentDescription = "Profile picture",
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clip(
-                            CircleShape /* TODO: hacer q sea un circulo */
-                        )
-                        .size(100.dp)
-                )
-
-                Column(
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    // Name
-                    Text(
-                        text = "$firstname $lastname",
-                        style = MaterialTheme.typography.h5,
-                        modifier = Modifier.padding(bottom = 2.dp)
-                    )
-                    // Email
-                    Text(
-                        text = email,
-                        style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(top = 2.dp)
-                    )
-                }
-            }
-
-            //  ----------------------- Text fields -----------------------
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                // First name
-                OutlinedTextField(
-                    value = firstname,
-                    onValueChange = { /*TODO*/ },
-                    label = { Text(stringResource(R.string.profile_first_name)) },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                )
-                // Last name
-                OutlinedTextField(
-                    value = lastname,
-                    onValueChange = { /*TODO*/ },
-                    label = { Text(stringResource(R.string.profile_last_name)) },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                )
-                // Email
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { /*TODO*/ },
-                    label = { Text(stringResource(R.string.profile_email)) },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth(),
-                    enabled = false
-                )
-
-                // Profile picture
-                OutlinedTextField(
-                    value = avatarUrl,
-                    onValueChange = { /*TODO*/ },
-                    label = { Text(stringResource(R.string.Profile_pic)) },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                )
-            }
-
-
-            //  ----------------------- Buttons -----------------------
-            // Edit profile button
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.edit_profile_button))
-            }
-        }
-    }
-}
- */
