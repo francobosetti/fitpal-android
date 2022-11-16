@@ -18,7 +18,14 @@ data class ExecRoutineState(
     var isPaused : Boolean = false,
 
     val reps : Int = exercises[currentExerciseIndex].reps,
-)
+
+    val executionMode: Boolean = DETAILED_MODE
+) {
+    companion object {
+        const val DETAILED_MODE = true
+        const val SIMPLE_MODE = false
+    }
+}
 
 object Utility {
     private const val TIME_FORMAT = "%02d:%02d"

@@ -8,14 +8,19 @@ import androidx.lifecycle.ViewModel
 import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
 import com.example.fitpal_android.data.repository.DEPRECATED.RoutineRepository
 import com.example.fitpal_android.ui.screens.appContent.execRoutine.Utility.formatTime
+import com.example.fitpal_android.util.SettingsManager
 
-class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
+class ExecRoutineViewModel(
+    routineId: Int?,
+    settingsManager: SettingsManager
+) : ViewModel() {
 
     private val defaultId = 1
 
     private var uiState by mutableStateOf(
         ExecRoutineState(
             routine = RoutineRepository().getRoutineById(routineId ?: defaultId),
+            executionMode = settingsManager.getExecutionMode()
         )
     )
 
@@ -24,7 +29,7 @@ class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
     }
 
     fun nextExercise() {
-        if(uiState.currentExerciseIndex < uiState.exercises.size - 1) {
+        if (uiState.currentExerciseIndex < uiState.exercises.size - 1) {
             uiState = uiState.copy(
                 currentExerciseIndex = uiState.currentExerciseIndex + 1,
                 reps = uiState.exercises[uiState.currentExerciseIndex + 1].reps
@@ -55,7 +60,7 @@ class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
     }
 
     fun startTimer() {
-        val mills = if(uiState.isPaused)
+        val mills = if (uiState.isPaused)
             uiState.currentTime
         else
             getCurrentExercise().seconds * 1000
@@ -63,9 +68,11 @@ class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
 
         uiState = uiState.copy(countDownTimer = object : CountDownTimer(mills, 1) {
             override fun onTick(millisRemaining: Long) {
-                val progressValue = millisRemaining.toFloat() / (getCurrentExercise().seconds * 1000)
+                val progressValue =
+                    millisRemaining.toFloat() / (getCurrentExercise().seconds * 1000)
                 handleTimerValues(true, millisRemaining, progressValue)
             }
+
             override fun onFinish() {
                 stopTimer()
             }
@@ -99,4 +106,8 @@ class ExecRoutineViewModel( routineId: Int? ) : ViewModel() {
     fun getCurrentIndex() = uiState.currentExerciseIndex
 
     fun getSize() = uiState.exercises.size
+
+    fun isDetailedMode() = uiState.executionMode == ExecRoutineState.DETAILED_MODE
+
+    fun isSimpleMode() = uiState.executionMode == ExecRoutineState.SIMPLE_MODE
 }

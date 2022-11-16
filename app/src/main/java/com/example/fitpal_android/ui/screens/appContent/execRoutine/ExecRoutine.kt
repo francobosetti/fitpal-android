@@ -26,127 +26,136 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.theme.Orange500
+import com.example.fitpal_android.util.getViewModelFactory
 
 
 @Composable
 fun ExecRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
-    viewModel : ExecRoutineViewModel = ExecRoutineViewModel(routineId)
+    viewModel : ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId))
 ) {
-    Surface(color = MaterialTheme.colors.background) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        ) {
-            Row{
-                Text(
-                    text = viewModel.getCurrentExercise().name,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .fillMaxWidth(),
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        textAlign = TextAlign.Center
-                    ),
-                    color= Color.White
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
+    if (viewModel.isDetailedMode()) {
+        Surface(color = MaterialTheme.colors.background) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxHeight(),
             ) {
-                if(viewModel.getReps() == 0)
-                    CountDownView(viewModel = viewModel)
-                else{
+                Row{
                     Text(
-                        text = viewModel.getReps().toString() + stringResource(R.string.reps_exercise),
-                        color = Color.White,
-                        //fontFamily = FontFamily(Font(R.font.poppins_semibold)),
-                        style = MaterialTheme.typography.h2,
-                        fontWeight = FontWeight.Bold
+                        text = viewModel.getCurrentExercise().name,
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        color= Color.White
                     )
                 }
-            }
-            Spacer(modifier = Modifier.weight(0.5f))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.5f)
-                    .padding(10.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if(viewModel.getCurrentIndex() > 0){
-                    Button(
-                        onClick = { viewModel.previousExercise() },
-                        modifier = Modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .height(50.dp)
-                            .width(120.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
-                    ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if(viewModel.getReps() == 0)
+                        CountDownView(viewModel = viewModel)
+                    else{
                         Text(
-                            text = stringResource(R.string.previous_button),
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                textAlign = TextAlign.Center
-                            ),
-                            color= Color.White
+                            text = viewModel.getReps().toString() + stringResource(R.string.reps_exercise),
+                            color = Color.White,
+                            //fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+                            style = MaterialTheme.typography.h2,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
-                if(viewModel.getCurrentIndex() < viewModel.getSize() - 1){
-                    Button(
-                        onClick = { viewModel.nextExercise() },
-                        modifier = Modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .height(50.dp)
-                            .width(120.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.next_button),
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                textAlign = TextAlign.Center
-                            ),
-                            color= Color.White
-                        )
+                Spacer(modifier = Modifier.weight(0.5f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5f)
+                        .padding(10.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if(viewModel.getCurrentIndex() > 0){
+                        Button(
+                            onClick = { viewModel.previousExercise() },
+                            modifier = Modifier
+                                .padding(start = 30.dp, end = 30.dp)
+                                .height(50.dp)
+                                .width(120.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.previous_button),
+                                style = TextStyle(
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center
+                                ),
+                                color= Color.White
+                            )
+                        }
                     }
-                }
-                else{
-                    Button(
-                        onClick = { onBackPressed() },
-                        modifier = Modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .height(50.dp)
-                            .width(120.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.finish_button),
-                            style = TextStyle(
-                                fontSize = 18.sp,
-                                textAlign = TextAlign.Center
-                            ),
-                            color= Color.White
-                        )
+                    if(viewModel.getCurrentIndex() < viewModel.getSize() - 1){
+                        Button(
+                            onClick = { viewModel.nextExercise() },
+                            modifier = Modifier
+                                .padding(start = 30.dp, end = 30.dp)
+                                .height(50.dp)
+                                .width(120.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.next_button),
+                                style = TextStyle(
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center
+                                ),
+                                color= Color.White
+                            )
+                        }
+                    }
+                    else{
+                        Button(
+                            onClick = { onBackPressed() },
+                            modifier = Modifier
+                                .padding(start = 30.dp, end = 30.dp)
+                                .height(50.dp)
+                                .width(120.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.finish_button),
+                                style = TextStyle(
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center
+                                ),
+                                color= Color.White
+                            )
+                        }
                     }
                 }
             }
         }
+    } else {
+        //TODO: Implementar la pantalla de exec simple
+        Text(text = "Simple mode")
     }
+
+
 }
 
 @Composable
