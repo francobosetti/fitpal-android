@@ -4,5 +4,6 @@ data class VerifyFromState(
     val verifyLoading: Boolean = false,
     val resendLoading: Boolean = false,
     val verificationCode: String = "",
-    val verificationCodeError: Int? = null
+    val verificationCodeError: Int? = null,
+    val apiMsg: Int? = null
 )

@@ -31,6 +31,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
     val viewModel = viewModel<VerifyViewModel>(factory = getViewModelFactory())
     val verifyFormState = viewModel.verifyFormState
     val context = LocalContext.current
+    val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = context) {
         viewModel.validationEvents.collect { event ->
@@ -129,6 +130,20 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                     ),
                     color = Color.White
                 )
+            }
+        }
+    }
+    verifyFormState.apiMsg?.let {
+        val apiError = stringResource(verifyFormState.apiMsg)
+        //val actionLabel = stringResource(R.string.dismiss) // TODO: remove comment
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = apiError,
+                actionLabel = "DISMISS", //TODO: replace string
+            )
+            when(result) {
+                SnackbarResult.Dismissed -> viewModel.onEvent(VerifyFormEvent.DismissMessage)
+                SnackbarResult.ActionPerformed -> viewModel.onEvent(VerifyFormEvent.DismissMessage)
             }
         }
     }

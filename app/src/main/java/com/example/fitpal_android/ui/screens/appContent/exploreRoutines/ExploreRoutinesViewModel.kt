@@ -46,8 +46,12 @@ class ExploreRoutinesViewModel(
 
     fun orderBy(orderBy: String, direction: String) {
         viewModelScope.launch {
-            val routines = routineRepository.getRoutines(orderBy, direction)
-            exploreRoutinesState = exploreRoutinesState.copy(otherRoutines = routines)
+            try {
+                val routines = routineRepository.getRoutines(orderBy, direction)
+                exploreRoutinesState = exploreRoutinesState.copy(otherRoutines = routines)
+            } catch (e: Exception) {
+                // TODO: do smth
+            }
         }
     }
 }

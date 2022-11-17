@@ -43,23 +43,28 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
     init {
         viewModelScope.launch {
             profileState = profileState.copy(isFetching = true)
-            val user = userRepository.getCurrentUser()
-            // Shouldn't be null
-            user!!
+            try {
+                val user = userRepository.getCurrentUser()
 
-            profileState = profileState.copy(
-                firstname = user.firstname,
-                lastname = user.lastname,
-                email = user.email,
-                avatarUrl = user.avatarUrl,
-                isFetching = false,
-            )
+                // Shouldn't be null
+                user!!
 
-            profileFormState = profileFormState.copy(
-                firstname = user.firstname,
-                lastname = user.lastname,
-                avatarUrl = user.avatarUrl,
-            )
+                profileState = profileState.copy(
+                    firstname = user.firstname,
+                    lastname = user.lastname,
+                    email = user.email,
+                    avatarUrl = user.avatarUrl,
+                    isFetching = false,
+                )
+
+                profileFormState = profileFormState.copy(
+                    firstname = user.firstname,
+                    lastname = user.lastname,
+                    avatarUrl = user.avatarUrl,
+                )
+            } catch (e: Exception) {
+                //TODO: do smth
+            }
         }
     }
 
