@@ -31,6 +31,9 @@ class LoginViewModel(
             is LoginFormEvent.PasswordChanged -> {
                 loginFormState = loginFormState.copy(password = event.password)
             }
+            is LoginFormEvent.DismissMessage -> {
+                loginFormState = loginFormState.copy(apiMsg = null)
+            }
             is LoginFormEvent.Login -> {
                 login()
             }
@@ -62,12 +65,9 @@ class LoginViewModel(
                 validationEventChannel.send(ValidationEvent.Success)
             } catch (e: Exception) {
 
-                // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
                 loginFormState = loginFormState.copy(
-                    emailError = R.string.error_log_in
-                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
+                    apiMsg = R.string.error_log_in // TODO: MAKE SPECIFIC (acording to Exeption)
                 )
-
             }
             loginFormState = loginFormState.copy(loading = false)
         }

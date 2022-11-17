@@ -1,6 +1,8 @@
 package com.example.fitpal_android.ui.navigation
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,6 +16,7 @@ import com.example.fitpal_android.ui.screens.authentication.verify.Verify
 
 @Composable
 fun AuthNavHost(
+    scaffoldState: ScaffoldState,
     navController: NavHostController = rememberNavController(),
     onAuthentication: () -> Unit,
 ) {
@@ -23,6 +26,7 @@ fun AuthNavHost(
         // Login
         composable(Screens.LogIn.route) {
             LogIn(
+                scaffoldState = scaffoldState,
                 onAuthentication = onAuthentication,
                 onLinkClicked = {
                     navController.navigate(Screens.SignUp.route) {
@@ -35,6 +39,7 @@ fun AuthNavHost(
         // Sign Up
         composable(Screens.SignUp.route) {
             SignUp(
+                scaffoldState = scaffoldState,
                 onSignUpClicked = { email, password ->
                     navController.navigate("Verify/$email/$password") {
                         popUpTo(0)
@@ -63,6 +68,7 @@ fun AuthNavHost(
             )
         ) {
             Verify(
+                scaffoldState = scaffoldState,
                 onAuthentication = onAuthentication,
                 email = it.arguments?.getString("email") ?: "",
                 password = it.arguments?.getString("password") ?: ""

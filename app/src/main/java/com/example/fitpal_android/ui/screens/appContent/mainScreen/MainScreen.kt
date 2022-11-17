@@ -3,12 +3,14 @@ package com.example.fitpal_android.ui.screens.appContent.mainScreen
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,10 +28,11 @@ import kotlinx.coroutines.launch
 // TODO: Ver Que onda con este warning
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen(onLoggedOut: () -> Unit) {
+fun MainScreen(
+    scaffoldState: ScaffoldState,
+    onLoggedOut: () -> Unit
+) {
     // A surface container using the 'background' color from the theme
-    // TODO: MAndar al Viewmodel esto?
-    val state = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val topBarState = rememberSaveable { (mutableStateOf(true)) }
@@ -54,7 +57,7 @@ fun MainScreen(onLoggedOut: () -> Unit) {
     val mainScreenState = viewModel.mainScreenState
 
     Scaffold(
-        scaffoldState = state,
+        scaffoldState = scaffoldState,
         topBar = {
             AnimatedVisibility(visible = topBarState.value) {
                 TopBar(
@@ -71,7 +74,7 @@ fun MainScreen(onLoggedOut: () -> Unit) {
                         else -> "FitPal"
                     },
                     imageUrl = mainScreenState.avatarUrl,
-                    onMenuClick = { scope.launch { state.drawerState.open() } },
+                    onMenuClick = { scope.launch { scaffoldState.drawerState.open() } },
                     navController = navController
                 )
             }
@@ -81,7 +84,7 @@ fun MainScreen(onLoggedOut: () -> Unit) {
             AnimatedVisibility(visible = navBarState.value) {
                 NavigationDrawer(
                     navController = navController,
-                    onMenuClick = { scope.launch { state.drawerState.close() } },
+                    onMenuClick = { scope.launch { scaffoldState.drawerState.close() } },
                     onLogOutClick = { scope.launch { viewModel.logout(); onLoggedOut() } }
                 )
             }

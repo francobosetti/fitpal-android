@@ -68,6 +68,8 @@
     <string name="error_log_in">Error Loggin In</string>
     <string name="error_resend_verif">Error when resending verification</string>
     <string name="error_verify_mail">Error verifying mail</string>
+    <string name="error_sign_up">Error On Sign Up</string>
+    <string name="dismiss">Dismiss</string>
     <string name="settings_screen">Settings</string>
     <string name="execution_mode">Detailed execution</string>
 </resources>

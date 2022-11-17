@@ -91,8 +91,7 @@ class VerifyViewModel(
                 )
             } catch (e: Exception) {
                 verifyFormState = verifyFormState.copy(
-                    apiMsg = R.string.error_resend_verif
-                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
+                    apiMsg = R.string.error_resend_verif // TODO: MAKE SPECIFIC (acording to Exeption)
                 )
             }
             verifyFormState = verifyFormState.copy(resendLoading = false)
