@@ -32,9 +32,7 @@ class LoginViewModel(
                 loginFormState = loginFormState.copy(password = event.password)
             }
             is LoginFormEvent.Login -> {
-                loginFormState = loginFormState.copy(loading = true)
                 login()
-                loginFormState = loginFormState.copy(loading = false)
             }
         }
     }
@@ -58,7 +56,7 @@ class LoginViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
-
+            loginFormState = loginFormState.copy(loading = true)
             try {
                 userRepository.login(loginFormState.email, loginFormState.password)
                 validationEventChannel.send(ValidationEvent.Success)
@@ -71,6 +69,7 @@ class LoginViewModel(
                 )
 
             }
+            loginFormState = loginFormState.copy(loading = false)
 
         }
     }

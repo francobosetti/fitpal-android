@@ -32,17 +32,13 @@ class VerifyViewModel(
 
             is VerifyFormEvent.ResendCode -> {
                 if (email != null) {
-                    verifyFormState = verifyFormState.copy(resendLoading = true)
                     resendCode(email)
-                    verifyFormState = verifyFormState.copy(resendLoading = false)
                 }
             }
 
             is VerifyFormEvent.VerifyCode -> {
                 if (email != null && password != null) {
-                    verifyFormState = verifyFormState.copy(verifyLoading = true)
                     verifyCode(email, password)
-                    verifyFormState = verifyFormState.copy(verifyLoading = false)
                 }
             }
         }
@@ -66,6 +62,7 @@ class VerifyViewModel(
         }
 
         viewModelScope.launch {
+            verifyFormState = verifyFormState.copy(verifyLoading = true)
             try {
                 userRepository.verifyEmail(email, verifyFormState.verificationCode)
                 userRepository.login(email, password)
@@ -76,11 +73,13 @@ class VerifyViewModel(
                     // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
             }
+            verifyFormState = verifyFormState.copy(verifyLoading = false)
         }
     }
 
     private fun resendCode(email: String) {
         viewModelScope.launch {
+            verifyFormState = verifyFormState.copy(resendLoading = true)
             try {
                 userRepository.resendVerification(email)
                 verifyFormState = verifyFormState.copy(
@@ -92,6 +91,7 @@ class VerifyViewModel(
                     // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
             }
+            verifyFormState = verifyFormState.copy(resendLoading = false)
         }
     }
 }

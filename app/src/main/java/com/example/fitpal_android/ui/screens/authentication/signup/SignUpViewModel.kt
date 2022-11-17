@@ -43,9 +43,7 @@ class SignUpViewModel(
                 signUpFormState = signUpFormState.copy(confirmPassword = event.confirmPassword)
             }
             is SignUpFormEvent.SignUp -> {
-                signUpFormState = signUpFormState.copy(loading = true)
                 signUp()
-                signUpFormState = signUpFormState.copy(loading = false)
             }
         }
     }
@@ -82,6 +80,7 @@ class SignUpViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
+            signUpFormState = signUpFormState.copy(loading = true)
             try {
                 userRepository.registerUser(
                     firstname = signUpFormState.firstname,
@@ -100,7 +99,7 @@ class SignUpViewModel(
                     serverError = e.message
                 )
             }
-
+            signUpFormState = signUpFormState.copy(loading = false)
         }
     }
 }

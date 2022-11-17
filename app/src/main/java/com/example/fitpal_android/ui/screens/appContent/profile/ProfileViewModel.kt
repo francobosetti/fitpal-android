@@ -78,9 +78,7 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
                 profileFormState = profileFormState.copy(avatarUrl = event.avatarUrl)
             }
             is ProfileFormEvent.EditProfile -> {
-                profileFormState = profileFormState.copy(editLoading = true)
                 editProfile()
-                profileFormState = profileFormState.copy(editLoading = false)
             }
         }
     }
@@ -147,7 +145,7 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
         if(hasError) { return }
 
         viewModelScope.launch {
-
+            profileFormState = profileFormState.copy(editLoading = true)
             try {
                 userRepository.updateUser(
                     firstname = profileFormState.firstname,
@@ -178,6 +176,7 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
                 )
 
             }
+            profileFormState = profileFormState.copy(editLoading = false)
         }
     }
 
