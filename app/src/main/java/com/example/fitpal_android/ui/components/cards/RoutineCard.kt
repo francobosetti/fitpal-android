@@ -81,7 +81,7 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
 
             // Routine difficulty
             Text(
-                text = difficulty,
+                text = difficulty.replaceFirstChar { it.uppercaseChar() },
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)

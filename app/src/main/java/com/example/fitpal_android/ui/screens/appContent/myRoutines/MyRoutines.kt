@@ -14,12 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
-import com.example.fitpal_android.ui.components.TopOrderAndSearch
+import com.example.fitpal_android.ui.components.OrderByDropdown
 import com.example.fitpal_android.ui.components.cards.RoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
-import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun MyRoutines(
@@ -49,7 +47,7 @@ fun MyRoutines(
     Surface(color = MaterialTheme.colors.background) {
         Column{
             Box(modifier = Modifier.padding(8.dp)) {
-                TopOrderAndSearch { order: String, dir: String ->
+                OrderByDropdown{ order: String, dir: String ->
                     viewModel.orderBy(
                         order,
                         dir
