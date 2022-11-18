@@ -74,4 +74,16 @@
     <string name="execution_mode">Detailed execution</string>
     <string name="next_cycle">Next Cycle</string>
     <string name="cycle">Cycle</string>
+    <string name="unknown_err">Unknown error</string>
+    <string name="unexpected_err">Unexpected error</string>
+    <string name="connection_err">Connection error</string>
+    <string name="inv_verification_code">Invalid verification code</string>
+    <string name="unauthorized">Unauthorized</string>
+    <string name="invalid_request">Invalid request</string>
+    <string name="database_error">Database error</string>
+    <string name="inv_email_or_pass">Invalid email or password</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="email_already_in_use">Email already in use</string>
+    <string name="invalid_data">Invalid data</string>
+    <string name="resent_code">Resent code</string>
 </resources>

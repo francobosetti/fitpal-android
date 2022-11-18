@@ -22,22 +22,17 @@ abstract class RemoteDataSource {
                 val error = gson.fromJson<NetworkError>(it.string(), object : TypeToken<NetworkError?>() {}.type)
                 throw DataSourceException(error.code, error.description, error.details)
             }
-            throw DataSourceException(UNEXPECTED_ERROR_CODE, "Missing error", null)
+            throw DataSourceException(ApiErrorCodes.MISSING_ERROR, ApiErrorStrings.MISSING_ERROR_STR, null)
         } catch (e: DataSourceException) {
             throw e
         } catch (e: IOException) {
-            throw DataSourceException(CONNECTION_ERROR_CODE, "Connection error", getDetailsFromException(e))
+            throw DataSourceException(ApiErrorCodes.CONNECTION_ERROR, ApiErrorStrings.CONECTION_ERROR_STR, getDetailsFromException(e))
         } catch (e: Exception) {
-            throw DataSourceException(UNEXPECTED_ERROR_CODE, "Unexpected error", getDetailsFromException(e))
+            throw DataSourceException(ApiErrorCodes.UNEXPECTED_ERROR, ApiErrorStrings.UNEXPECTED_ERROR_STR, getDetailsFromException(e))
         }
     }
 
     private fun getDetailsFromException(e: Exception) : List<String> {
         return if (e.message != null) listOf(e.message!!) else emptyList()
-    }
-
-    companion object {
-        const val CONNECTION_ERROR_CODE = 98
-        const val UNEXPECTED_ERROR_CODE = 99
     }
 }

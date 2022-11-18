@@ -3,7 +3,7 @@ package com.example.fitpal_android.domain.use_case
 import android.util.Patterns
 import com.example.fitpal_android.R
 
-class ValidateEmail {
+object ValidateEmail {
     fun execute(email: String) : ValidationResult {
         if(email.isBlank()) {
             return ValidationResult(
