@@ -175,7 +175,7 @@ fun Profile(
                             OutlinedTextField(
                                 value = profileState.email,
                                 // Value cant be changed
-                                onValueChange = { /*TODO*/ }, //
+                                onValueChange = {  }, //
                                 label = { Text(stringResource(R.string.profile_email)) },
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -284,7 +284,7 @@ fun Profile(
                             OutlinedTextField(
                                 value = profileState.email,
                                 // Value cant be changed
-                                onValueChange = { /*TODO*/ }, //
+                                onValueChange = {  },
                                 label = { Text(stringResource(R.string.profile_email)) },
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -302,7 +302,7 @@ fun Profile(
                                         viewModel.onEvent(ProfileFormEvent.AvatarUrlChanged(it))
                                     }
                                 },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next), //TODO: elegir la accion
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next),
                                 keyboardActions = KeyboardActions(
                                     onNext = { focusManager.clearFocus() }
                                 ),
@@ -347,15 +347,5 @@ fun Profile(
                 }
             }
         }
-
-        // TODO: revisar si se puede seguir usando esto
-        /*
-        ProfileForm(
-            firstname = currentUser.firstname,
-            lastname = currentUser.lastname,
-            email = currentUser.email,
-            avatarUrl = currentUser.avatarUrl,
-        )
-         */
     }
 }

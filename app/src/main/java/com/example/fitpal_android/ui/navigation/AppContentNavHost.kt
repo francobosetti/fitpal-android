@@ -133,8 +133,6 @@ fun AppContentNavHost(
             deepLinks = listOf(navDeepLink {
                 uriPattern = "fitpal://routines/{routineId}" // TODO: Revisar link
                 action = Intent.ACTION_VIEW
-
-
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de rutinas

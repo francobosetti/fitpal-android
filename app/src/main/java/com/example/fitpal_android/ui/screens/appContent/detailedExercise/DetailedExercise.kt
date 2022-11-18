@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -63,13 +61,13 @@ fun DetailedExercise(
                         )
                     }
                 } else {
-                    if (detailedExerciseState.exercise != null) {
-                        DetailedExerciseCard(
-                            name = detailedExerciseState.exercise.name,
-                            videoUrl = detailedExerciseState.exercise.videoUrl,
-                            tags = detailedExerciseState.exercise.tags,
-                            description = detailedExerciseState.exercise.description
-                        )
+                     if (detailedExerciseState.exercise != null) {
+                    DetailedExerciseCard(
+                        name = detailedExerciseState.exercise.name,
+                        videoUrl = detailedExerciseState.exercise.imageUrl,
+                        tags = detailedExerciseState.exercise.tags,
+                        description = detailedExerciseState.exercise.description
+                    )
                     }
                 }
             }

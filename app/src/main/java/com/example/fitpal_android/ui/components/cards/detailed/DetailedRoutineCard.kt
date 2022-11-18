@@ -229,7 +229,6 @@ fun DetailedRoutineCard(
     }
 }
 
-// TODO: hacer que maneje doubles
 @Composable
 fun RatingRow(
     rating: Double,
