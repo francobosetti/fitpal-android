@@ -26,7 +26,7 @@ fun DetailedRoutine(
     onSharePressed: (Int?) -> Unit,
     onFavoritePressed: () -> Unit,
     onRatingSubmit: () -> Unit,
-    viewModel: DetailedRoutineViewModel
+    viewModel: DetailedRoutineViewModel = viewModel(factory = getViewModelFactory(routineId))
 ) {
 
     val detailedRoutineState = viewModel.detailedRoutineState

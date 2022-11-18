@@ -41,7 +41,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun ExecRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
-    viewModel: ExecRoutineViewModel
+    viewModel: ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId))
 ) {
     if (viewModel.isDetailedMode()) {
         Surface(color = MaterialTheme.colors.background) {

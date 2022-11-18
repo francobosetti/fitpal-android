@@ -21,7 +21,7 @@ fun DetailedExercise(
     scaffoldState: ScaffoldState,
     exerciseId: Int?,
     onBackPressed: () -> Unit,
-    viewModel: DetailedExerciseViewModel
+    viewModel: DetailedExerciseViewModel = viewModel(factory = getViewModelFactory(exerciseId))
 ) {
     val detailedExerciseState = viewModel.detailedExerciseState
 

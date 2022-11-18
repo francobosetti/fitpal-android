@@ -119,12 +119,10 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de ejercicios
-            val exerciseId = it.arguments?.getInt("exerciseId")
             DetailedExercise(
                 scaffoldState = scaffoldState,
-                exerciseId = exerciseId,
+                exerciseId = it.arguments?.getInt("exerciseId"),
                 onBackPressed = { navController.popBackStack() },
-                viewModel = viewModel(factory = getViewModelFactory(exerciseId))
             )
         }
 
@@ -140,10 +138,8 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de rutinas
-            val routineId = it.arguments?.getInt("routineId")
             DetailedRoutine(
-                routineId = routineId,
-                viewModel = viewModel(factory = getViewModelFactory(routineId)),
+                routineId = it.arguments?.getInt("routineId"),
                 onStartPressed = { routineId ->
                     navController.navigate("ExecRoutine/$routineId")
                 },
@@ -175,13 +171,11 @@ fun AppContentNavHost(
             Screens.ExecRoutine.route,
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
-            val routineId = it.arguments?.getInt("routineId")
             ExecRoutine(
-                routineId = routineId,
+                routineId = it.arguments?.getInt("routineId"),
                 onBackPressed = {
                     navController.popBackStack()
                 },
-                viewModel = viewModel(factory = getViewModelFactory(routineId))
             )
         }
     }
