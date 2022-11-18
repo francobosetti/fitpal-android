@@ -3,5 +3,6 @@
 
     <style name="Theme.Fitpalandroid" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/secondary</item>
+        <item name="android:windowBackground">@color/accent</item>
     </style>
 </resources>

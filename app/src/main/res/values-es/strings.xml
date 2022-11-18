@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">fitpal-android</string>
+    <string name="app_name">FitPal</string>
     <string name="exercises_screen">Ejercicios</string>
     <string name="my_routine_screen">Mis Rutinas</string>
     <string name="explore_routines_screen">Explorar Rutinas</string>
