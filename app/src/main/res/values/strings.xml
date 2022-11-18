@@ -70,4 +70,6 @@
     <string name="error_verify_mail">Error verifying mail</string>
     <string name="settings_screen">Settings</string>
     <string name="execution_mode">Detailed execution</string>
+    <string name="next_cycle">Next Cycle</string>
+    <string name="cycle">Cycle</string>
 </resources>

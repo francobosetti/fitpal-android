@@ -16,8 +16,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.fitpal_android.ui.components.cards.ExerciseCard
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.fitpal_android.ui.components.TopOrderAndSearch
-import com.example.fitpal_android.ui.components.cards.RoutineCard
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable

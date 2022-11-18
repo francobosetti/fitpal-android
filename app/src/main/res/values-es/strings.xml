@@ -23,7 +23,7 @@
     <string name="Profile_pic">Foto de perfil</string>
     <string name="edit_profile_button">Editar perfil</string>
     <string name="previous_button">Anterior</string>
-    <string name="next_button">Proximo</string>
+    <string name="next_button">Siguiente</string>
     <string name="rating_button_text">Puntuar</string>
     <string name="rating_title">Puntuar Rutina</string>
     <string name="cancel_button_text">Cancelar</string>
@@ -70,4 +70,6 @@
     <string name="error_verify_mail">Error verificando email</string>
     <string name="settings_screen">Configuración</string>
     <string name="execution_mode">Ejecución detallada</string>
+    <string name="next_cycle">Siguiente Ciclo</string>
+    <string name="cycle">Ciclo</string>
 </resources>

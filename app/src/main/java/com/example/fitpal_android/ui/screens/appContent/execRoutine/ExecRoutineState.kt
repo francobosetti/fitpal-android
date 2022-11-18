@@ -1,42 +1,31 @@
 package com.example.fitpal_android.ui.screens.appContent.execRoutine
 
 import android.os.CountDownTimer
-import com.example.fitpal_android.data.repository.DEPRECATED.Exercise
-import com.example.fitpal_android.data.repository.DEPRECATED.Routine
-import com.example.fitpal_android.data.repository.DEPRECATED.RoutineRepository
-import java.util.concurrent.TimeUnit
+import com.example.fitpal_android.data.model.Cycle
+import com.example.fitpal_android.data.model.CycleExercise
+import com.example.fitpal_android.data.model.Routine
 
 data class ExecRoutineState(
-    val routine: Routine?,
-    val exercises: List<Exercise> = RoutineRepository().getMyRoutines().find { it.id == routine?.id }?.exercises ?: emptyList(),
-    var currentExerciseIndex : Int = 0,
+    val routine: Routine? = null,
+    val cycles: List<Cycle> = emptyList(),
+    val currentCycleIndex: Int = 0,
+
+    val exercises: List<CycleExercise> = emptyList(),
+    var currentExerciseIndex: Int = 0,
 
     var countDownTimer: CountDownTimer? = null,
-    var currentTime : Long = exercises[currentExerciseIndex].seconds * 1000,
-    var currentProgress : Float = 1.00F,
-    var isPlaying : Boolean = false,
-    var isPaused : Boolean = false,
+    var currentTime: Long = 0,
+    var currentProgress: Float = 1.00F,
+    var isPlaying: Boolean = false,
+    var isPaused: Boolean = false,
 
-    val reps : Int = exercises[currentExerciseIndex].reps,
+    val reps: Int = 0,
 
     val executionMode: Boolean = DETAILED_MODE
 ) {
     companion object {
         const val DETAILED_MODE = true
         const val SIMPLE_MODE = false
-    }
-}
-
-object Utility {
-    private const val TIME_FORMAT = "%02d:%02d"
-
-    //convert time to milli seconds
-    fun formatTime(mills : Long): String {
-        return String.format(
-            TIME_FORMAT,
-            TimeUnit.MILLISECONDS.toMinutes(mills),
-            TimeUnit.MILLISECONDS.toSeconds(mills) % 60
-        )
     }
 }
 

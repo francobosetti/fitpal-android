@@ -1,6 +1,5 @@
 package com.example.fitpal_android.data.remote
 
-
 import com.example.fitpal_android.data.remote.model.NetworkError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

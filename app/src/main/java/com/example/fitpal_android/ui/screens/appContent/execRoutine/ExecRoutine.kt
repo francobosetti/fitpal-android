@@ -36,7 +36,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun ExecRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
-    viewModel : ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId))
+    viewModel : ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId)),
 ) {
     if (viewModel.isDetailedMode()) {
         Surface(color = MaterialTheme.colors.background) {
@@ -47,12 +47,25 @@ fun ExecRoutine(
             ) {
                 Row{
                     Text(
-                        text = viewModel.getCurrentExercise().name,
+                        text = stringResource(R.string.cycle) + ' ' + (viewModel.getCurrentCycleIndex()  +  1),
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
                         style = TextStyle(
                             fontSize = 30.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        color= Color.White
+                    )
+                }
+                Row{
+                    Text(
+                        text = viewModel.getCurrentExerciseName(),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        style = TextStyle(
+                            fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
                         color= Color.White
@@ -87,7 +100,7 @@ fun ExecRoutine(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if(viewModel.getCurrentIndex() > 0){
+                    if(viewModel.getCurrentExerciseIndex() > 0 || viewModel.getCurrentCycleIndex() > 0){
                         Button(
                             onClick = { viewModel.previousExercise() },
                             modifier = Modifier
@@ -107,7 +120,7 @@ fun ExecRoutine(
                             )
                         }
                     }
-                    if(viewModel.getCurrentIndex() < viewModel.getSize() - 1){
+                    if(viewModel.getCurrentExerciseIndex() < viewModel.getExercisesSize() - 1){
                         Button(
                             onClick = { viewModel.nextExercise() },
                             modifier = Modifier
@@ -119,6 +132,26 @@ fun ExecRoutine(
                         ) {
                             Text(
                                 text = stringResource(R.string.next_button),
+                                style = TextStyle(
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center
+                                ),
+                                color= Color.White
+                            )
+                        }
+                    }
+                    else if(viewModel.getCurrentCycleIndex() < viewModel.getCyclesSize() - 1){
+                        Button(
+                            onClick = { viewModel.nextCycle() },
+                            modifier = Modifier
+                                .padding(start = 30.dp, end = 30.dp)
+                                .height(50.dp)
+                                .width(120.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.next_cycle),
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center
@@ -154,8 +187,6 @@ fun ExecRoutine(
         //TODO: Implementar la pantalla de exec simple
         Text(text = "Simple mode")
     }
-
-
 }
 
 @Composable

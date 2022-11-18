@@ -65,7 +65,7 @@ class ViewModelFactory constructor(
             isAssignableFrom(MyRoutinesViewModel::class.java) -> MyRoutinesViewModel(routineRepository =  routineRepository)
             isAssignableFrom(FavRoutinesViewModel::class.java) -> FavRoutinesViewModel(routineRepository =  routineRepository)
             isAssignableFrom(DetailedRoutineViewModel::class.java) -> DetailedRoutineViewModel(routineRepository =  routineRepository, id!!)
-            isAssignableFrom(ExecRoutineViewModel::class.java) -> ExecRoutineViewModel(routineId = id!!, settingsManager = settingsManager)
+            isAssignableFrom(ExecRoutineViewModel::class.java) -> ExecRoutineViewModel(routineId = id!!, routineRepository = routineRepository, settingsManager = settingsManager)
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
