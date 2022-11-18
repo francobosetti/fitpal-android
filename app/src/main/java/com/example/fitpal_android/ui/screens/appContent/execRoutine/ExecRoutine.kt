@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -39,7 +40,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun ExecRoutine(
     routineId: Int?,
     onBackPressed: () -> Unit,
-    viewModel : ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId)),
+    viewModel: ExecRoutineViewModel = viewModel(factory = getViewModelFactory(routineId)),
 ) {
     if (viewModel.isDetailedMode()) {
         Surface(color = MaterialTheme.colors.background) {
@@ -48,9 +49,9 @@ fun ExecRoutine(
                     .fillMaxWidth()
                     .fillMaxHeight(),
             ) {
-                Row{
+                Row {
                     Text(
-                        text = stringResource(R.string.cycle) + ' ' + (viewModel.getCurrentCycleIndex()  +  1) + ": " + viewModel.getCurrentCycleName(),
+                        text = stringResource(R.string.cycle) + ' ' + (viewModel.getCurrentCycleIndex() + 1) + ": " + viewModel.getCurrentCycleName(),
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
@@ -58,10 +59,10 @@ fun ExecRoutine(
                             fontSize = 30.sp,
                             textAlign = TextAlign.Center
                         ),
-                        color= Color.White
+                        color = Color.White
                     )
                 }
-                Row{
+                Row {
                     Text(
                         text = viewModel.getCurrentExerciseName(),
                         modifier = Modifier
@@ -71,7 +72,7 @@ fun ExecRoutine(
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
-                        color= Color.White
+                        color = Color.White
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -82,11 +83,12 @@ fun ExecRoutine(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if(viewModel.getReps() == 0)
+                    if (viewModel.getReps() == 0)
                         CountDownView(viewModel = viewModel)
-                    else{
+                    else {
                         Text(
-                            text = viewModel.getReps().toString() + stringResource(R.string.reps_exercise),
+                            text = viewModel.getReps()
+                                .toString() + stringResource(R.string.reps_exercise),
                             color = Color.White,
                             //fontFamily = FontFamily(Font(R.font.poppins_semibold)),
                             style = MaterialTheme.typography.h2,
@@ -103,7 +105,7 @@ fun ExecRoutine(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if(viewModel.getCurrentExerciseIndex() > 0 || viewModel.getCurrentCycleIndex() > 0){
+                    if (viewModel.getCurrentExerciseIndex() > 0 || viewModel.getCurrentCycleIndex() > 0) {
                         Button(
                             onClick = { viewModel.previousExercise() },
                             modifier = Modifier
@@ -119,11 +121,11 @@ fun ExecRoutine(
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center
                                 ),
-                                color= Color.White
+                                color = Color.White
                             )
                         }
                     }
-                    if(viewModel.getCurrentExerciseIndex() < viewModel.getExercisesSize() - 1){
+                    if (viewModel.getCurrentExerciseIndex() < viewModel.getExercisesSize() - 1) {
                         Button(
                             onClick = { viewModel.nextExercise() },
                             modifier = Modifier
@@ -139,11 +141,10 @@ fun ExecRoutine(
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center
                                 ),
-                                color= Color.White
+                                color = Color.White
                             )
                         }
-                    }
-                    else if(viewModel.getCurrentCycleIndex() < viewModel.getCyclesSize() - 1){
+                    } else if (viewModel.getCurrentCycleIndex() < viewModel.getCyclesSize() - 1) {
                         Button(
                             onClick = { viewModel.nextCycle() },
                             modifier = Modifier
@@ -159,11 +160,10 @@ fun ExecRoutine(
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center
                                 ),
-                                color= Color.White
+                                color = Color.White
                             )
                         }
-                    }
-                    else{
+                    } else {
                         Button(
                             onClick = { onBackPressed() },
                             modifier = Modifier
@@ -179,7 +179,7 @@ fun ExecRoutine(
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center
                                 ),
-                                color= Color.White
+                                color = Color.White
                             )
                         }
                     }
@@ -188,7 +188,27 @@ fun ExecRoutine(
         }
     } else {
         //TODO: Implementar la pantalla de exec simple
-        Text(text = "Simple mode")
+        LazyColumn(content = {
+            items(viewModel.getCyclesSize()) { index ->
+                Text(text = viewModel.getCycle(index).name, style = MaterialTheme.typography.h5)
+
+                for (exercise in viewModel.getCycle(index).exercises) {
+
+                    /*val exerciseInfoText =
+                        if (exercise.duration == 0) exercise.repetitions.toString() + " reps" else exercise.duration.toString() + "s"
+
+                    Text(text = exercise.exercise.name + " - " + exerciseInfoText)*/
+
+                    ExerciseInRoutineCard(
+                        exerciseName = exercise.exercise.name,
+                        reps = exercise.repetitions,
+                        time = exercise.duration.toString(),
+                        modifier = Modifier
+                            .padding(10.dp)
+                    )
+                }
+            }
+        })
     }
 }
 
@@ -199,7 +219,7 @@ fun CountDownIndicator(
     time: String,
     size: Int,
     stroke: Int
-){
+) {
 
     val animatedProgress by animateFloatAsState(
         targetValue = progress,
@@ -250,7 +270,7 @@ fun CircularProgressIndicatorBackGround(
 
     Canvas(modifier = modifier, onDraw = {
 
-        val innerRadius = (size.minDimension - style.width)/2
+        val innerRadius = (size.minDimension - style.width) / 2
 
         drawArc(
             color = color,
@@ -273,33 +293,33 @@ fun CountDownButton(
     text: String,
     optionSelected: () -> Unit
 ) {
-        Button(
-            onClick = {
-                optionSelected()
-            },
-            modifier =
-            Modifier
-                .padding(start = 10.dp, end = 10.dp)
-                .height(70.dp)
-                .width(150.dp),
+    Button(
+        onClick = {
+            optionSelected()
+        },
+        modifier =
+        Modifier
+            .padding(start = 10.dp, end = 10.dp)
+            .height(70.dp)
+            .width(150.dp),
 
-            shape = RoundedCornerShape(25.dp),
+        shape = RoundedCornerShape(25.dp),
 
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = colorResource(id = R.color.primary),
-                contentColor = colorResource(id = R.color.primary),
-            ),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = colorResource(id = R.color.primary),
+            contentColor = colorResource(id = R.color.primary),
+        ),
 
-            )
+        )
 
-        {
-            Text(
-                text = text,
-                fontSize = 20.sp,
-                color = Color.White,
-                //fontFamily = FontFamily(Font(R.font.poppins_semibold))
-            )
-        }
+    {
+        Text(
+            text = text,
+            fontSize = 20.sp,
+            color = Color.White,
+            //fontFamily = FontFamily(Font(R.font.poppins_semibold))
+        )
+    }
 }
 
 @Composable
@@ -344,15 +364,27 @@ fun CountDownScreen(
         )
 
         Row {
-            if(isPaused)
-                CountDownButton(text = stringResource(R.string.resume_exercise), optionSelected = start)
-            else if(isPlaying)
-                CountDownButton(text = stringResource(R.string.pause_exercise), optionSelected = pause)
+            if (isPaused)
+                CountDownButton(
+                    text = stringResource(R.string.resume_exercise),
+                    optionSelected = start
+                )
+            else if (isPlaying)
+                CountDownButton(
+                    text = stringResource(R.string.pause_exercise),
+                    optionSelected = pause
+                )
 
-            if(isPaused || isPlaying)
-                CountDownButton(text = stringResource(R.string.stop_exercise), optionSelected = stop)
+            if (isPaused || isPlaying)
+                CountDownButton(
+                    text = stringResource(R.string.stop_exercise),
+                    optionSelected = stop
+                )
             else
-                CountDownButton(text = stringResource(R.string.start_exercise), optionSelected = start)
+                CountDownButton(
+                    text = stringResource(R.string.start_exercise),
+                    optionSelected = start
+                )
         }
 
     }

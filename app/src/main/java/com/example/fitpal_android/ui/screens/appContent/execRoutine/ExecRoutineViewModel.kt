@@ -151,4 +151,9 @@ class ExecRoutineViewModel(
     fun isDetailedMode() = uiState.executionMode == ExecRoutineState.DETAILED_MODE
 
     fun isSimpleMode() = uiState.executionMode == ExecRoutineState.SIMPLE_MODE
+
+    fun getCycle(cycleIndex: Int) = uiState.cycles[cycleIndex]
+
+    fun getCycleExercises(cycleIndex: Int) = uiState.cycles[cycleIndex].exercises
+
 }
