@@ -38,13 +38,13 @@ fun Profile(
     viewModel: ProfileViewModel
 ) {
 
-    Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
+    val profileState = viewModel.profileState
+    val profileFormState = viewModel.profileFormState
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
 
-        val profileState = viewModel.profileState
-        val profileFormState = viewModel.profileFormState
-        val context = LocalContext.current
-        val focusManager = LocalFocusManager.current
-        val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+    Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
 
         LaunchedEffect(key1 = context) {
             viewModel.validationEvents.collect {
@@ -355,5 +355,4 @@ fun Profile(
         )
          */
     }
-
 }
