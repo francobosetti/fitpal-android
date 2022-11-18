@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.invalidateGroupsWithKey
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -187,28 +188,48 @@ fun ExecRoutine(
             }
         }
     } else {
-        //TODO: Implementar la pantalla de exec simple
-        LazyColumn(content = {
-            items(viewModel.getCyclesSize()) { index ->
-                Text(text = viewModel.getCycle(index).name, style = MaterialTheme.typography.h5)
+        Column() {
+            LazyColumn(content = {
+                items(viewModel.getCyclesSize()) { index ->
+                    Text(text = viewModel.getCycle(index).name, style = MaterialTheme.typography.h5)
 
-                for (exercise in viewModel.getCycle(index).exercises) {
+                    for (exercise in viewModel.getCycle(index).exercises) {
 
-                    /*val exerciseInfoText =
-                        if (exercise.duration == 0) exercise.repetitions.toString() + " reps" else exercise.duration.toString() + "s"
+                        /*val exerciseInfoText =
+                            if (exercise.duration == 0) exercise.repetitions.toString() + " reps" else exercise.duration.toString() + "s"
 
-                    Text(text = exercise.exercise.name + " - " + exerciseInfoText)*/
+                        Text(text = exercise.exercise.name + " - " + exerciseInfoText)*/
 
-                    ExerciseInRoutineCard(
-                        exerciseName = exercise.exercise.name,
-                        reps = exercise.repetitions,
-                        time = exercise.duration.toString(),
-                        modifier = Modifier
-                            .padding(10.dp)
-                    )
+                        ExerciseInRoutineCard(
+                            exerciseName = exercise.exercise.name,
+                            reps = exercise.repetitions,
+                            time = exercise.duration.toString(),
+                            modifier = Modifier
+                                .padding(10.dp)
+                        )
+                    }
                 }
+            })
+            Button(
+                onClick = { onBackPressed() },
+                modifier = Modifier
+                    .padding(start = 10.dp, end = 10.dp)
+                    .height(50.dp)
+                    .width(150.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
+            ) {
+                Text(
+                    text = stringResource(R.string.finish_button),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                    color = Color.White
+                )
             }
-        })
+        }
+
     }
 }
 
