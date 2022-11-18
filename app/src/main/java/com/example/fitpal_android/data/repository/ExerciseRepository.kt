@@ -22,8 +22,8 @@ class ExerciseRepository(
         exerciseMutex.lock()
 
         val exercises = exerciseRemoteDataSource.getExercises(page, pageSize).content.map { networkExercise ->
-            val videoUrl = exerciseRemoteDataSource.getExerciseVideo(networkExercise.id).content.first().url
-            networkExercise.asModel(videoUrl)
+            val imageUrl = exerciseRemoteDataSource.getExerciseImage(networkExercise.id).content.first().url
+            networkExercise.asModel(imageUrl)
         }
         this.exercises = exercises
 
