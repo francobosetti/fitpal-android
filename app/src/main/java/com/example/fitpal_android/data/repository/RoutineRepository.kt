@@ -116,9 +116,7 @@ class RoutineRepository(
     }
 
     // Fetches the latest favorite routines from the network.
-    suspend fun fetchFavoriteRoutines(orderBy: String?, direction: String?) {
-        val resp = handleParameters(orderBy, direction)
-
+    suspend fun fetchFavoriteRoutines() {
         favoriteRoutineMutex.lock()
 
         val favoriteRoutines = routineRemoteDataSource.getFavoriteRoutines(
@@ -174,15 +172,15 @@ class RoutineRepository(
     }
 
     // Returns the cached favorite routines.
-    suspend fun getFavoriteRoutines(orderBy: String?, direction: String?): List<Routine> {
+    suspend fun getFavoriteRoutines(): List<Routine> {
 
-        //if (routines.isEmpty()) {
-        fetchRoutines(orderBy, direction)
-        //}
+        if (routines.isEmpty()) {
+        fetchRoutines(null, null)
+        }
 
-        //if (favoriteRoutines.isEmpty()) {
-        fetchFavoriteRoutines(orderBy, direction)
-        // }
+        if (favoriteRoutines.isEmpty()) {
+        fetchFavoriteRoutines()
+        }
 
         // Get routines that have the same id as the favorite routines.
         return routineMutex.withLock {
@@ -197,13 +195,13 @@ class RoutineRepository(
     // Returns the cached user routines.
     suspend fun getCurrentUserRoutines(orderBy: String?, direction: String?): List<Routine> {
 
-        //if (routines.isEmpty()) {
-        fetchRoutines(orderBy, direction)
-        //}
+        if (routines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
+            fetchRoutines(orderBy, direction)
+        }
 
-        //if (userRoutines.isEmpty()) {
-        fetchCurrentUserRoutines(orderBy, direction)
-        //}
+        if (userRoutines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
+            fetchCurrentUserRoutines(orderBy, direction)
+        }
 
         // Get routines that have the same id as the user routines.
         return routineMutex.withLock {
@@ -260,7 +258,7 @@ class RoutineRepository(
     suspend fun addFavoriteRoutine(routineId: Int) {
         // Add the routine id to the favorite routines.
         routineRemoteDataSource.addFavoriteRoutine(routineId)
-        fetchFavoriteRoutines(defaultOrdering, defaultDirection)
+        fetchFavoriteRoutines()
 
     }
 
@@ -269,7 +267,7 @@ class RoutineRepository(
         // Remove the routine id from the favorite routines.
         routineRemoteDataSource.removeFavoriteRoutine(routineId)
 
-        fetchFavoriteRoutines(defaultOrdering, defaultDirection)
+        fetchFavoriteRoutines()
     }
 
     // Rates a routine.

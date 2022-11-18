@@ -47,7 +47,7 @@ fun ExecRoutine(
             ) {
                 Row{
                     Text(
-                        text = stringResource(R.string.cycle) + ' ' + (viewModel.getCurrentCycleIndex()  +  1),
+                        text = stringResource(R.string.cycle) + ' ' + (viewModel.getCurrentCycleIndex()  +  1) + ": " + viewModel.getCurrentCycleName(),
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
@@ -91,7 +91,7 @@ fun ExecRoutine(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.weight(0.5f))
+                Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,9 +104,9 @@ fun ExecRoutine(
                         Button(
                             onClick = { viewModel.previousExercise() },
                             modifier = Modifier
-                                .padding(start = 30.dp, end = 30.dp)
+                                .padding(start = 10.dp, end = 10.dp)
                                 .height(50.dp)
-                                .width(120.dp),
+                                .width(150.dp),
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Orange500)
                         ) {
@@ -124,9 +124,9 @@ fun ExecRoutine(
                         Button(
                             onClick = { viewModel.nextExercise() },
                             modifier = Modifier
-                                .padding(start = 30.dp, end = 30.dp)
+                                .padding(start = 10.dp, end = 10.dp)
                                 .height(50.dp)
-                                .width(120.dp),
+                                .width(150.dp),
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                         ) {
@@ -144,9 +144,9 @@ fun ExecRoutine(
                         Button(
                             onClick = { viewModel.nextCycle() },
                             modifier = Modifier
-                                .padding(start = 30.dp, end = 30.dp)
+                                .padding(start = 10.dp, end = 10.dp)
                                 .height(50.dp)
-                                .width(120.dp),
+                                .width(150.dp),
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                         ) {
@@ -164,9 +164,9 @@ fun ExecRoutine(
                         Button(
                             onClick = { onBackPressed() },
                             modifier = Modifier
-                                .padding(start = 30.dp, end = 30.dp)
+                                .padding(start = 10.dp, end = 10.dp)
                                 .height(50.dp)
-                                .width(120.dp),
+                                .width(150.dp),
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Orange500),
                         ) {

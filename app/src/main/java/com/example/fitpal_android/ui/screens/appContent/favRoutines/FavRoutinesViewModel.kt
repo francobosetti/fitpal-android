@@ -28,7 +28,7 @@ class FavRoutinesViewModel(
         viewModelScope.launch {
             favRoutinesState = favRoutinesState.copy(isFetching = true, error = "")
             try {
-                val routines = routineRepository.getFavoriteRoutines(null, null)
+                val routines = routineRepository.getFavoriteRoutines()
                 favRoutinesState = favRoutinesState.copy(
                     favRoutines = routines,
                     isFetching = false,
