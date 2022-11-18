@@ -1,23 +1,21 @@
 package com.example.fitpal_android
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.navigation.AuthNavHost
+import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExerciseViewModel
+import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutineViewModel
+import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutineViewModel
 import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesViewModel
@@ -49,6 +47,10 @@ class MainActivity : ComponentActivity() {
                 val profileViewModel = viewModel<ProfileViewModel>(factory = getViewModelFactory())
                 val settingsViewModel = viewModel<SettingsViewModel>(factory = getViewModelFactory())
 
+                val detailedRoutineViewModel = viewModel<DetailedRoutineViewModel>(factory = getViewModelFactory())
+                val execRoutineViewModel = viewModel<ExecRoutineViewModel>(factory = getViewModelFactory())
+                val detailedExerciseViewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory())
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState
@@ -64,13 +66,15 @@ class MainActivity : ComponentActivity() {
                             exercisesViewModel = exercisesViewModel,
                             profileViewModel = profileViewModel,
                             settingsViewModel = settingsViewModel,
-                            viewModel = mainScreenViewModel
+                            viewModel = mainScreenViewModel,
+                            detailedRoutineViewModel = detailedRoutineViewModel,
+                            execRoutineViewModel = execRoutineViewModel,
+                            detailedExerciseViewModel = detailedExerciseViewModel
                         )
                     } else {
                         AuthNavHost(
                             scaffoldState = scaffoldState,
                             onAuthentication = {
-
                                 // Update view models with new user info
                                 myRoutinesViewModel.updateRoutines()
                                 favRoutinesViewModel.updateRoutines()
@@ -78,8 +82,6 @@ class MainActivity : ComponentActivity() {
                                 exercisesViewModel.updateExercises()
                                 profileViewModel.updateUser()
                                 mainScreenViewModel.updateAvatarUrl()
-
-
                                 mainActivityViewModel.loggedIn()
                             }
                         )

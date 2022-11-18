@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,7 +15,10 @@ import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutine
 import com.example.fitpal_android.ui.screens.appContent.exercises.Exercises
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExercise
+import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExerciseViewModel
 import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutine
+import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutineViewModel
+import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutineViewModel
 import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutines
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
@@ -28,7 +30,6 @@ import com.example.fitpal_android.ui.screens.appContent.profile.Profile
 import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
 import com.example.fitpal_android.ui.screens.appContent.settings.Settings
 import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
-import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun AppContentNavHost(
@@ -41,6 +42,9 @@ fun AppContentNavHost(
     exercisesViewModel: ExercisesViewModel,
     profileViewModel: ProfileViewModel,
     settingsViewModel: SettingsViewModel,
+    detailedExerciseViewModel: DetailedExerciseViewModel,
+    execRoutineViewModel: ExecRoutineViewModel,
+    detailedRoutineViewModel: DetailedRoutineViewModel,
 ) {
 
     val currentContext = LocalContext.current
@@ -114,9 +118,10 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de ejercicios
-            DetailedExercise(it.arguments?.getInt("exerciseId"), onBackPressed = {
-                navController.popBackStack()
-            })
+            DetailedExercise(it.arguments?.getInt("exerciseId"),
+                onBackPressed = { navController.popBackStack() },
+                viewModel = detailedExerciseViewModel
+            )
         }
 
         // Detailed Routine
@@ -155,7 +160,8 @@ fun AppContentNavHost(
                     myRoutinesViewModel.updateRoutines()
                     exploreRoutinesViewModel.updateRoutines()
                     favRoutinesViewModel.updateRoutines()
-                }
+                },
+                viewModel = detailedRoutineViewModel
             )
         }
 
@@ -169,6 +175,7 @@ fun AppContentNavHost(
                 onBackPressed = {
                     navController.popBackStack()
                 },
+                viewModel = execRoutineViewModel
             )
         }
     }

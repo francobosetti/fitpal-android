@@ -17,7 +17,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun DetailedExercise(
     exerciseId: Int?,
     onBackPressed: () -> Unit,
-    viewModel: DetailedExerciseViewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory(exerciseId))
+    viewModel: DetailedExerciseViewModel
 ) {
     val detailedExerciseState = viewModel.detailedExerciseState
 

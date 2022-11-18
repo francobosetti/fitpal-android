@@ -10,20 +10,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fitpal_android.Screens
 import com.example.fitpal_android.ui.components.NavigationDrawer
 import com.example.fitpal_android.ui.components.TopBar
 import com.example.fitpal_android.ui.navigation.AppContentNavHost
+import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExerciseViewModel
+import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutineViewModel
+import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutineViewModel
 import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
 import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
-import com.example.fitpal_android.util.getViewModelFactory
 import kotlinx.coroutines.launch
 
 // TODO: Ver Que onda con este warning
@@ -38,7 +39,10 @@ fun MainScreen(
     exercisesViewModel: ExercisesViewModel,
     profileViewModel: ProfileViewModel,
     settingsViewModel: SettingsViewModel,
-    viewModel: MainScreenViewModel
+    viewModel: MainScreenViewModel,
+    detailedRoutineViewModel: DetailedRoutineViewModel,
+    execRoutineViewModel: ExecRoutineViewModel,
+    detailedExerciseViewModel: DetailedExerciseViewModel
 ) {
     // A surface container using the 'background' color from the theme
     val scope = rememberCoroutineScope()
@@ -112,7 +116,10 @@ fun MainScreen(
             exploreRoutinesViewModel = exploreRoutinesViewModel,
             exercisesViewModel = exercisesViewModel,
             profileViewModel = profileViewModel,
-            settingsViewModel = settingsViewModel
+            settingsViewModel = settingsViewModel,
+            detailedExerciseViewModel = detailedExerciseViewModel,
+            execRoutineViewModel = execRoutineViewModel,
+            detailedRoutineViewModel = detailedRoutineViewModel,
         )
     }
 }

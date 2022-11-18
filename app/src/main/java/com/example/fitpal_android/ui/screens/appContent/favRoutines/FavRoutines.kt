@@ -24,7 +24,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 @Composable
 fun FavRoutines(
     onItemClicked: (Int) -> Unit,
-    viewModel: FavRoutinesViewModel = viewModel(factory = getViewModelFactory())
+    viewModel: FavRoutinesViewModel
 ) {
     val favRoutinesState = viewModel.favRoutinesState
     val configuration = LocalConfiguration.current

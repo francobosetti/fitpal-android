@@ -25,10 +25,10 @@ fun DetailedRoutine(
     onStartPressed: (Int?) -> Unit,
     onSharePressed: (Int?) -> Unit,
     onFavoritePressed: () -> Unit,
-    onRatingSubmit: () -> Unit
+    onRatingSubmit: () -> Unit,
+    viewModel: DetailedRoutineViewModel
 ) {
 
-    val viewModel = viewModel<DetailedRoutineViewModel>(factory = getViewModelFactory(routineId))
     val detailedRoutineState = viewModel.detailedRoutineState
     val context = LocalContext.current
 

@@ -29,7 +29,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun ExploreRoutines(
     scaffoldState: ScaffoldState,
     onItemClicked: (Int) -> Unit,
-    viewModel: ExploreRoutinesViewModel = viewModel(factory = getViewModelFactory())
+    viewModel: ExploreRoutinesViewModel
 ) {
     val exploreRoutinesState = viewModel.exploreRoutinesState
     val configuration = LocalConfiguration.current

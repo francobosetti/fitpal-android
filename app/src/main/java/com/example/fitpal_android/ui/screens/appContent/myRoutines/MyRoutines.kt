@@ -26,7 +26,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 @Composable
 fun MyRoutines(
     onItemClicked: (Int) -> Unit,
-    viewModel: MyRoutinesViewModel = viewModel(factory = getViewModelFactory())
+    viewModel: MyRoutinesViewModel
 ) {
     val myRoutinesState = viewModel.myRoutinesState
 
