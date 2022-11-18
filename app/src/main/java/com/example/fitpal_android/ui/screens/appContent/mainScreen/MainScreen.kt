@@ -40,9 +40,6 @@ fun MainScreen(
     profileViewModel: ProfileViewModel,
     settingsViewModel: SettingsViewModel,
     viewModel: MainScreenViewModel,
-    detailedRoutineViewModel: DetailedRoutineViewModel,
-    execRoutineViewModel: ExecRoutineViewModel,
-    detailedExerciseViewModel: DetailedExerciseViewModel
 ) {
     // A surface container using the 'background' color from the theme
     val scope = rememberCoroutineScope()
@@ -117,9 +114,6 @@ fun MainScreen(
             exercisesViewModel = exercisesViewModel,
             profileViewModel = profileViewModel,
             settingsViewModel = settingsViewModel,
-            detailedExerciseViewModel = detailedExerciseViewModel,
-            execRoutineViewModel = execRoutineViewModel,
-            detailedRoutineViewModel = detailedRoutineViewModel,
         )
     }
 }

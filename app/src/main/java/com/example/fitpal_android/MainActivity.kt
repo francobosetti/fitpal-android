@@ -47,10 +47,6 @@ class MainActivity : ComponentActivity() {
                 val profileViewModel = viewModel<ProfileViewModel>(factory = getViewModelFactory())
                 val settingsViewModel = viewModel<SettingsViewModel>(factory = getViewModelFactory())
 
-                val detailedRoutineViewModel = viewModel<DetailedRoutineViewModel>(factory = getViewModelFactory())
-                val execRoutineViewModel = viewModel<ExecRoutineViewModel>(factory = getViewModelFactory())
-                val detailedExerciseViewModel = viewModel<DetailedExerciseViewModel>(factory = getViewModelFactory())
-
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState
@@ -67,9 +63,6 @@ class MainActivity : ComponentActivity() {
                             profileViewModel = profileViewModel,
                             settingsViewModel = settingsViewModel,
                             viewModel = mainScreenViewModel,
-                            detailedRoutineViewModel = detailedRoutineViewModel,
-                            execRoutineViewModel = execRoutineViewModel,
-                            detailedExerciseViewModel = detailedExerciseViewModel
                         )
                     } else {
                         AuthNavHost(

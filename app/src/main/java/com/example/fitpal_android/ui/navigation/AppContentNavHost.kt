@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -30,6 +31,7 @@ import com.example.fitpal_android.ui.screens.appContent.profile.Profile
 import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
 import com.example.fitpal_android.ui.screens.appContent.settings.Settings
 import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
+import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun AppContentNavHost(
@@ -42,9 +44,6 @@ fun AppContentNavHost(
     exercisesViewModel: ExercisesViewModel,
     profileViewModel: ProfileViewModel,
     settingsViewModel: SettingsViewModel,
-    detailedExerciseViewModel: DetailedExerciseViewModel,
-    execRoutineViewModel: ExecRoutineViewModel,
-    detailedRoutineViewModel: DetailedRoutineViewModel,
 ) {
     val currentContext = LocalContext.current
 
@@ -120,11 +119,12 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de ejercicios
+            val exerciseId = it.arguments?.getInt("exerciseId")
             DetailedExercise(
                 scaffoldState = scaffoldState,
-                exerciseId = it.arguments?.getInt("exerciseId"),
+                exerciseId = exerciseId,
                 onBackPressed = { navController.popBackStack() },
-                viewModel = detailedExerciseViewModel
+                viewModel = viewModel(factory = getViewModelFactory(exerciseId))
             )
         }
 
@@ -140,8 +140,10 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de rutinas
-
-            DetailedRoutine(it.arguments?.getInt("routineId"),
+            val routineId = it.arguments?.getInt("routineId")
+            DetailedRoutine(
+                routineId = routineId,
+                viewModel = viewModel(factory = getViewModelFactory(routineId)),
                 onStartPressed = { routineId ->
                     navController.navigate("ExecRoutine/$routineId")
                 },
@@ -165,7 +167,6 @@ fun AppContentNavHost(
                     exploreRoutinesViewModel.updateRoutines()
                     favRoutinesViewModel.updateRoutines()
                 },
-                viewModel = detailedRoutineViewModel
             )
         }
 
@@ -174,12 +175,13 @@ fun AppContentNavHost(
             Screens.ExecRoutine.route,
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
+            val routineId = it.arguments?.getInt("routineId")
             ExecRoutine(
-                routineId = it.arguments?.getInt("routineId"),
+                routineId = routineId,
                 onBackPressed = {
                     navController.popBackStack()
                 },
-                viewModel = execRoutineViewModel
+                viewModel = viewModel(factory = getViewModelFactory(routineId))
             )
         }
     }
