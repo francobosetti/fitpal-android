@@ -31,7 +31,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.ProgressButton
 import com.example.fitpal_android.ui.screens.ValidationEvent
-import com.example.fitpal_android.ui.screens.authentication.verify.VerifyFormEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
@@ -86,7 +85,7 @@ fun LogIn(
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         Image(
-            painter = painterResource(id = R.drawable.fitpal_horizontallogo),
+            painter = painterResource(id = R.drawable.fitpal_horizontal_logo),
             contentDescription = "Fitpal Logo",
             modifier = Modifier.padding(16.dp),
         )
