@@ -29,13 +29,14 @@ fun MyRoutines(
 
     val configuration = LocalConfiguration.current
     Surface(color = MaterialTheme.colors.background) {
-        //TODO: PUT TOP_ORDER_AND_SEARCH_HERE
-        Column(modifier = Modifier.padding(10.dp)){
-            TopOrderAndSearch { order: String, dir: String ->
-                viewModel.orderBy(
-                    order,
-                    dir
-                )
+        Column{
+            Box(modifier = Modifier.padding(8.dp)) {
+                TopOrderAndSearch { order: String, dir: String ->
+                    viewModel.orderBy(
+                        order,
+                        dir
+                    )
+                }
             }
             if(myRoutinesState.isFetching) {
                 Box(
