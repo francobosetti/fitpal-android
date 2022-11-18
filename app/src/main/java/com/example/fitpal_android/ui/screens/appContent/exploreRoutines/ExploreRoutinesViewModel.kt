@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.data.model.Routine
 import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.RoutineRepository
@@ -29,6 +30,10 @@ class ExploreRoutinesViewModel(
     }
 
     fun updateRoutines() {
+        if (!FitpalApplication.isUserLoggedIn()) {
+            return
+        }
+
         viewModelScope.launch {
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true)
 

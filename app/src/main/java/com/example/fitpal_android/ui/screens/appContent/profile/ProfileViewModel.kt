@@ -97,6 +97,10 @@ class ProfileViewModel(
     }
 
     fun updateUser() {
+        if (!userRepository.isLoggedIn()) {
+            return
+        }
+
         viewModelScope.launch {
             profileState = profileState.copy(isFetching = true)
             try {

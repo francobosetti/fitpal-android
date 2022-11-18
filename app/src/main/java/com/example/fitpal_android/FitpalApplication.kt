@@ -48,5 +48,9 @@ class FitpalApplication : Application() {
         private lateinit var userRemoteDataSource: UserRemoteDataSource
         private lateinit var exerciseRemoteDataSource: ExerciseRemoteDataSource
         private lateinit var routineRemoteDataSource: RoutineRemoteDataSource
+
+        fun isUserLoggedIn(): Boolean {
+            return sessionManager.loadAuthToken() != null
+        }
     }
 }

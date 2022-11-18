@@ -35,6 +35,10 @@ class MainScreenViewModel(
 
 
     fun updateAvatarUrl() {
+        if (!userRepository.isLoggedIn()) {
+            return
+        }
+
         viewModelScope.launch {
             try{
                 mainScreenState = mainScreenState.copy(isFetching = true)

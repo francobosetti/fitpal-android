@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.data.model.Exercise
 import com.example.fitpal_android.data.repository.ExerciseRepository
 import kotlinx.coroutines.launch
@@ -27,6 +28,11 @@ class ExercisesViewModel(
     }
 
     fun updateExercises() {
+
+        if (!FitpalApplication.isUserLoggedIn()) {
+            return
+        }
+
         viewModelScope.launch {
             exercisesState = exercisesState.copy(isFetching = true, error = "")
 
