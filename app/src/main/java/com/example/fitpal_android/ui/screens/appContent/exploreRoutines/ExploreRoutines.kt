@@ -52,7 +52,7 @@ fun ExploreRoutines(
 
     Surface(color = MaterialTheme.colors.background) {
         Column {
-            Box(modifier = Modifier.padding(8.dp)) {
+            Box(modifier = Modifier.padding(20.dp)) {
                 OrderByDropdown { order: String, dir: String ->
                     viewModel.orderBy(
                         order,
