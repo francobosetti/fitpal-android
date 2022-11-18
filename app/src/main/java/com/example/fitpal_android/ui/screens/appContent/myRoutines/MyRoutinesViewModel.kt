@@ -26,30 +26,32 @@ class MyRoutinesViewModel(
         viewModelScope.launch {
             myRoutinesState = myRoutinesState.copy(isFetching = true, error = "")
 
-            try {
+            myRoutinesState = try {
                 val routines = routineRepository.getCurrentUserRoutines("name", "asc")
-                myRoutinesState = myRoutinesState.copy(
+                myRoutinesState.copy(
                     myRoutines = routines,
-                    isFetching = false,
                     error = ""
                 )
             } catch (e: Exception) {
-                myRoutinesState = myRoutinesState.copy(
-                    isFetching = false,
+                myRoutinesState.copy(
                     error = e.message ?: "Unknown error"
                 )
             }
+            myRoutinesState = myRoutinesState.copy(isFetching = false)
         }
     }
 
     fun orderBy(orderBy: String, direction: String) {
         viewModelScope.launch {
+            myRoutinesState = myRoutinesState.copy(isFetching = true, error = "")
+
             try {
                 val routines = routineRepository.getCurrentUserRoutines(orderBy, direction)
                 myRoutinesState = myRoutinesState.copy(myRoutines = routines)
             } catch (e : Exception) {
                 // TODO: do smth
             }
+            myRoutinesState = myRoutinesState.copy(isFetching = false)
         }
     }
 }

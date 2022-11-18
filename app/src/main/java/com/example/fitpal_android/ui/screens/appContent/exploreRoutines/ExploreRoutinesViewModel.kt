@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.data.model.Routine
 import com.example.fitpal_android.data.repository.RoutineRepository
 import kotlinx.coroutines.launch
+import kotlin.math.exp
 
 class ExploreRoutinesViewModel(
     private val routineRepository: RoutineRepository
@@ -27,31 +28,32 @@ class ExploreRoutinesViewModel(
         viewModelScope.launch {
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true, error = "")
 
-            try {
+            exploreRoutinesState = try {
                 routineRepository.fetchRoutines(null, null)
                 val routines = routineRepository.getRoutines(null, null)
-                exploreRoutinesState = exploreRoutinesState.copy(
+                exploreRoutinesState.copy(
                     otherRoutines = routines,
-                    isFetching = false,
                     error = ""
                 )
             } catch (e: Exception) {
-                exploreRoutinesState = exploreRoutinesState.copy(
-                    isFetching = false,
+                exploreRoutinesState.copy(
                     error = e.message ?: "Unknown error"
                 )
             }
+            exploreRoutinesState = exploreRoutinesState.copy(isFetching = false)
         }
     }
 
     fun orderBy(orderBy: String, direction: String) {
         viewModelScope.launch {
+            exploreRoutinesState = exploreRoutinesState.copy(isFetching = true, error = "")
             try {
                 val routines = routineRepository.getRoutines(orderBy, direction)
                 exploreRoutinesState = exploreRoutinesState.copy(otherRoutines = routines)
             } catch (e: Exception) {
                 // TODO: do smth
             }
+            exploreRoutinesState = exploreRoutinesState.copy(isFetching = false)
         }
     }
 }
