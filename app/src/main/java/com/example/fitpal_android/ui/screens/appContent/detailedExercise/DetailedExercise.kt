@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -51,7 +49,7 @@ fun DetailedExercise(
                 if (detailedExerciseState.exercise != null) {
                     DetailedExerciseCard(
                         name = detailedExerciseState.exercise.name,
-                        videoUrl = detailedExerciseState.exercise.videoUrl,
+                        videoUrl = detailedExerciseState.exercise.imageUrl,
                         tags = detailedExerciseState.exercise.tags,
                         description = detailedExerciseState.exercise.description
                     )

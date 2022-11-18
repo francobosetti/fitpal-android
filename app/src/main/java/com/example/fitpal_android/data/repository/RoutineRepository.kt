@@ -272,9 +272,6 @@ class RoutineRepository(
 
     // Rates a routine.
     suspend fun rateRoutine(routineId: Int, rating: Double) {
-
-        // TODO: si el usuario ya ha valorado la rutina, se deberia actualizar la valoracion, la api no t permite hacerlo, nose si hacer q el usuario vote muchas veces o no dejarle
-
         routineRemoteDataSource.addRoutineReview(routineId, rating)
     }
 

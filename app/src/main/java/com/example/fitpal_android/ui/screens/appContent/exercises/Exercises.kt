@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
@@ -15,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.fitpal_android.ui.components.cards.ExerciseCard
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun Exercises(
@@ -39,7 +36,7 @@ fun Exercises(
                     items(exercisesState.exercises.size) {
                         ExerciseCard(
                             name = exercisesState.exercises[it].name,
-                            videoUrl = exercisesState.exercises[it].videoUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
+                            imageUrl = exercisesState.exercises[it].imageUrl,
                             tags = exercisesState.exercises[it].tags,
                             modifier = Modifier.clickable {
                                 onItemClicked(exercisesState.exercises[it].id)
@@ -59,7 +56,7 @@ fun Exercises(
                     items(exercisesState.exercises.size) {
                         ExerciseCard(
                             name = exercisesState.exercises[it].name,
-                            videoUrl = exercisesState.exercises[it].videoUrl, // TODO: REPLACE IMAGE URL OR VIDEO URL
+                            imageUrl = exercisesState.exercises[it].imageUrl,
                             tags = exercisesState.exercises[it].tags,
                             modifier = Modifier.clickable {
                                 onItemClicked(exercisesState.exercises[it].id)

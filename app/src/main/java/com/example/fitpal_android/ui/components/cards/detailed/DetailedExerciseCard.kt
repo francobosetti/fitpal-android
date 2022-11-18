@@ -26,10 +26,9 @@ fun DetailedExerciseCard(name: String, description: String, tags: List<String>, 
         Column {
 
             // Video thumbnail
-            /* TODO : implementar video (otra vez xd)*/
             AsyncImage(
                 model = videoUrl,
-                contentDescription = "Exercise video",
+                contentDescription = "Exercise image",
                 modifier = Modifier
                     .padding(12.dp)
                     .fillMaxWidth()

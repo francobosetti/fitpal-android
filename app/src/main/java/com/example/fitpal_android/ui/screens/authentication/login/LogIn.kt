@@ -111,7 +111,7 @@ fun LogIn(
                         viewModel.onEvent(LoginFormEvent.EmailChanged(it))
                     }
                 },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next), //TODO: elegir la accion
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(
                     onNext = { focusManager.moveFocus(FocusDirection.Next) }
                 ),
