@@ -22,6 +22,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import coil.compose.AsyncImage
 import com.example.fitpal_android.R
+import com.example.fitpal_android.ui.theme.Black000
 
 @Composable
 fun DetailedRoutineCard(
@@ -211,11 +212,11 @@ fun DetailedRoutineCard(
                                 onStarPressed = { rating -> onUpdateSelectedRatingCallback(rating) },
                                 starPressable = true
                             )
-
                             Button(
                                 onClick = { onRatingSubmitCallback(selectedRating); onDismissPopupCallback() },
                                 modifier = Modifier
                                     .padding(12.dp),
+                                enabled = (selectedRating != 0.0)
                             ) {
                                 // Center text
                                 Text(text = stringResource(R.string.post))

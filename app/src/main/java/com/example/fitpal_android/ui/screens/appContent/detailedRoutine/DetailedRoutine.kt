@@ -74,7 +74,7 @@ fun DetailedRoutine(
                     imageUrl = detailedRoutineState.routine.imageUrl,
                     modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                     rating = detailedRoutineState.routine.rating,
-                    selectedRating = detailedRoutineState.userRating,
+                    selectedRating = detailedRoutineState.reviewRating,
                     isFavorite = detailedRoutineState.routine.isFavorite,
                     onStartPressedCallback = { onStartPressed(routineId) },
                     onSharePressedCallback = { onSharePressed(routineId) },
@@ -83,7 +83,7 @@ fun DetailedRoutine(
                     showPopup = detailedRoutineState.showPopup,
                     onDismissPopupCallback = { viewModel.dismissPopup() },
                     onShowPopupCallback = { viewModel.showPopup() },
-                    onUpdateSelectedRatingCallback = {rating -> viewModel.updateUserRating(rating) },
+                    onUpdateSelectedRatingCallback = {rating -> viewModel.updateReviewRating(rating) },
                 )
             }
 
