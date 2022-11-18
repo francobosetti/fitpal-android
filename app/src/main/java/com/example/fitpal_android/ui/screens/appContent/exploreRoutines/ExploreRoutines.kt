@@ -7,31 +7,47 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.TopOrderAndSearch
 import com.example.fitpal_android.ui.components.cards.RoutineCard
+import com.example.fitpal_android.ui.screens.authentication.verify.VerifyFormEvent
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 import kotlinx.coroutines.launch
 
 @Composable
 fun ExploreRoutines(
+    scaffoldState: ScaffoldState,
     onItemClicked: (Int) -> Unit,
     viewModel: ExploreRoutinesViewModel = viewModel(factory = getViewModelFactory())
 ) {
     val exploreRoutinesState = viewModel.exploreRoutinesState
     val configuration = LocalConfiguration.current
+
+    // SnackBar used to communicate api Messages
+    exploreRoutinesState.apiMsg?.let {
+        val message = stringResource(exploreRoutinesState.apiMsg)
+        val actionLabel = stringResource(R.string.dismiss)
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel
+            )
+            when(result) {
+                SnackbarResult.Dismissed -> viewModel.dismiss()
+                SnackbarResult.ActionPerformed -> viewModel.dismiss()
+            }
+        }
+    }
+
     Surface(color = MaterialTheme.colors.background) {
         Column {
             Box(modifier = Modifier.padding(8.dp)) {

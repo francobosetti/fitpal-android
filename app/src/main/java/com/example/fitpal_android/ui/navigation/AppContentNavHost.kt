@@ -1,6 +1,7 @@
 package com.example.fitpal_android.ui.navigation
 
 import android.content.Intent
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,6 +32,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun AppContentNavHost(
+    scaffoldState: ScaffoldState,
     navController: NavHostController = rememberNavController(),
     onProfileUpdate: () -> Unit,
     myRoutinesViewModel: MyRoutinesViewModel,
@@ -63,6 +65,7 @@ fun AppContentNavHost(
         // Explore Routines
         composable(Screens.ExploreRoutines.route) {
             ExploreRoutines(
+                scaffoldState = scaffoldState,
                 onItemClicked = { routineId ->
                     navController.navigate("DetailedRoutine/$routineId")
                 },

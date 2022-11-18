@@ -104,6 +104,7 @@ fun MainScreen(
         },
     ) {
         AppContentNavHost(
+            scaffoldState = scaffoldState,
             navController = navController,
             onProfileUpdate = { scope.launch { viewModel.updateAvatarUrl() } },
             myRoutinesViewModel = myRoutinesViewModel,
