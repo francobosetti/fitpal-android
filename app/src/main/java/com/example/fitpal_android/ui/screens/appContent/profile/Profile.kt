@@ -35,11 +35,10 @@ import com.example.fitpal_android.util.getViewModelFactory
 @Composable
 fun Profile(
     onProfileUpdate: () -> Unit,
+    viewModel: ProfileViewModel
 ) {
 
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
-
-        val viewModel = viewModel<ProfileViewModel>(factory = getViewModelFactory())
 
         val profileState = viewModel.profileState
         val profileFormState = viewModel.profileFormState

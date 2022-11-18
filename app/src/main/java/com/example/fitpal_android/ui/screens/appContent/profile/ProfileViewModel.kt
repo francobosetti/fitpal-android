@@ -39,31 +39,7 @@ class ProfileViewModel(
     )
 
     init {
-        viewModelScope.launch {
-            profileState = profileState.copy(isFetching = true)
-            try {
-                val user = userRepository.getCurrentUser()
-
-                // Shouldn't be null
-                user!!
-
-                profileState = profileState.copy(
-                    firstname = user.firstname,
-                    lastname = user.lastname,
-                    email = user.email,
-                    avatarUrl = user.avatarUrl,
-                    isFetching = false,
-                )
-
-                profileFormState = profileFormState.copy(
-                    firstname = user.firstname,
-                    lastname = user.lastname,
-                    avatarUrl = user.avatarUrl,
-                )
-            } catch (e: Exception) {
-                //TODO: do smth
-            }
-        }
+        updateUser()
     }
 
     private val validationEventChannel = Channel<ValidationEvent>()
@@ -119,6 +95,34 @@ class ProfileViewModel(
             profileState = profileState.copy(
                 message = e.message,
                 isFetching = false)
+        }
+    }
+
+    fun updateUser() {
+        viewModelScope.launch {
+            profileState = profileState.copy(isFetching = true)
+            try {
+                val user = userRepository.getCurrentUser()
+
+                // Shouldn't be null
+                user!!
+
+                profileState = profileState.copy(
+                    firstname = user.firstname,
+                    lastname = user.lastname,
+                    email = user.email,
+                    avatarUrl = user.avatarUrl,
+                    isFetching = false,
+                )
+
+                profileFormState = profileFormState.copy(
+                    firstname = user.firstname,
+                    lastname = user.lastname,
+                    avatarUrl = user.avatarUrl,
+                )
+            } catch (e: Exception) {
+                //TODO: do smth
+            }
         }
     }
 

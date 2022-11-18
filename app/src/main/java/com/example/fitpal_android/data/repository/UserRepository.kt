@@ -62,4 +62,11 @@ class UserRepository(
             currentUser = remoteDataSource.updateUser(firstname, lastname, avatarUrl).asModel()
         }
     }
+
+    // Clears cache
+    suspend fun resetRepository() {
+        currentUserMutex.withLock {
+            currentUser = null
+        }
+    }
 }

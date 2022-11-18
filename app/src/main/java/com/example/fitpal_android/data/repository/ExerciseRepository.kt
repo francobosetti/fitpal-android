@@ -47,4 +47,11 @@ class ExerciseRepository(
 
         return exerciseMutex.withLock { this.exercises.find { it.id == id } }
     }
+
+    // Clears cache
+    suspend fun resetRepository() {
+        exerciseMutex.withLock {
+            this.exercises = emptyList()
+        }
+    }
 }

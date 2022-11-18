@@ -16,6 +16,7 @@ import com.example.fitpal_android.ui.screens.appContent.execRoutine.ExecRoutine
 import com.example.fitpal_android.ui.screens.appContent.exercises.Exercises
 import com.example.fitpal_android.ui.screens.appContent.detailedExercise.DetailedExercise
 import com.example.fitpal_android.ui.screens.appContent.detailedRoutine.DetailedRoutine
+import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutines
 import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutines
@@ -23,22 +24,27 @@ import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesV
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutines
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
 import com.example.fitpal_android.ui.screens.appContent.profile.Profile
+import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
 import com.example.fitpal_android.ui.screens.appContent.settings.Settings
+import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun AppContentNavHost(
     navController: NavHostController = rememberNavController(),
     onProfileUpdate: () -> Unit,
+    myRoutinesViewModel: MyRoutinesViewModel,
+    favRoutinesViewModel: FavRoutinesViewModel,
+    exploreRoutinesViewModel: ExploreRoutinesViewModel,
+    exercisesViewModel: ExercisesViewModel,
+    profileViewModel: ProfileViewModel,
+    settingsViewModel: SettingsViewModel,
 ) {
 
     val currentContext = LocalContext.current
 
-    // View models for main routines screens TODO: nose si esto esta bien
-    val myRoutinesViewModel = viewModel<MyRoutinesViewModel>(factory = getViewModelFactory())
-    val favRoutinesViewModel = viewModel<FavRoutinesViewModel>(factory = getViewModelFactory())
-    val exploreRoutinesViewModel =
-        viewModel<ExploreRoutinesViewModel>(factory = getViewModelFactory())
+
+
 
     NavHost(navController = navController, startDestination = Screens.Exercises.route) {
 
@@ -46,9 +52,12 @@ fun AppContentNavHost(
 
         // Exercises
         composable(Screens.Exercises.route) {
-            Exercises(onItemClicked = { exerciseId ->
-                navController.navigate("DetailedExercise/$exerciseId")
-            })
+            Exercises(
+                onItemClicked = { exerciseId ->
+                    navController.navigate("DetailedExercise/$exerciseId")
+                },
+                viewModel = exercisesViewModel
+            )
         }
 
         // Explore Routines
@@ -83,12 +92,12 @@ fun AppContentNavHost(
 
         // Profile
         composable(Screens.Profile.route) {
-            Profile(onProfileUpdate = onProfileUpdate)
+            Profile(onProfileUpdate = onProfileUpdate, viewModel = profileViewModel)
         }
 
         // Settings
         composable(Screens.Settings.route) {
-            Settings()
+            Settings(viewModel = settingsViewModel)
         }
 
         // ------------ Secondary screens -------------

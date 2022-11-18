@@ -278,4 +278,23 @@ class RoutineRepository(
         routineRemoteDataSource.addRoutineReview(routineId, rating)
     }
 
+    // Clears cache
+    suspend fun resetRepository() {
+
+        // Routines list
+        routineMutex.withLock {
+            this.routines = emptyList()
+        }
+
+        // Favorites list
+        favoriteRoutineMutex.withLock {
+            this.favoriteRoutines = emptyList()
+        }
+
+        // Current user list
+        currentRoutineMutex.withLock {
+            this.userRoutines = emptyList()
+        }
+    }
+
 }

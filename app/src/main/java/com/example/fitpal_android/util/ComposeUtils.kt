@@ -49,3 +49,9 @@ fun getViewModelFactory(id: Int?, defaultArgs: Bundle? = null): ViewModelFactory
         defaultArgs = defaultArgs
     )
 }
+
+suspend fun resetRepositories() {
+    FitpalApplication.userRepository.resetRepository()
+    FitpalApplication.exerciseRepository.resetRepository()
+    FitpalApplication.routineRepository.resetRepository()
+}

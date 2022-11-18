@@ -15,9 +15,9 @@ import com.example.fitpal_android.R
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
-fun Settings() {
-    val viewModel = viewModel<SettingsViewModel>(factory = getViewModelFactory())
-
+fun Settings(
+    viewModel: SettingsViewModel
+) {
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
 
         Card(

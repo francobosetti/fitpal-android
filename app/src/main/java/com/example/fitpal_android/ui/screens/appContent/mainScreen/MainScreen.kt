@@ -4,24 +4,25 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.Screens
-import com.example.fitpal_android.ui.navigation.AppContentNavHost
 import com.example.fitpal_android.ui.components.NavigationDrawer
 import com.example.fitpal_android.ui.components.TopBar
-import com.example.fitpal_android.ui.screens.appContent.mainScreen.MainScreenViewModel
+import com.example.fitpal_android.ui.navigation.AppContentNavHost
+import com.example.fitpal_android.ui.screens.appContent.exercises.ExercisesViewModel
+import com.example.fitpal_android.ui.screens.appContent.exploreRoutines.ExploreRoutinesViewModel
+import com.example.fitpal_android.ui.screens.appContent.favRoutines.FavRoutinesViewModel
+import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesViewModel
+import com.example.fitpal_android.ui.screens.appContent.profile.ProfileViewModel
+import com.example.fitpal_android.ui.screens.appContent.settings.SettingsViewModel
 import com.example.fitpal_android.util.getViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     scaffoldState: ScaffoldState,
-    onLoggedOut: () -> Unit
+    onLoggedOut: () -> Unit,
+    myRoutinesViewModel: MyRoutinesViewModel,
+    favRoutinesViewModel: FavRoutinesViewModel,
+    exploreRoutinesViewModel: ExploreRoutinesViewModel,
+    exercisesViewModel: ExercisesViewModel,
+    profileViewModel: ProfileViewModel,
+    settingsViewModel: SettingsViewModel,
+    viewModel: MainScreenViewModel
 ) {
     // A surface container using the 'background' color from the theme
     val scope = rememberCoroutineScope()
@@ -51,9 +59,6 @@ fun MainScreen(
         }
     }
 
-    val viewModel = viewModel<MainScreenViewModel>(
-        factory = getViewModelFactory()
-    )
     val mainScreenState = viewModel.mainScreenState
 
     Scaffold(
@@ -85,7 +90,15 @@ fun MainScreen(
                 NavigationDrawer(
                     navController = navController,
                     onMenuClick = { scope.launch { scaffoldState.drawerState.close() } },
-                    onLogOutClick = { scope.launch { viewModel.logout(); onLoggedOut() } }
+                    onLogOutClick = {
+                        scope.launch {
+                            viewModel.logout()
+
+                            // Reset ViewModels
+
+                            onLoggedOut()
+                        }
+                    }
                 )
             }
         },
@@ -93,6 +106,12 @@ fun MainScreen(
         AppContentNavHost(
             navController = navController,
             onProfileUpdate = { scope.launch { viewModel.updateAvatarUrl() } },
+            myRoutinesViewModel = myRoutinesViewModel,
+            favRoutinesViewModel = favRoutinesViewModel,
+            exploreRoutinesViewModel = exploreRoutinesViewModel,
+            exercisesViewModel = exercisesViewModel,
+            profileViewModel = profileViewModel,
+            settingsViewModel = settingsViewModel
         )
     }
 }

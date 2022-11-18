@@ -22,27 +22,10 @@ class ExercisesViewModel(
     )
 
     init {
-        viewModelScope.launch {
-            exercisesState = exercisesState.copy(isFetching = true, error = "")
-
-            try {
-                val exercises = exerciseRepository.getExercises()
-                exercisesState = exercisesState.copy(
-                    exercises = exercises,
-                    isFetching = false,
-                    error = ""
-                )
-            } catch (e: Exception) {
-                exercisesState = exercisesState.copy(
-                    isFetching = false,
-                    error = e.message ?: "Unknown error"
-                )
-            }
-
-        }
+        updateExercises()
     }
 
-    fun getExercises() : List<Exercise> {
+    fun updateExercises() {
         viewModelScope.launch {
             exercisesState = exercisesState.copy(isFetching = true, error = "")
 
@@ -61,7 +44,5 @@ class ExercisesViewModel(
             }
 
         }
-
-        return exercisesState.exercises
     }
 }

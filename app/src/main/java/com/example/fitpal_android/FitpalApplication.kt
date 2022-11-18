@@ -1,6 +1,8 @@
 package com.example.fitpal_android
 
 import android.app.Application
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.example.fitpal_android.data.remote.ExerciseRemoteDataSource
 import com.example.fitpal_android.data.remote.RoutineRemoteDataSource
 import com.example.fitpal_android.data.remote.UserRemoteDataSource
@@ -29,7 +31,6 @@ class FitpalApplication : Application() {
         userRepository = UserRepository(userRemoteDataSource, sessionManager)
         exerciseRepository = ExerciseRepository(ExerciseRemoteDataSource(RetrofitClient.getApiExerciseService(this)))
         routineRepository = RoutineRepository(RoutineRemoteDataSource(RetrofitClient.getApiRoutineService(this)), exerciseRemoteDataSource, userRemoteDataSource)
-
     }
 
     // Access repositories from anywhere in the app

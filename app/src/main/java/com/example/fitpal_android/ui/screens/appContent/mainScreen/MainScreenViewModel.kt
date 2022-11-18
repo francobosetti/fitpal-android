@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.data.repository.UserRepository
+import com.example.fitpal_android.util.resetRepositories
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okhttp3.internal.concurrent.Task
@@ -23,32 +24,20 @@ class MainScreenViewModel(
         private set
 
     init {
-        viewModelScope.launch {
-            mainScreenState = mainScreenState.copy(isFetching = true)
-            try {
-                val user = userRepository.getCurrentUser()
-                // Shouldn't be null
-                user!!
-
-                mainScreenState = mainScreenState.copy(
-                    avatarUrl = user.avatarUrl,
-                )
-            } catch (e : Exception) {
-                // TODO: smth
-            }
-            mainScreenState = mainScreenState.copy(isFetching = false)
-        }
+        updateAvatarUrl()
     }
 
     suspend fun logout() {
         userRepository.logout()
+        resetRepositories()
     }
-    
-    suspend fun updateAvatarUrl() {
+
+
+
+    fun updateAvatarUrl() {
         viewModelScope.launch {
             try{
                 mainScreenState = mainScreenState.copy(isFetching = true)
-                userRepository.fetchUser()
                 val user = userRepository.getCurrentUser()
                 // Shouldn't be null
                 user!!
@@ -60,6 +49,7 @@ class MainScreenViewModel(
             } catch (e : Exception) {
                 //TODO: do smth
             }
+            mainScreenState = mainScreenState.copy(isFetching = false)
         }
     }
 

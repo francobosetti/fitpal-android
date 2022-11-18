@@ -20,9 +20,9 @@ import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun Exercises(
-    onItemClicked: (Int) -> Unit
+    onItemClicked: (Int) -> Unit,
+    viewModel: ExercisesViewModel
 ) {
-    val viewModel = viewModel<ExercisesViewModel>(factory = getViewModelFactory())
     val exercisesState = viewModel.exercisesState
     val configuration = LocalConfiguration.current
     when(configuration.orientation){
