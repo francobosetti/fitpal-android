@@ -87,4 +87,6 @@
     <string name="invalid_data">Invalid data</string>
     <string name="resent_code">Resent code</string>
     <string name="time_routine">Time: </string>
+    <string name="no_fav">No favorite routines found</string>
+    <string name="no_routines">No routines found</string>
 </resources>

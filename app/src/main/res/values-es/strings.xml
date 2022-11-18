@@ -87,4 +87,6 @@
     <string name="invalid_data">Datos invalidos</string>
     <string name="resent_code">Codigo reenviado</string>
     <string name="time_routine">Tiempo: </string>
+    <string name="no_fav">No se encontraron rutinas favoritas</string>
+    <string name="no_routines">No se encontraron rutinas</string>
 </resources>
