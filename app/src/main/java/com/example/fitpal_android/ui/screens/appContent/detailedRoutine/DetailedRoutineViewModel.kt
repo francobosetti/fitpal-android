@@ -34,7 +34,11 @@ class DetailedRoutineViewModel(
 
             try {
                 val routine = routineRepository.getRoutine(routineId)
-                val rating = routineRepository.getRoutineUserScore(routineId)
+                var rating = routineRepository.getRoutineUserScore(routineId)
+
+                if (rating == null) {
+                    rating = 0.0
+                }
 
                 detailedRoutineState = detailedRoutineState.copy(
                     routine = routine,
@@ -109,5 +113,17 @@ class DetailedRoutineViewModel(
                 )
             }
         }
+    }
+
+    fun showPopup() {
+        detailedRoutineState = detailedRoutineState.copy(showPopup = true)
+    }
+
+    fun dismissPopup() {
+        detailedRoutineState = detailedRoutineState.copy(showPopup = false)
+    }
+
+    fun updateUserRating(rating: Double) {
+        detailedRoutineState = detailedRoutineState.copy(userRating = rating)
     }
 }

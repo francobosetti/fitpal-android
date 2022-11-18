@@ -89,4 +89,5 @@
     <string name="time_routine">Tiempo: </string>
     <string name="no_fav">No se encontraron rutinas favoritas</string>
     <string name="no_routines">No se encontraron rutinas</string>
+    <string name="post">Enviar</string>
 </resources>

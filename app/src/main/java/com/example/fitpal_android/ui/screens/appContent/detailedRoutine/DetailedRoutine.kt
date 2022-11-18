@@ -3,16 +3,11 @@ package com.example.fitpal_android.ui.screens.appContent.detailedRoutine
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -76,15 +71,19 @@ fun DetailedRoutine(
                     name = detailedRoutineState.routine.name,
                     description = detailedRoutineState.routine.description,
                     difficulty = detailedRoutineState.routine.difficulty,
-                    videoUrl = detailedRoutineState.routine.imageUrl,
+                    imageUrl = detailedRoutineState.routine.imageUrl,
                     modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                     rating = detailedRoutineState.routine.rating,
-                    userRating = detailedRoutineState.userRating,
+                    selectedRating = detailedRoutineState.userRating,
                     isFavorite = detailedRoutineState.routine.isFavorite,
                     onStartPressedCallback = { onStartPressed(routineId) },
                     onSharePressedCallback = { onSharePressed(routineId) },
                     onFavoritePressedCallback = { viewModel.toggleFav() },
-                    onRatingSubmitCallback = { rating -> viewModel.rateRoutine(rating) }
+                    onRatingSubmitCallback = { rating -> viewModel.rateRoutine(rating) },
+                    showPopup = detailedRoutineState.showPopup,
+                    onDismissPopupCallback = { viewModel.dismissPopup() },
+                    onShowPopupCallback = { viewModel.showPopup() },
+                    onUpdateSelectedRatingCallback = {rating -> viewModel.updateUserRating(rating) },
                 )
             }
 
