@@ -86,4 +86,5 @@
     <string name="email_already_in_use">Email en uso</string>
     <string name="invalid_data">Datos invalidos</string>
     <string name="resent_code">Codigo reenviado</string>
+    <string name="time_routine">Tiempo: </string>
 </resources>
