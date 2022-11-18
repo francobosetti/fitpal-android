@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,8 +18,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.TopOrderAndSearch
 import com.example.fitpal_android.ui.components.cards.RoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
@@ -55,42 +58,46 @@ fun ExploreRoutines(
                     )
                 }
             } else {
-                when (configuration.orientation) {
-                    Configuration.ORIENTATION_LANDSCAPE -> {
-                        LazyVerticalGrid(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(20.dp),
-                            verticalArrangement = Arrangement.spacedBy(20.dp),
-                            columns = GridCells.Adaptive(250.dp)
-                        ) {
-                            items(exploreRoutinesState.otherRoutines.size) {
-                                RoutineCard(
-                                    name = exploreRoutinesState.otherRoutines[it].name,
-                                    imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
-                                    rating = exploreRoutinesState.otherRoutines[it].rating,
-                                    difficulty = exploreRoutinesState.otherRoutines[it].difficulty,
-                                    modifier = Modifier.clickable {
-                                        onItemClicked(exploreRoutinesState.otherRoutines[it].id)
-                                    }
-                                )
+                if (exploreRoutinesState.otherRoutines.isEmpty()) {
+                    Text(text = stringResource(R.string.no_routines))
+                } else {
+                    when (configuration.orientation) {
+                        Configuration.ORIENTATION_LANDSCAPE -> {
+                            LazyVerticalGrid(
+                                modifier = Modifier.padding(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                                verticalArrangement = Arrangement.spacedBy(20.dp),
+                                columns = GridCells.Adaptive(250.dp)
+                            ) {
+                                items(exploreRoutinesState.otherRoutines.size) {
+                                    RoutineCard(
+                                        name = exploreRoutinesState.otherRoutines[it].name,
+                                        imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
+                                        rating = exploreRoutinesState.otherRoutines[it].rating,
+                                        difficulty = exploreRoutinesState.otherRoutines[it].difficulty,
+                                        modifier = Modifier.clickable {
+                                            onItemClicked(exploreRoutinesState.otherRoutines[it].id)
+                                        }
+                                    )
+                                }
                             }
                         }
-                    }
-                    else -> {
-                        LazyColumn(
-                            modifier = Modifier.padding(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(exploreRoutinesState.otherRoutines.size) {
-                                RoutineCard(
-                                    name = exploreRoutinesState.otherRoutines[it].name,
-                                    imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
-                                    rating = exploreRoutinesState.otherRoutines[it].rating,
-                                    difficulty = exploreRoutinesState.otherRoutines[it].difficulty,
-                                    modifier = Modifier.clickable {
-                                        onItemClicked(exploreRoutinesState.otherRoutines[it].id)
-                                    }
-                                )
+                        else -> {
+                            LazyColumn(
+                                modifier = Modifier.padding(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                items(exploreRoutinesState.otherRoutines.size) {
+                                    RoutineCard(
+                                        name = exploreRoutinesState.otherRoutines[it].name,
+                                        imageUrl = exploreRoutinesState.otherRoutines[it].imageUrl,
+                                        rating = exploreRoutinesState.otherRoutines[it].rating,
+                                        difficulty = exploreRoutinesState.otherRoutines[it].difficulty,
+                                        modifier = Modifier.clickable {
+                                            onItemClicked(exploreRoutinesState.otherRoutines[it].id)
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
