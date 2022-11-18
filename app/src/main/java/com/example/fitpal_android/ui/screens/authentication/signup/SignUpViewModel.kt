@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.R
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.*
 import kotlinx.coroutines.channels.Channel
@@ -42,10 +43,11 @@ class SignUpViewModel(
             is SignUpFormEvent.ConfirmPasswordChanged -> {
                 signUpFormState = signUpFormState.copy(confirmPassword = event.confirmPassword)
             }
+            is SignUpFormEvent.DismissMessage -> {
+                signUpFormState = signUpFormState.copy(apiMsg = null)
+            }
             is SignUpFormEvent.SignUp -> {
-                signUpFormState = signUpFormState.copy(loading = true)
                 signUp()
-                signUpFormState = signUpFormState.copy(loading = false)
             }
         }
     }
@@ -82,6 +84,7 @@ class SignUpViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
+            signUpFormState = signUpFormState.copy(loading = true)
             try {
                 userRepository.registerUser(
                     firstname = signUpFormState.firstname,
@@ -92,15 +95,10 @@ class SignUpViewModel(
                 validationEventChannel.send(SignUpValidationEvent.Success(signUpFormState.email, signUpFormState.password))
             } catch (e: Exception) {
                 signUpFormState = signUpFormState.copy(
-                    firstnameError = null,
-                    lastnameError = null,
-                    emailError = null,
-                    passwordError = null,
-                    confirmPasswordError = null,
-                    serverError = e.message
+                    apiMsg = R.string.error_sign_up         // TODO: MAKE SPECIFIC (acording to Exeption)
                 )
             }
-
+            signUpFormState = signUpFormState.copy(loading = false)
         }
     }
 }

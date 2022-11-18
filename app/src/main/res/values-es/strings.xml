@@ -68,6 +68,8 @@
     <string name="error_log_in">Error iniciando sesion</string>
     <string name="error_resend_verif">Error al reenviar verificación de email</string>
     <string name="error_verify_mail">Error verificando email</string>
+    <string name="error_sign_up">Error registrandose</string>
+    <string name="dismiss">Descartar</string>
     <string name="settings_screen">Configuración</string>
     <string name="execution_mode">Ejecución detallada</string>
     <string name="next_cycle">Siguiente Ciclo</string>

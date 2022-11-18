@@ -2,10 +2,7 @@ package com.example.fitpal_android.ui.screens.authentication.login
 
 import android.view.KeyEvent.*
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,15 +31,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.ProgressButton
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import com.example.fitpal_android.ui.screens.authentication.verify.VerifyFormEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
-import com.example.fitpal_android.ui.theme.White100
 import com.example.fitpal_android.util.getViewModelFactory
 
 
 @Composable
-fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
+fun LogIn(
+    scaffoldState: ScaffoldState,
+    onAuthentication: () -> Unit,
+    onLinkClicked: () -> Unit
+){
 
     val viewModel = viewModel<LoginViewModel>(factory = getViewModelFactory())
     val formState = viewModel.loginFormState
@@ -57,6 +58,21 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
                 is ValidationEvent.Success -> {
                     onAuthentication()
                 }
+            }
+        }
+    }
+    // SnackBar used to communicate api Messages
+    formState.apiMsg?.let {
+        val message = stringResource(formState.apiMsg)
+        val actionLabel = stringResource(R.string.dismiss)
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel
+            )
+            when(result) {
+                SnackbarResult.Dismissed -> viewModel.onEvent(LoginFormEvent.DismissMessage)
+                SnackbarResult.ActionPerformed -> viewModel.onEvent(LoginFormEvent.DismissMessage)
             }
         }
     }
@@ -83,7 +99,9 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
 
         Column {
             TextField(
-                colors= TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                colors= TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
+                    unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
                     cursorColor = Orange500),
@@ -118,7 +136,9 @@ fun LogIn(onAuthentication: () -> Unit, onLinkClicked: () -> Unit){
 
         Column {
             TextField(
-                colors = TextFieldDefaults.textFieldColors(unfocusedLabelColor = Black000,
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
+                    unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
                     cursorColor = Orange500),

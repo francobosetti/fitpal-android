@@ -13,5 +13,5 @@ data class SignUpFormState(
     val passwordError : Int?  = null,
     val confirmPassword : String = "",
     val confirmPasswordError : Int?  = null,
-    val serverError: String? = null,
+    val apiMsg: Int? = null,
 )

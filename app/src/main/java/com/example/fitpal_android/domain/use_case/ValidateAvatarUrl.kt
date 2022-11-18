@@ -11,7 +11,7 @@ class ValidateAvatarUrl {
         }
         */ // IF BLANK -> default picture is loaded
 
-        // TODO: check if url is valid
+        // TODO: check if url is a <valid image
         /*
         if(!avatarUrl.validImageUrl) {
             return ValidationResult (

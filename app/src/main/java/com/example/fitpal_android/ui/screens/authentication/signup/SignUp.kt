@@ -34,13 +34,18 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.ProgressButton
+import com.example.fitpal_android.ui.screens.authentication.login.LoginFormEvent
 import com.example.fitpal_android.ui.theme.Black000
 import com.example.fitpal_android.ui.theme.Gray400
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
-fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit) {
+fun SignUp(
+    scaffoldState: ScaffoldState,
+    onSignUpClicked: (String, String) -> Unit,
+    onLinkClicked: () -> Unit
+) {
     val viewModel = viewModel<SignUpViewModel>(factory = getViewModelFactory())
     val signUpFormState = viewModel.signUpFormState
     val context = LocalContext.current
@@ -61,6 +66,21 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
                     onSignUpClicked(event.email, event.password)
 
                 }
+            }
+        }
+    }
+    // SnackBar used to communicate api Messages
+    signUpFormState.apiMsg?.let {
+        val message = stringResource(signUpFormState.apiMsg)
+        val actionLabel = stringResource(R.string.dismiss)
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel
+            )
+            when(result) {
+                SnackbarResult.Dismissed -> viewModel.onEvent(SignUpFormEvent.DismissMessage)
+                SnackbarResult.ActionPerformed -> viewModel.onEvent(SignUpFormEvent.DismissMessage)
             }
         }
     }
@@ -92,6 +112,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
@@ -130,6 +151,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
@@ -168,6 +190,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
@@ -209,6 +232,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
@@ -252,6 +276,7 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,
@@ -288,15 +313,6 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
                 )
             }
         }
-
-        if (signUpFormState.serverError != null) {
-            Text(
-                text = signUpFormState.serverError,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        }
-
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
@@ -335,7 +351,5 @@ fun SignUp(onSignUpClicked: (String, String) -> Unit, onLinkClicked: () -> Unit)
                 )
             )
         }
-
-
     }
 }

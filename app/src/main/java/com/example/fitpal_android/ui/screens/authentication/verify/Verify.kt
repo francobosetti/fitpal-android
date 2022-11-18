@@ -26,7 +26,11 @@ import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
-fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
+fun Verify(
+    scaffoldState: ScaffoldState,
+    onAuthentication: () -> Unit,
+    email: String, password: String
+) {
 
     val viewModel = viewModel<VerifyViewModel>(factory = getViewModelFactory())
     val verifyFormState = viewModel.verifyFormState
@@ -38,6 +42,21 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
                 is ValidationEvent.Success -> {
                     onAuthentication()
                 }
+            }
+        }
+    }
+    // SnackBar used to communicate api Messages
+    verifyFormState.apiMsg?.let {
+        val message = stringResource(verifyFormState.apiMsg)
+        val actionLabel = stringResource(R.string.dismiss)
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            val result = scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel
+            )
+            when(result) {
+                SnackbarResult.Dismissed -> viewModel.onEvent(VerifyFormEvent.DismissMessage)
+                SnackbarResult.ActionPerformed -> viewModel.onEvent(VerifyFormEvent.DismissMessage)
             }
         }
     }
@@ -68,6 +87,7 @@ fun Verify(onAuthentication: () -> Unit, email: String, password: String) {
         Column {
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
+                    textColor = Black000,
                     unfocusedLabelColor = Black000,
                     focusedIndicatorColor = Orange500,
                     focusedLabelColor = Orange500,

@@ -31,10 +31,11 @@ class LoginViewModel(
             is LoginFormEvent.PasswordChanged -> {
                 loginFormState = loginFormState.copy(password = event.password)
             }
+            is LoginFormEvent.DismissMessage -> {
+                loginFormState = loginFormState.copy(apiMsg = null)
+            }
             is LoginFormEvent.Login -> {
-                loginFormState = loginFormState.copy(loading = true)
                 login()
-                loginFormState = loginFormState.copy(loading = false)
             }
         }
     }
@@ -58,20 +59,17 @@ class LoginViewModel(
         if(hasError) { return }
 
         viewModelScope.launch {
-
+            loginFormState = loginFormState.copy(loading = true)
             try {
                 userRepository.login(loginFormState.email, loginFormState.password)
                 validationEventChannel.send(ValidationEvent.Success)
             } catch (e: Exception) {
 
-                // TODO: HANDLE ERROR NO ENTIENDO COMO ANDA ESTO
                 loginFormState = loginFormState.copy(
-                    emailError = R.string.error_log_in
-                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
+                    apiMsg = R.string.error_log_in // TODO: MAKE SPECIFIC (acording to Exeption)
                 )
-
             }
-
+            loginFormState = loginFormState.copy(loading = false)
         }
     }
 }

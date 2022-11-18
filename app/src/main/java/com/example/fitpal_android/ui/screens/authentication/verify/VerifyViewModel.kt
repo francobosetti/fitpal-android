@@ -30,19 +30,19 @@ class VerifyViewModel(
                 verifyFormState = verifyFormState.copy(verificationCode = event.code)
             }
 
+            is VerifyFormEvent.DismissMessage -> {
+                verifyFormState = verifyFormState.copy(apiMsg = null)
+            }
+
             is VerifyFormEvent.ResendCode -> {
                 if (email != null) {
-                    verifyFormState = verifyFormState.copy(resendLoading = true)
                     resendCode(email)
-                    verifyFormState = verifyFormState.copy(resendLoading = false)
                 }
             }
 
             is VerifyFormEvent.VerifyCode -> {
                 if (email != null && password != null) {
-                    verifyFormState = verifyFormState.copy(verifyLoading = true)
                     verifyCode(email, password)
-                    verifyFormState = verifyFormState.copy(verifyLoading = false)
                 }
             }
         }
@@ -66,6 +66,7 @@ class VerifyViewModel(
         }
 
         viewModelScope.launch {
+            verifyFormState = verifyFormState.copy(verifyLoading = true)
             try {
                 userRepository.verifyEmail(email, verifyFormState.verificationCode)
                 userRepository.login(email, password)
@@ -76,22 +77,24 @@ class VerifyViewModel(
                     // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
                 )
             }
+            verifyFormState = verifyFormState.copy(verifyLoading = false)
         }
     }
 
     private fun resendCode(email: String) {
         viewModelScope.launch {
+            verifyFormState = verifyFormState.copy(resendLoading = true)
             try {
                 userRepository.resendVerification(email)
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = R.string.verif_sent,
+                    apiMsg = R.string.verif_sent,
                 )
             } catch (e: Exception) {
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = R.string.error_resend_verif
-                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
+                    apiMsg = R.string.error_resend_verif // TODO: MAKE SPECIFIC (acording to Exeption)
                 )
             }
+            verifyFormState = verifyFormState.copy(resendLoading = false)
         }
     }
 }
