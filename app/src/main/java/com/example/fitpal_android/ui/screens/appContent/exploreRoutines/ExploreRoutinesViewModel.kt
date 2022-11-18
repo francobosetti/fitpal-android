@@ -10,6 +10,7 @@ import com.example.fitpal_android.data.model.Routine
 import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.math.exp
 import kotlin.math.expm1
@@ -25,6 +26,8 @@ class ExploreRoutinesViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateRoutines()
     }
@@ -34,7 +37,9 @@ class ExploreRoutinesViewModel(
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true)
 
             exploreRoutinesState = try {
@@ -53,7 +58,10 @@ class ExploreRoutinesViewModel(
     }
 
     fun orderBy(orderBy: String, direction: String) {
-        viewModelScope.launch {
+
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             exploreRoutinesState = exploreRoutinesState.copy(isFetching = true)
             exploreRoutinesState = try {
                 val routines = routineRepository.getRoutines(orderBy, direction)

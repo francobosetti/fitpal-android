@@ -149,7 +149,7 @@ fun DetailedRoutineCard(
             )
 
             Text(
-                text = difficulty,
+                text = difficulty.replaceFirstChar { it.uppercaseChar() },
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 8.dp)

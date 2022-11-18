@@ -9,6 +9,7 @@ import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MyRoutinesViewModel(
@@ -22,6 +23,8 @@ class MyRoutinesViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateRoutines()
     }
@@ -31,7 +34,9 @@ class MyRoutinesViewModel(
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             myRoutinesState = myRoutinesState.copy(isFetching = true)
 
             myRoutinesState = try {
@@ -49,7 +54,10 @@ class MyRoutinesViewModel(
     }
 
     fun orderBy(orderBy: String, direction: String) {
-        viewModelScope.launch {
+
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             myRoutinesState = myRoutinesState.copy(isFetching = true)
 
             myRoutinesState = try {

@@ -10,6 +10,7 @@ import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
 import com.example.fitpal_android.ui.screens.appContent.myRoutines.MyRoutinesState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FavRoutinesViewModel(
@@ -24,6 +25,8 @@ class FavRoutinesViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateRoutines()
     }
@@ -33,7 +36,9 @@ class FavRoutinesViewModel(
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             favRoutinesState = favRoutinesState.copy(isFetching = true)
             favRoutinesState = try {
                 val routines = routineRepository.getFavoriteRoutines()

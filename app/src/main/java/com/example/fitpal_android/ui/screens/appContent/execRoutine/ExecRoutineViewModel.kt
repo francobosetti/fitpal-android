@@ -61,6 +61,15 @@ class ExecRoutineViewModel(
             )
             stopTimer()
         }
+        else if(uiState.currentCycleIndex > 0){
+            uiState = uiState.copy(
+                currentCycleIndex = uiState.currentCycleIndex - 1,
+                exercises = uiState.cycles[uiState.currentCycleIndex - 1].exercises,
+                reps = uiState.cycles[uiState.currentCycleIndex - 1].exercises[uiState.cycles[uiState.currentCycleIndex - 1].exercises.size - 1].repetitions,
+                currentExerciseIndex = uiState.cycles[uiState.currentCycleIndex -1].exercises.size - 1
+            )
+            stopTimer()
+        }
     }
 
     fun nextCycle() {

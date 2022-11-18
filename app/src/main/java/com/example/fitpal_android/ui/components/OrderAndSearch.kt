@@ -2,45 +2,15 @@ package com.example.fitpal_android.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.fitpal_android.R
-import kotlinx.coroutines.Job
 import java.util.*
-
-@Composable
-fun TopOrderAndSearch(
-    orderBy: (String, String) -> Unit,
-){
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        OrderByDropdown(orderBy)
-        //TODO: Agregar pop-up para busqueda avanzada
-        IconButton(
-            onClick = { }) {
-            Icon(
-                modifier = Modifier
-                    .padding(start = 24.dp, end = 24.dp)
-                    .size(40.dp),
-                imageVector = Icons.Default.Search,
-                contentDescription = stringResource(R.string.advanced_search),
-            )
-        }
-    }
-
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun OrderByDropdown(
+fun OrderByDropdown(
     orderBy : (String, String) -> Unit,
 ) {
 
@@ -63,6 +33,7 @@ private fun OrderByDropdown(
 
     // the box
     ExposedDropdownMenuBox(
+        modifier = Modifier.fillMaxWidth(),
         expanded = expanded,
         onExpandedChange = {
             expanded = !expanded
@@ -71,6 +42,7 @@ private fun OrderByDropdown(
 
         // text field
         TextField(
+            modifier = Modifier.fillMaxWidth(),
             value = selectedItem,
             onValueChange = {},
             readOnly = true,
@@ -85,18 +57,21 @@ private fun OrderByDropdown(
 
         // menu
         ExposedDropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
             listItems.forEach { selectedOption ->
                 // menu item
                 DropdownMenuItem(
+                    modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         selectedItem = selectedOption
                         orderBy(mapItems.getValue(selectedItem), "desc") // TODO: check direction
                         expanded = false
                     }) {
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
                         text = selectedOption
                     )
                 }
