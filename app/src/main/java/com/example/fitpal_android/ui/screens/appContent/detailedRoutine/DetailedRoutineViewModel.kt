@@ -26,6 +26,7 @@ class DetailedRoutineViewModel(
             error = ""
         )
     )
+        private set
 
     init {
         viewModelScope.launch {

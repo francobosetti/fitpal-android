@@ -22,6 +22,7 @@ class ExploreRoutinesViewModel(
             otherRoutines = emptyList()
         )
     )
+        private set
 
     init {
         updateRoutines()

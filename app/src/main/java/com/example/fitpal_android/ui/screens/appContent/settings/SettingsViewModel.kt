@@ -14,6 +14,7 @@ class SettingsViewModel(
             executionMode = settingsManager.getExecutionMode()
         )
     )
+        private set
 
     fun toggleExecutionMode() {
         settingsManager.toggleExecutionMode()

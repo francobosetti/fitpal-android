@@ -46,11 +46,7 @@ fun AppContentNavHost(
     execRoutineViewModel: ExecRoutineViewModel,
     detailedRoutineViewModel: DetailedRoutineViewModel,
 ) {
-
     val currentContext = LocalContext.current
-
-
-
 
     NavHost(navController = navController, startDestination = Screens.Exercises.route) {
 
@@ -80,6 +76,7 @@ fun AppContentNavHost(
         // Favorite Routines
         composable(Screens.FavoriteRoutine.route) {
             FavRoutines(
+                scaffoldState = scaffoldState,
                 onItemClicked = { routineId ->
                     navController.navigate("DetailedRoutine/$routineId")
                 },
@@ -90,6 +87,7 @@ fun AppContentNavHost(
         // My Routines
         composable(Screens.Routines.route) {
             MyRoutines(
+                scaffoldState = scaffoldState,
                 onItemClicked = { routineId ->
                     navController.navigate("DetailedRoutine/$routineId")
                 },
@@ -99,7 +97,11 @@ fun AppContentNavHost(
 
         // Profile
         composable(Screens.Profile.route) {
-            Profile(onProfileUpdate = onProfileUpdate, viewModel = profileViewModel)
+            Profile(
+                scaffoldState = scaffoldState,
+                onProfileUpdate = onProfileUpdate,
+                viewModel = profileViewModel
+            )
         }
 
         // Settings
@@ -118,7 +120,9 @@ fun AppContentNavHost(
             })
         ) {
             // TODO: hacer que si estas en deep link, si vas para atras te lleve a la pantalla de ejercicios
-            DetailedExercise(it.arguments?.getInt("exerciseId"),
+            DetailedExercise(
+                scaffoldState = scaffoldState,
+                exerciseId = it.arguments?.getInt("exerciseId"),
                 onBackPressed = { navController.popBackStack() },
                 viewModel = detailedExerciseViewModel
             )
@@ -171,7 +175,7 @@ fun AppContentNavHost(
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) {
             ExecRoutine(
-                it.arguments?.getInt("routineId"),
+                routineId = it.arguments?.getInt("routineId"),
                 onBackPressed = {
                     navController.popBackStack()
                 },

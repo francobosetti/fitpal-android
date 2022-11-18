@@ -34,6 +34,7 @@ import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
 fun Profile(
+    scaffoldState: ScaffoldState,
     onProfileUpdate: () -> Unit,
     viewModel: ProfileViewModel
 ) {
@@ -43,6 +44,8 @@ fun Profile(
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val noEnterNoTabRegex = Regex("^[^\\t\\n]*\$")
+
+
 
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
 

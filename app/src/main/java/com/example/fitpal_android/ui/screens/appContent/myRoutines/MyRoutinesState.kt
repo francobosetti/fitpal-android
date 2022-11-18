@@ -5,5 +5,5 @@ import com.example.fitpal_android.data.model.Routine
 data class MyRoutinesState (
     val myRoutines: List<Routine> = emptyList(),
     val isFetching: Boolean = false,
-    val error: String = ""
+    val apiMsg: Int? = null
 )

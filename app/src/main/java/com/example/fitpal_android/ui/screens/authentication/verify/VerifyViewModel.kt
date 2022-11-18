@@ -23,7 +23,7 @@ class VerifyViewModel(
         private set
 
     private var validationEventChannel = Channel<ValidationEvent>()
-    var validationEvents = validationEventChannel.receiveAsFlow()
+    val validationEvents = validationEventChannel.receiveAsFlow()
 
     fun onEvent(event: VerifyFormEvent, email: String? = null, password: String? = null) {
         when (event) {

@@ -8,5 +8,5 @@ data class ProfileState(
     val avatarUrl: String = "",
 
     val isFetching: Boolean = false,
-    val message: String? = null,
+    val apiMsg: Int? = null
 )

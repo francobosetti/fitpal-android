@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.UserRepository
+import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
 import com.example.fitpal_android.domain.use_case.ValidateAvatarUrl
 import com.example.fitpal_android.domain.use_case.ValidateFirstname
 import com.example.fitpal_android.domain.use_case.ValidateLastname
@@ -37,6 +39,7 @@ class ProfileViewModel(
             avatarUrlError = null,
         )
     )
+        private set
 
     init {
         updateUser()
@@ -63,20 +66,14 @@ class ProfileViewModel(
     }
 
     fun getCurrentUser() = viewModelScope.launch {
-        profileState = profileState.copy(
-            isFetching = true,
-            message = null
-        )
-        runCatching {
-            userRepository.getCurrentUser()
-        }.onSuccess { response ->
+        profileState = profileState.copy(isFetching = true)
+        try {
+            val response = userRepository.getCurrentUser()
             // Should not be null
             response!!
 
 
             profileState = profileState.copy(
-                isFetching = false,
-                message = null,
                 firstname = response.firstname,
                 lastname = response.lastname,
                 email = response.email,
@@ -90,12 +87,13 @@ class ProfileViewModel(
                 avatarUrl = response.avatarUrl
             )
 
-        }.onFailure { e ->
+        } catch (e : DataSourceException ) {
             // Handle the error and notify the UI when appropriate.
             profileState = profileState.copy(
-                message = e.message,
-                isFetching = false)
+                apiMsg = ApiCodeTranslator.translate(e.code)
+            )
         }
+        profileState = profileState.copy(isFetching = false)
     }
 
     fun updateUser() {
@@ -112,7 +110,6 @@ class ProfileViewModel(
                     lastname = user.lastname,
                     email = user.email,
                     avatarUrl = user.avatarUrl,
-                    isFetching = false,
                 )
 
                 profileFormState = profileFormState.copy(
@@ -120,9 +117,12 @@ class ProfileViewModel(
                     lastname = user.lastname,
                     avatarUrl = user.avatarUrl,
                 )
-            } catch (e: Exception) {
-                //TODO: do smth
+            } catch (e: DataSourceException) {
+                profileState = profileState.copy(
+                    apiMsg = ApiCodeTranslator.translate(e.code)
+                )
             }
+            profileState = profileState.copy(isFetching = false)
         }
     }
 
@@ -170,18 +170,13 @@ class ProfileViewModel(
                     lastname = newUser.lastname,
                     email = newUser.email,
                     avatarUrl = newUser.avatarUrl,
-                    isFetching = false,
-                    message = "Profile updated successfully"
                 )
 
                 validationEventChannel.send(ValidationEvent.Success)
-            } catch (e: Exception) {
-
+            } catch (e: DataSourceException) {
                 profileState = profileState.copy(
-                    isFetching = false,
-                    message = e.message
+                    apiMsg = ApiCodeTranslator.translate(e.code)
                 )
-
             }
             profileFormState = profileFormState.copy(editLoading = false)
         }

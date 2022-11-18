@@ -20,6 +20,7 @@ class ExercisesViewModel(
             error = ""
         )
     )
+        private set
 
     init {
         updateExercises()
