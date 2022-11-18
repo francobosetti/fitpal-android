@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.R
+import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.*
 import kotlinx.coroutines.channels.Channel
@@ -13,11 +14,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val validateFirstname: ValidateFirstname = ValidateFirstname(),
-    private val validateLastname: ValidateLastname = ValidateLastname(),
-    private val validateEmail: ValidateEmail = ValidateEmail(),
-    private val validatePassword: ValidatePassword = ValidatePassword(),
-    private val validateConfirmPassword: ValidateConfirmPassword = ValidateConfirmPassword(),
     private val userRepository: UserRepository
 ) : ViewModel() {
     var signUpFormState by mutableStateOf(SignUpFormState())
@@ -59,11 +55,11 @@ class SignUpViewModel(
             lastname = signUpFormState.lastname.trimEnd(' '),
             email = signUpFormState.email.trimEnd(' ')
         )
-        val firstnameResult = validateFirstname.execute(signUpFormState.firstname)
-        val lastnameResult = validateLastname.execute(signUpFormState.lastname)
-        val emailResult = validateEmail.execute(signUpFormState.email)
-        val passwordResult = validatePassword.execute(signUpFormState.password)
-        val confirmPasswordResult = validateConfirmPassword.execute(signUpFormState.password, signUpFormState.confirmPassword)
+        val firstnameResult = ValidateFirstname.execute(signUpFormState.firstname)
+        val lastnameResult = ValidateLastname.execute(signUpFormState.lastname)
+        val emailResult = ValidateEmail.execute(signUpFormState.email)
+        val passwordResult = ValidatePassword.execute(signUpFormState.password)
+        val confirmPasswordResult = ValidateConfirmPassword.execute(signUpFormState.password, signUpFormState.confirmPassword)
 
         signUpFormState = signUpFormState.copy(
             firstnameError = firstnameResult.errorMessage,
@@ -93,9 +89,9 @@ class SignUpViewModel(
                     password = signUpFormState.password
                 )
                 validationEventChannel.send(SignUpValidationEvent.Success(signUpFormState.email, signUpFormState.password))
-            } catch (e: Exception) {
+            } catch (e: DataSourceException) {
                 signUpFormState = signUpFormState.copy(
-                    apiMsg = R.string.error_sign_up         // TODO: MAKE SPECIFIC (acording to Exeption)
+                    apiMsg = ApiCodeTranslator.translate(e.code)
                 )
             }
             signUpFormState = signUpFormState.copy(loading = false)

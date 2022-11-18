@@ -2,7 +2,7 @@ package com.example.fitpal_android.domain.use_case
 
 import com.example.fitpal_android.R
 
-class ValidateVerificationCode {
+object ValidateVerificationCode {
     fun execute(verificationCode: String) : ValidationResult{
         if(verificationCode.isBlank()) {
             return ValidationResult(

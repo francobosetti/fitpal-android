@@ -2,7 +2,7 @@ package com.example.fitpal_android.domain.use_case
 
 import com.example.fitpal_android.R
 
-class ValidateFirstname {
+object ValidateFirstname {
     fun execute(firstname: String) : ValidationResult {
         if(firstname.isBlank()) {
             return ValidationResult(

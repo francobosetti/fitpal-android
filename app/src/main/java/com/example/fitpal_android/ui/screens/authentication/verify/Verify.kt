@@ -3,7 +3,6 @@ package com.example.fitpal_android.ui.screens.authentication.verify
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -69,7 +68,7 @@ fun Verify(
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         Image(
-            painter = painterResource(id = R.drawable.fitpal_horizontallogo),
+            painter = painterResource(id = R.drawable.fitpal_horizontal_logo),
             contentDescription = "Fitpal Logo",
             modifier = Modifier.padding(16.dp),
         )

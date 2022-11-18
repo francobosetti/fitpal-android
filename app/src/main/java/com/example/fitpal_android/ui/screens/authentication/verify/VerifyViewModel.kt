@@ -6,7 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.R
+import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.UserRepository
+import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
 import com.example.fitpal_android.domain.use_case.ValidateVerificationCode
 import com.example.fitpal_android.ui.screens.ValidationEvent
 import kotlinx.coroutines.channels.Channel
@@ -14,7 +16,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class VerifyViewModel(
-    private val validateVerificationCode: ValidateVerificationCode = ValidateVerificationCode(),
     private val userRepository: UserRepository
 ) : ViewModel() {
 
@@ -51,7 +52,7 @@ class VerifyViewModel(
 
     private fun verifyCode(email: String, password: String) {
         val verificationCodeResult =
-            validateVerificationCode.execute(verifyFormState.verificationCode)
+            ValidateVerificationCode.execute(verifyFormState.verificationCode)
 
         verifyFormState = verifyFormState.copy(
             verificationCodeError = verificationCodeResult.errorMessage,
@@ -71,10 +72,9 @@ class VerifyViewModel(
                 userRepository.verifyEmail(email, verifyFormState.verificationCode)
                 userRepository.login(email, password)
                 validationEventChannel.send(ValidationEvent.Success)
-            } catch (e: Exception) {
+            } catch (e: DataSourceException) {
                 verifyFormState = verifyFormState.copy(
-                    verificationCodeError = R.string.error_verify_mail
-                    // TODO ver esto  xq nose como cambiar el e.message para que devuelva int
+                    verificationCodeError = ApiCodeTranslator.translate(e.code)
                 )
             }
             verifyFormState = verifyFormState.copy(verifyLoading = false)
@@ -84,14 +84,14 @@ class VerifyViewModel(
     private fun resendCode(email: String) {
         viewModelScope.launch {
             verifyFormState = verifyFormState.copy(resendLoading = true)
-            try {
+            verifyFormState = try {
                 userRepository.resendVerification(email)
-                verifyFormState = verifyFormState.copy(
-                    apiMsg = R.string.verif_sent,
+                verifyFormState.copy(
+                    apiMsg = R.string.resent_code,
                 )
-            } catch (e: Exception) {
-                verifyFormState = verifyFormState.copy(
-                    apiMsg = R.string.error_resend_verif // TODO: MAKE SPECIFIC (acording to Exeption)
+            } catch (e: DataSourceException) {
+                verifyFormState.copy(
+                    apiMsg = ApiCodeTranslator.translate(e.code)
                 )
             }
             verifyFormState = verifyFormState.copy(resendLoading = false)

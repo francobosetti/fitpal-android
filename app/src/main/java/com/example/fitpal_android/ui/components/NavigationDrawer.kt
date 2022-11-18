@@ -51,7 +51,7 @@ fun NavigationDrawer(navController: NavController, onMenuClick: () -> Unit, onLo
                 Icon(Icons.Filled.Menu, contentDescription = "Menu")
             }
             Image(
-                painter = painterResource(id = R.drawable.fitpal_horizontallogo),
+                painter = painterResource(id = R.drawable.fitpal_horizontal_logo),
                 contentDescription = "Fitpal Logo",
                 modifier = Modifier.padding(16.dp)
             )

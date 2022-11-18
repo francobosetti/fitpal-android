@@ -1,6 +1,6 @@
 package com.example.fitpal_android.domain.use_case
 
-class ValidateAvatarUrl {
+object ValidateAvatarUrl {
     fun execute(avatarUrl: String) : ValidationResult {
         /*
         if(avatarUrl.isBlank()) {

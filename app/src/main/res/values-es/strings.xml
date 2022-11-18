@@ -74,4 +74,16 @@
     <string name="execution_mode">Ejecución detallada</string>
     <string name="next_cycle">Siguiente Ciclo</string>
     <string name="cycle">Ciclo</string>
+    <string name="unknown_err">Error desconocido</string>
+    <string name="unexpected_err">Error inesperado</string>
+    <string name="connection_err">Error de conexion</string>
+    <string name="inv_verification_code">Codigo de verificacion invalido</string>
+    <string name="unauthorized">Acceso denegado</string>
+    <string name="invalid_request">Peticion invalida</string>
+    <string name="database_error">Error de base de datos</string>
+    <string name="inv_email_or_pass">Email o contraseña invalida</string>
+    <string name="email_not_found">Email no encontrado</string>
+    <string name="email_already_in_use">Email en uso</string>
+    <string name="invalid_data">Datos invalidos</string>
+    <string name="resent_code">Codigo reenviado</string>
 </resources>

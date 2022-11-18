@@ -15,10 +15,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 // TODO: update state when routing
-class ProfileViewModel(private val validateFirstname: ValidateFirstname = ValidateFirstname(),
-                       private val validateLastname: ValidateLastname = ValidateLastname(),
-                       private val validateAvatarUrl: ValidateAvatarUrl = ValidateAvatarUrl(),
-                       private val userRepository: UserRepository,
+class ProfileViewModel(
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     var profileState by mutableStateOf(
@@ -131,9 +129,9 @@ class ProfileViewModel(private val validateFirstname: ValidateFirstname = Valida
             lastname = profileFormState.lastname.trimEnd(' '),
             avatarUrl = profileFormState.avatarUrl.trimEnd(' '),
         )
-        val firstnameResult = validateFirstname.execute(profileFormState.firstname)
-        val lastnameResult = validateLastname.execute(profileFormState.lastname)
-        val avatarUrlResult = validateAvatarUrl.execute(profileFormState.avatarUrl)
+        val firstnameResult = ValidateFirstname.execute(profileFormState.firstname)
+        val lastnameResult = ValidateLastname.execute(profileFormState.lastname)
+        val avatarUrlResult = ValidateAvatarUrl.execute(profileFormState.avatarUrl)
 
         profileFormState = profileFormState.copy(
             firstnameError = firstnameResult.errorMessage,
