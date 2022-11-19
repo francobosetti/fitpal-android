@@ -29,10 +29,10 @@ class RoutineRepository(
     private var routines: List<Routine> = emptyList()
 
     // Cache of the latest favorite routines got from the network using id.
-    private var favoriteRoutines: List<Routine> = emptyList()
+    private var favoriteRoutines: List<Int> = emptyList()
 
     // Cache of the latest user routines got from the network using id.
-    private var userRoutines: List<Routine> = emptyList()
+    private var userRoutines: List<Int> = emptyList()
 
     // Fetches the latest routines from the network.
     suspend fun fetchRoutines(orderBy: String?, direction: String?) {
@@ -66,16 +66,18 @@ class RoutineRepository(
 
                 networkRoutine.asModel(
                     routineCycles,
-                    favoriteRoutines.any { it.id == networkRoutine.id })
+                    favoriteRoutines.any { it.id == networkRoutine.id }
+                )
             }
-
 
         this.routines = routines
 
-        favoriteRoutineMutex.lock()
-
-        this.favoriteRoutines = favoriteRoutines.map {
-            networkRoutine ->
+        val privateUserRoutines = routineRemoteDataSource.getCurrentUserRoutines(
+            page,
+            pageSize,
+            resp.first,
+            resp.second
+        ).content.map { networkRoutine ->
 
             val routineCycles =
                 routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
@@ -92,11 +94,16 @@ class RoutineRepository(
 
             networkRoutine.asModel(
                 routineCycles,
-                true
+                favoriteRoutines.any { it.id == networkRoutine.id }
             )
         }
 
+        this.routines += privateUserRoutines
+        this.routines = this.routines.distinct()
 
+        favoriteRoutineMutex.lock()
+
+        this.favoriteRoutines = favoriteRoutines.map { it.id }
 
         favoriteRoutineMutex.unlock()
 
@@ -120,7 +127,7 @@ class RoutineRepository(
                 networkCycle.asModel(cycleExercises)
             }
 
-        val routine = networkRoutine.asModel(routineCycles, favoriteRoutines.any { it.id == routineId })
+        val routine = networkRoutine.asModel(routineCycles, favoriteRoutines.any { it == routineId })
 
         // Replace the routine in the cache with the new one.
         routineMutex.withLock {
@@ -130,9 +137,9 @@ class RoutineRepository(
         // If the routine is a favorite o is not favorite anymore, replace it in the cache.
         favoriteRoutineMutex.withLock {
             favoriteRoutines = if (routine.isFavorite) {
-                favoriteRoutines.map { if (it.id == routineId) routine else it }
+                favoriteRoutines.map { if (it == routineId) routineId else it }
             } else {
-                favoriteRoutines.filter { it.id != routineId }
+                favoriteRoutines.filter { it != routineId }
             }
         }
     }
@@ -145,24 +152,7 @@ class RoutineRepository(
             page,
             pageSize,
         ).content.map { networkRoutine ->
-
-            val routineCycles =
-                routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
-
-                    val cycleExercises =
-                        routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
-                            val videoUrl =
-                                exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
-
-                            networkCycleExercise.asModel(videoUrl)
-                        }
-                    networkCycle.asModel(cycleExercises)
-                }
-
-            networkRoutine.asModel(
-                routineCycles,
-                true
-            )
+            networkRoutine.id
         }
 
         this.favoriteRoutines = favoriteRoutines
@@ -182,23 +172,7 @@ class RoutineRepository(
             resp.first,
             resp.second
         ).content.map { networkRoutine ->
-
-            val routineCycles =
-                routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
-
-                    val cycleExercises =
-                        routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
-                            val videoUrl =
-                                exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
-
-                            networkCycleExercise.asModel(videoUrl)
-                        }
-                    networkCycle.asModel(cycleExercises)
-                }
-
-            networkRoutine.asModel(
-                routineCycles,
-                favoriteRoutines.any { it.id == networkRoutine.id })
+            networkRoutine.id
         }
 
         this.userRoutines = currentUserRoutines
@@ -223,13 +197,7 @@ class RoutineRepository(
             fetchRoutines(defaultOrdering, defaultDirection)
         }
 
-        val out = try {
-            routineMutex.withLock { this.routines.first { it.id == id } }
-        } catch (e : NoSuchElementException) {
-            routineMutex.withLock { this.userRoutines.first { it.id == id} }
-        }
-
-        return out
+        return routineMutex.withLock { this.routines.first { it.id == id } }
     }
 
     // Returns the cached favorite routines.
@@ -244,18 +212,34 @@ class RoutineRepository(
         }
 
         // Get routines that have the same id as the favorite routines.
-        return favoriteRoutines
+        return routineMutex.withLock {
+            this.routines.filter { routine ->
+                favoriteRoutines.contains(
+                    routine.id
+                )
+            }
+        }
     }
 
     // Returns the cached user routines.
     suspend fun getCurrentUserRoutines(orderBy: String?, direction: String?): List<Routine> {
+
+        if (routines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
+            fetchRoutines(orderBy, direction)
+        }
 
         if (userRoutines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
             fetchCurrentUserRoutines(orderBy, direction)
         }
 
         // Get routines that have the same id as the user routines.
-        return userRoutines
+        return routineMutex.withLock {
+            this.routines.filter { routine ->
+                userRoutines.contains(
+                    routine.id
+                )
+            }
+        }
     }
 
     // Returns an average of the score of the routine.
@@ -304,6 +288,7 @@ class RoutineRepository(
         // Add the routine id to the favorite routines.
         routineRemoteDataSource.addFavoriteRoutine(routineId)
         fetchFavoriteRoutines()
+
     }
 
     // Removes a routine from the favorite routines.
