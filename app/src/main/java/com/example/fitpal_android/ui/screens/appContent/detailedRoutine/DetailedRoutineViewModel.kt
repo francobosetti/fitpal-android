@@ -57,7 +57,7 @@ class DetailedRoutineViewModel(
             detailedRoutineState = detailedRoutineState.copy(isFetching = true, error = "")
 
             try {
-                routineRepository.rateRoutine(routineId, rating)
+                routineRepository.rateRoutine(routineId, rating * 2)
 
                 routineRepository.fetchRoutine(routineId)
                 val routine = routineRepository.getRoutine(routineId)
