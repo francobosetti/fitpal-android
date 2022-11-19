@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -183,7 +185,11 @@ fun ExecRoutine(
             }
         }
     } else {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier.verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             viewModel.getRoutineName()?.let {
                 Text(
                     text = it.uppercase(),
@@ -197,19 +203,16 @@ fun ExecRoutine(
                     ),
                 )
             }
-            LazyColumn(content = {
-                items(viewModel.getCyclesSize()) { index ->
-                    val cycle = viewModel.getCycle(index)
-                    CycleInRoutineCard(
-                        cycleIndex = index,
-                        cycleName = cycle.name,
-                        exercises = cycle.exercises,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                    Divider(color = Color.White, thickness = 1.dp)
-                }
-            })
+            for ((index, cycle) in viewModel.getCycles().withIndex()) {
+                CycleInRoutineCard(
+                    cycleIndex = index,
+                    cycleName = cycle.name,
+                    exercises = cycle.exercises,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Divider(color = Color.White, thickness = 1.dp)
+            }
             Button(
                 onClick = { onBackPressed() },
                 modifier = Modifier

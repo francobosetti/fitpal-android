@@ -152,6 +152,8 @@ class ExecRoutineViewModel(
 
     fun getReps() = uiState.reps
 
+    fun getCycles() = uiState.cycles
+
     fun getCurrentExerciseIndex() = uiState.currentExerciseIndex
 
     fun getCurrentCycleIndex() = uiState.currentCycleIndex
