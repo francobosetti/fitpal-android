@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,6 +29,7 @@ import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.cards.CycleInRoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
+import java.util.*
 
 
 @Composable
@@ -184,7 +186,7 @@ fun ExecRoutine(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             viewModel.getRoutineName()?.let {
                 Text(
-                    text = it,
+                    text = it.uppercase(),
                     modifier = Modifier
                         .padding(20.dp)
                         .fillMaxWidth(),
@@ -206,7 +208,7 @@ fun ExecRoutine(
                             .fillMaxWidth()
                     )
                     Divider(color = Color.White, thickness = 1.dp)
-                    }
+                }
             })
             Button(
                 onClick = { onBackPressed() },

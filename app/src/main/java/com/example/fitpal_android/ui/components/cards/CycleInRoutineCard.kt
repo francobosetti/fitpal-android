@@ -26,7 +26,6 @@ fun CycleInRoutineCard(cycleIndex : Int, cycleName : String, exercises : List<Cy
         modifier = modifier
     ) {
         Column {
-            for (ex in exercises) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(15.dp)
@@ -51,6 +50,7 @@ fun CycleInRoutineCard(cycleIndex : Int, cycleName : String, exercises : List<Cy
                         ),
                         color = Color.White
                     )}
+            for (ex in exercises) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 10.dp)
