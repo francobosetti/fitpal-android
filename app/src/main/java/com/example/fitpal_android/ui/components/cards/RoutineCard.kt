@@ -36,7 +36,7 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
                 model = imageUrl,
                 contentDescription = "Routine video",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .height(150.dp)
                     .clip(
@@ -55,16 +55,16 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
                     text = name,
                     style = MaterialTheme.typography.h5,
                     color = MaterialTheme.colors.onPrimary,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(12.dp)
                 )
 
 
                 Row(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = rating.toString(),
+                        text = (rating / 2).toString(),
                         style = MaterialTheme.typography.body2,
                         color = MaterialTheme.colors.onPrimary,
                     )
@@ -84,7 +84,7 @@ fun RoutineCard(name: String, difficulty: String, imageUrl: String, rating: Doub
                 text = difficulty.replaceFirstChar { it.uppercaseChar() },
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 12.dp, bottom = 12.dp)
             )
         }
     }

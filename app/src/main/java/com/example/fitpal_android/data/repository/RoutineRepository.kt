@@ -98,8 +98,7 @@ class RoutineRepository(
             )
         }
 
-        this.routines += privateUserRoutines
-        this.routines = this.routines.distinct()
+        this.routines += privateUserRoutines.filter { e -> !this.routines.any { e.id == it.id } }
 
         favoriteRoutineMutex.lock()
 

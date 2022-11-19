@@ -113,7 +113,7 @@ fun DetailedRoutineCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = rating.toString(),
+                    text = (rating / 2).toString(),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onPrimary,
                 )
