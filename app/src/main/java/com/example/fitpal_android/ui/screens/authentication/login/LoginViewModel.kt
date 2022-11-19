@@ -12,6 +12,7 @@ import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
 import com.example.fitpal_android.domain.use_case.ValidateEmail
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -21,6 +22,8 @@ class LoginViewModel(
 ) : ViewModel() {
     var loginFormState by mutableStateOf(LoginFormState())
         private set
+
+    private var fetchJob: Job? = null
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
@@ -59,7 +62,9 @@ class LoginViewModel(
 
         if(hasError) { return }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             loginFormState = loginFormState.copy(loading = true)
             try {
                 userRepository.login(loginFormState.email, loginFormState.password)

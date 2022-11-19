@@ -11,6 +11,7 @@ import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
 import com.example.fitpal_android.domain.use_case.ValidateVerificationCode
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -21,6 +22,8 @@ class VerifyViewModel(
 
     var verifyFormState by mutableStateOf(VerifyFromState())
         private set
+
+    private var fetchJob: Job? = null
 
     private var validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
@@ -66,7 +69,9 @@ class VerifyViewModel(
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             verifyFormState = verifyFormState.copy(verifyLoading = true)
             try {
                 userRepository.verifyEmail(email, verifyFormState.verificationCode)
@@ -82,7 +87,9 @@ class VerifyViewModel(
     }
 
     private fun resendCode(email: String) {
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             verifyFormState = verifyFormState.copy(resendLoading = true)
             verifyFormState = try {
                 userRepository.resendVerification(email)

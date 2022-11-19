@@ -9,6 +9,7 @@ import com.example.fitpal_android.R
 import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.UserRepository
 import com.example.fitpal_android.domain.use_case.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -18,6 +19,8 @@ class SignUpViewModel(
 ) : ViewModel() {
     var signUpFormState by mutableStateOf(SignUpFormState())
         private set
+
+    private var fetchJob: Job? = null
 
     private val validationEventChannel = Channel<SignUpValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
@@ -79,7 +82,9 @@ class SignUpViewModel(
 
         if(hasError) { return }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             signUpFormState = signUpFormState.copy(loading = true)
             try {
                 userRepository.registerUser(

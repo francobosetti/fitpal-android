@@ -7,16 +7,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.data.model.CycleExercise
-import com.example.fitpal_android.data.model.Exercise
-import com.example.fitpal_android.data.model.Routine
 import com.example.fitpal_android.data.repository.RoutineRepository
 import com.example.fitpal_android.util.SettingsManager
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class ExecRoutineViewModel(
-    routineId: Int,
-    routineRepository: RoutineRepository,
+    private val routineId: Int,
+    private val routineRepository: RoutineRepository,
     settingsManager: SettingsManager
 ) : ViewModel() {
 
@@ -27,8 +26,16 @@ class ExecRoutineViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
-        viewModelScope.launch {
+        updateExecRoutine()
+    }
+
+    private fun updateExecRoutine(){
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             val routine = routineRepository.getRoutine(routineId)
             uiState = uiState.copy(
                 routine = routine,

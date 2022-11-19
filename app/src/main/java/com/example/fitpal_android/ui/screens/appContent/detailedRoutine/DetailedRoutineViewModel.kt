@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.data.repository.RoutineRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -28,8 +29,16 @@ class DetailedRoutineViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
-        viewModelScope.launch {
+        updateDetailedRoutine()
+    }
+
+    private fun updateDetailedRoutine(){
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             detailedRoutineState = detailedRoutineState.copy(isFetching = true, error = "")
 
             try {
@@ -48,7 +57,6 @@ class DetailedRoutineViewModel(
                     error = e.message ?: "Unknown error"
                 )
             }
-
         }
     }
 

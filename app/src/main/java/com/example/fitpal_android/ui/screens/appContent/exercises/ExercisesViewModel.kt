@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.FitpalApplication
 import com.example.fitpal_android.data.model.Exercise
 import com.example.fitpal_android.data.repository.ExerciseRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ExercisesViewModel(
@@ -23,17 +24,20 @@ class ExercisesViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateExercises()
     }
 
     fun updateExercises() {
-
         if (!FitpalApplication.isUserLoggedIn()) {
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             exercisesState = exercisesState.copy(isFetching = true, error = "")
 
             try {

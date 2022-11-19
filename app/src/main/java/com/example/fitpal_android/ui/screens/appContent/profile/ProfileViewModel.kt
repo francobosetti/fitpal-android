@@ -12,6 +12,7 @@ import com.example.fitpal_android.domain.use_case.ValidateAvatarUrl
 import com.example.fitpal_android.domain.use_case.ValidateFirstname
 import com.example.fitpal_android.domain.use_case.ValidateLastname
 import com.example.fitpal_android.ui.screens.ValidationEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -41,6 +42,8 @@ class ProfileViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateUser()
     }
@@ -65,35 +68,39 @@ class ProfileViewModel(
         }
     }
 
-    fun getCurrentUser() = viewModelScope.launch {
-        profileState = profileState.copy(isFetching = true)
-        try {
-            val response = userRepository.getCurrentUser()
-            // Should not be null
-            response!!
+    fun getCurrentUser(){
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
+            profileState = profileState.copy(isFetching = true)
+            try {
+                val response = userRepository.getCurrentUser()
+                // Should not be null
+                response!!
 
 
-            profileState = profileState.copy(
-                firstname = response.firstname,
-                lastname = response.lastname,
-                email = response.email,
-                avatarUrl = response.avatarUrl
-            )
+                profileState = profileState.copy(
+                    firstname = response.firstname,
+                    lastname = response.lastname,
+                    email = response.email,
+                    avatarUrl = response.avatarUrl
+                )
 
 
-            profileFormState = profileFormState.copy(
-                firstname = response.firstname,
-                lastname = response.lastname,
-                avatarUrl = response.avatarUrl
-            )
+                profileFormState = profileFormState.copy(
+                    firstname = response.firstname,
+                    lastname = response.lastname,
+                    avatarUrl = response.avatarUrl
+                )
 
-        } catch (e : DataSourceException ) {
-            // Handle the error and notify the UI when appropriate.
-            profileState = profileState.copy(
-                apiMsg = ApiCodeTranslator.translate(e.code)
-            )
+            } catch (e : DataSourceException ) {
+                // Handle the error and notify the UI when appropriate.
+                profileState = profileState.copy(
+                    apiMsg = ApiCodeTranslator.translate(e.code)
+                )
+            }
+            profileState = profileState.copy(isFetching = false)
         }
-        profileState = profileState.copy(isFetching = false)
     }
 
     fun updateUser() {
@@ -101,7 +108,9 @@ class ProfileViewModel(
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             profileState = profileState.copy(isFetching = true)
             try {
                 val user = userRepository.getCurrentUser()
@@ -155,7 +164,9 @@ class ProfileViewModel(
 
         if(hasError) { return }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             profileFormState = profileFormState.copy(editLoading = true)
             try {
                 userRepository.updateUser(

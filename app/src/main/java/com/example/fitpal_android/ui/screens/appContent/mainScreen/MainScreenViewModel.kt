@@ -23,6 +23,8 @@ class MainScreenViewModel(
     )
         private set
 
+    private var fetchJob: Job? = null
+
     init {
         updateAvatarUrl()
     }
@@ -32,14 +34,14 @@ class MainScreenViewModel(
         resetRepositories()
     }
 
-
-
     fun updateAvatarUrl() {
         if (!userRepository.isLoggedIn()) {
             return
         }
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             try{
                 mainScreenState = mainScreenState.copy(isFetching = true)
                 val user = userRepository.getCurrentUser()

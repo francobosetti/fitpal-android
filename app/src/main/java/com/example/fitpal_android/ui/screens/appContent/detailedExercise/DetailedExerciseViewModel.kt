@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fitpal_android.data.remote.DataSourceException
 import com.example.fitpal_android.data.repository.ExerciseRepository
 import com.example.fitpal_android.domain.use_case.ApiCodeTranslator
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class DetailedExerciseViewModel(
@@ -23,8 +24,16 @@ class DetailedExerciseViewModel(
     )
     private set
 
+    private var fetchJob: Job? = null
+
     init {
-        viewModelScope.launch {
+        updateDetailedExercise()
+    }
+
+    private fun updateDetailedExercise(){
+        fetchJob?.cancel()
+
+        fetchJob = viewModelScope.launch {
             detailedExerciseState = detailedExerciseState.copy(isFetching = true)
 
             detailedExerciseState = try {
