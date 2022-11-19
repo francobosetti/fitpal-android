@@ -1,38 +1,31 @@
 package com.example.fitpal_android.ui.screens.appContent.execRoutine
 
-import android.content.ClipData
 import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.invalidateGroupsWithKey
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
-import com.example.fitpal_android.ui.components.cards.ExerciseInRoutineCard
+import com.example.fitpal_android.ui.components.cards.CycleInRoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
@@ -188,32 +181,37 @@ fun ExecRoutine(
             }
         }
     } else {
-        Column() {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            viewModel.getRoutineName()?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth(),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 40.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                )
+            }
             LazyColumn(content = {
                 items(viewModel.getCyclesSize()) { index ->
-                    Text(text = viewModel.getCycle(index).name, style = MaterialTheme.typography.h5)
-
-                    for (exercise in viewModel.getCycle(index).exercises) {
-
-                        /*val exerciseInfoText =
-                            if (exercise.duration == 0) exercise.repetitions.toString() + " reps" else exercise.duration.toString() + "s"
-
-                        Text(text = exercise.exercise.name + " - " + exerciseInfoText)*/
-
-                        ExerciseInRoutineCard(
-                            exerciseName = exercise.exercise.name,
-                            reps = exercise.repetitions,
-                            time = exercise.duration.toString(),
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
+                    val cycle = viewModel.getCycle(index)
+                    CycleInRoutineCard(
+                        cycleIndex = index,
+                        cycleName = cycle.name,
+                        exercises = cycle.exercises,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    Divider(color = Color.White, thickness = 1.dp)
                     }
-                }
             })
             Button(
                 onClick = { onBackPressed() },
                 modifier = Modifier
-                    .padding(start = 10.dp, end = 10.dp)
+                    .padding(15.dp)
                     .height(50.dp)
                     .width(150.dp),
                 shape = RoundedCornerShape(10.dp),
@@ -229,7 +227,6 @@ fun ExecRoutine(
                 )
             }
         }
-
     }
 }
 

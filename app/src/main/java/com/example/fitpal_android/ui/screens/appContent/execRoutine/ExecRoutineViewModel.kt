@@ -20,11 +20,12 @@ class ExecRoutineViewModel(
     settingsManager: SettingsManager
 ) : ViewModel() {
 
-    private var uiState by mutableStateOf(
+    var uiState by mutableStateOf(
         ExecRoutineState(
             executionMode = settingsManager.getExecutionMode()
         )
     )
+        private set
 
     init {
         viewModelScope.launch {
@@ -135,6 +136,8 @@ class ExecRoutineViewModel(
         )
     }
 
+    fun getRoutineName() = uiState.routine?.name
+
     fun getCurrentExerciseName() = uiState.exercises[uiState.currentExerciseIndex].exercise.name
 
     fun getCurrentCycleName() = uiState.cycles[uiState.currentCycleIndex].name
@@ -162,7 +165,5 @@ class ExecRoutineViewModel(
     fun isSimpleMode() = uiState.executionMode == ExecRoutineState.SIMPLE_MODE
 
     fun getCycle(cycleIndex: Int) = uiState.cycles[cycleIndex]
-
-    fun getCycleExercises(cycleIndex: Int) = uiState.cycles[cycleIndex].exercises
 
 }
