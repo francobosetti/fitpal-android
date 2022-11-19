@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.cards.RoutineCard
+import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
 
 @Composable
@@ -46,63 +47,74 @@ fun FavRoutines(
             }
         }
     }
-
-    if(favRoutinesState.favRoutines.isEmpty()){
+    if (favRoutinesState.isFetching) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = stringResource(R.string.no_fav)
+            CircularProgressIndicator(
+                color = Orange500,
+                strokeWidth = 4.dp,
+                modifier = Modifier
+                    .padding(10.dp)
             )
         }
-    }
-    else {
-        when (configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                Surface(color = MaterialTheme.colors.background) {
-                    LazyVerticalGrid(
-                        modifier = Modifier.padding(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
-                        columns = GridCells.Adaptive(250.dp)
-                    ) {
-                        items(favRoutinesState.favRoutines.size) {
-                            RoutineCard(
-                                name = favRoutinesState.favRoutines[it].name,
-                                imageUrl = favRoutinesState.favRoutines[it].imageUrl,
-                                difficulty = favRoutinesState.favRoutines[it].difficulty,
-                                rating = favRoutinesState.favRoutines[it].rating,
-                                modifier = Modifier.clickable {
-                                    onItemClicked(favRoutinesState.favRoutines[it].id)
-                                }
-                            )
+    } else {
+        if (favRoutinesState.favRoutines.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.no_fav)
+                )
+            }
+        } else {
+            when (configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    Surface(color = MaterialTheme.colors.background) {
+                        LazyVerticalGrid(
+                            modifier = Modifier.padding(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            columns = GridCells.Adaptive(250.dp)
+                        ) {
+                            items(favRoutinesState.favRoutines.size) {
+                                RoutineCard(
+                                    name = favRoutinesState.favRoutines[it].name,
+                                    imageUrl = favRoutinesState.favRoutines[it].imageUrl,
+                                    difficulty = favRoutinesState.favRoutines[it].difficulty,
+                                    rating = favRoutinesState.favRoutines[it].rating,
+                                    modifier = Modifier.clickable {
+                                        onItemClicked(favRoutinesState.favRoutines[it].id)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            }
-            else -> {
-                Surface(color = MaterialTheme.colors.background) {
-                    LazyColumn(
-                        modifier = Modifier.padding(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(favRoutinesState.favRoutines.size) {
-                            RoutineCard(
-                                name = favRoutinesState.favRoutines[it].name,
-                                imageUrl = favRoutinesState.favRoutines[it].imageUrl,
-                                difficulty = favRoutinesState.favRoutines[it].difficulty,
-                                rating = favRoutinesState.favRoutines[it].rating,
-                                modifier = Modifier.clickable {
-                                    onItemClicked(favRoutinesState.favRoutines[it].id)
-                                }
-                            )
+                else -> {
+                    Surface(color = MaterialTheme.colors.background) {
+                        LazyColumn(
+                            modifier = Modifier.padding(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(favRoutinesState.favRoutines.size) {
+                                RoutineCard(
+                                    name = favRoutinesState.favRoutines[it].name,
+                                    imageUrl = favRoutinesState.favRoutines[it].imageUrl,
+                                    difficulty = favRoutinesState.favRoutines[it].difficulty,
+                                    rating = favRoutinesState.favRoutines[it].rating,
+                                    modifier = Modifier.clickable {
+                                        onItemClicked(favRoutinesState.favRoutines[it].id)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             }
         }
     }
-
 
 }
