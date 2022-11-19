@@ -18,11 +18,11 @@ import com.example.fitpal_android.util.getViewModelFactory
 fun Settings(
     viewModel: SettingsViewModel
 ) {
-    Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(8.dp)) {
+    Surface(color = MaterialTheme.colors.background, modifier = Modifier.padding(12.dp)) {
 
         Card(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(12.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
             backgroundColor = MaterialTheme.colors.secondary,
@@ -36,7 +36,7 @@ fun Settings(
                 Text(
                     text = stringResource(R.string.execution_mode),
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(12.dp)
                 )
 
                 // Toggle switch for execution mode
@@ -50,16 +50,8 @@ fun Settings(
                         uncheckedThumbColor = MaterialTheme.colors.background,
                         uncheckedTrackColor = MaterialTheme.colors.primary
                     ),
-                    modifier = Modifier.padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
+                    modifier = Modifier.padding(start = 12.dp, top = 2.dp, bottom = 2.dp)
                 )
-
-                // TODO only for testing
-                Text(
-                    text = if (viewModel.isDetailedMode()) "Detailed mode" else "Simple mode",
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier.padding(8.dp)
-                )
-
             }
 
         }
