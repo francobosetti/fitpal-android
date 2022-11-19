@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,6 +31,7 @@ import com.example.fitpal_android.R
 import com.example.fitpal_android.ui.components.cards.CycleInRoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
 import com.example.fitpal_android.util.getViewModelFactory
+import java.util.*
 
 
 @Composable
@@ -181,10 +185,14 @@ fun ExecRoutine(
             }
         }
     } else {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier.verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             viewModel.getRoutineName()?.let {
                 Text(
-                    text = it,
+                    text = it.uppercase(),
                     modifier = Modifier
                         .padding(20.dp)
                         .fillMaxWidth(),
@@ -195,19 +203,16 @@ fun ExecRoutine(
                     ),
                 )
             }
-            LazyColumn(content = {
-                items(viewModel.getCyclesSize()) { index ->
-                    val cycle = viewModel.getCycle(index)
-                    CycleInRoutineCard(
-                        cycleIndex = index,
-                        cycleName = cycle.name,
-                        exercises = cycle.exercises,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                    Divider(color = Color.White, thickness = 1.dp)
-                    }
-            })
+            for ((index, cycle) in viewModel.getCycles().withIndex()) {
+                CycleInRoutineCard(
+                    cycleIndex = index,
+                    cycleName = cycle.name,
+                    exercises = cycle.exercises,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Divider(color = Color.White, thickness = 1.dp)
+            }
             Button(
                 onClick = { onBackPressed() },
                 modifier = Modifier
