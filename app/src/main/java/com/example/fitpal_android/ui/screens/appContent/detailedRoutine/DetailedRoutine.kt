@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fitpal_android.ui.components.cards.detailed.DetailedRoutineCard
 import com.example.fitpal_android.ui.theme.Orange500
@@ -81,8 +82,19 @@ fun DetailedRoutine(
                 }
             } else {
                 if (routineId != null && detailedRoutineState.routine != null) {
-                    detailedRoutineState.routine
 
+                    if(detailedRoutineState.loadingInput) {
+                        Dialog(
+                            onDismissRequest = { /*TODO*/ }
+                        ) {
+                            CircularProgressIndicator(
+                                color = Orange500,
+                                strokeWidth = 4.dp,
+                                modifier = Modifier
+                                    .padding(10.dp)
+                            )
+                        }
+                    }
                     // Routine details
                     DetailedRoutineCard(
                         name = detailedRoutineState.routine.name,
