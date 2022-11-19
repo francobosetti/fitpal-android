@@ -221,7 +221,13 @@ class RoutineRepository(
             fetchRoutines(defaultOrdering, defaultDirection)
         }
 
-        return routineMutex.withLock { this.routines.first { it.id == id } }
+        val out = try {
+            routineMutex.withLock { this.routines.first { it.id == id } }
+        } catch (e : NoSuchElementException) {
+            routineMutex.withLock { this.userRoutines.first { it.id == id} }
+        }
+
+        return out
     }
 
     // Returns the cached favorite routines.
