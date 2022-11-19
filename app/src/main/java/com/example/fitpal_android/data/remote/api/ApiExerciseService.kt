@@ -13,7 +13,7 @@ interface ApiExerciseService {
     @GET("exercises")
     suspend fun getExercises(@Query("page") page: Int, @Query("size") size: Int): Response<NetworkPagedContent<NetworkExercise>>
 
-    // Only one video per exercise, we use image path because we took bad decision to use image path instead of video path
+    // Only one image per exercise
     @GET("exercises/{exerciseId}/images")
     suspend fun getExerciseImage(@Path("exerciseId") exerciseId: Int): Response<NetworkPagedContent<NetworkExerciseImage>>
 }

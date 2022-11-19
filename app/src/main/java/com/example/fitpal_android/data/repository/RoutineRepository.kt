@@ -29,10 +29,10 @@ class RoutineRepository(
     private var routines: List<Routine> = emptyList()
 
     // Cache of the latest favorite routines got from the network using id.
-    private var favoriteRoutines: List<Int> = emptyList()
+    private var favoriteRoutines: List<Routine> = emptyList()
 
     // Cache of the latest user routines got from the network using id.
-    private var userRoutines: List<Int> = emptyList()
+    private var userRoutines: List<Routine> = emptyList()
 
     // Fetches the latest routines from the network.
     suspend fun fetchRoutines(orderBy: String?, direction: String?) {
@@ -74,7 +74,28 @@ class RoutineRepository(
 
         favoriteRoutineMutex.lock()
 
-        this.favoriteRoutines = favoriteRoutines.map { it.id }
+        this.favoriteRoutines = favoriteRoutines.map {
+            networkRoutine ->
+
+            val routineCycles =
+                routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
+
+                    val cycleExercises =
+                        routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
+                            val videoUrl =
+                                exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
+
+                            networkCycleExercise.asModel(videoUrl)
+                        }
+                    networkCycle.asModel(cycleExercises)
+                }
+
+            networkRoutine.asModel(
+                routineCycles,
+                favoriteRoutines.any { it.id == networkRoutine.id })
+        }
+
+
 
         favoriteRoutineMutex.unlock()
 
@@ -98,7 +119,7 @@ class RoutineRepository(
                 networkCycle.asModel(cycleExercises)
             }
 
-        val routine = networkRoutine.asModel(routineCycles, favoriteRoutines.any { it == routineId })
+        val routine = networkRoutine.asModel(routineCycles, favoriteRoutines.any { it.id == routineId })
 
         // Replace the routine in the cache with the new one.
         routineMutex.withLock {
@@ -108,9 +129,9 @@ class RoutineRepository(
         // If the routine is a favorite o is not favorite anymore, replace it in the cache.
         favoriteRoutineMutex.withLock {
             favoriteRoutines = if (routine.isFavorite) {
-                favoriteRoutines.map { if (it == routineId) routineId else it }
+                favoriteRoutines.map { if (it.id == routineId) routine else it }
             } else {
-                favoriteRoutines.filter { it != routineId }
+                favoriteRoutines.filter { it.id != routineId }
             }
         }
     }
@@ -123,7 +144,23 @@ class RoutineRepository(
             page,
             pageSize,
         ).content.map { networkRoutine ->
-            networkRoutine.id
+
+            val routineCycles =
+                routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
+
+                    val cycleExercises =
+                        routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
+                            val videoUrl =
+                                exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
+
+                            networkCycleExercise.asModel(videoUrl)
+                        }
+                    networkCycle.asModel(cycleExercises)
+                }
+
+            networkRoutine.asModel(
+                routineCycles,
+                favoriteRoutines.any { it.id == networkRoutine.id })
         }
 
         this.favoriteRoutines = favoriteRoutines
@@ -143,7 +180,23 @@ class RoutineRepository(
             resp.first,
             resp.second
         ).content.map { networkRoutine ->
-            networkRoutine.id
+
+            val routineCycles =
+                routineRemoteDataSource.getRoutineCycles(networkRoutine.id).content.map { networkCycle ->
+
+                    val cycleExercises =
+                        routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
+                            val videoUrl =
+                                exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
+
+                            networkCycleExercise.asModel(videoUrl)
+                        }
+                    networkCycle.asModel(cycleExercises)
+                }
+
+            networkRoutine.asModel(
+                routineCycles,
+                favoriteRoutines.any { it.id == networkRoutine.id })
         }
 
         this.userRoutines = currentUserRoutines
@@ -175,42 +228,26 @@ class RoutineRepository(
     suspend fun getFavoriteRoutines(): List<Routine> {
 
         if (routines.isEmpty()) {
-        fetchRoutines(null, null)
+            fetchRoutines(null, null)
         }
 
         if (favoriteRoutines.isEmpty()) {
-        fetchFavoriteRoutines()
+            fetchFavoriteRoutines()
         }
 
         // Get routines that have the same id as the favorite routines.
-        return routineMutex.withLock {
-            this.routines.filter { routine ->
-                favoriteRoutines.contains(
-                    routine.id
-                )
-            }
-        }
+        return favoriteRoutines
     }
 
     // Returns the cached user routines.
     suspend fun getCurrentUserRoutines(orderBy: String?, direction: String?): List<Routine> {
-
-        if (routines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
-            fetchRoutines(orderBy, direction)
-        }
 
         if (userRoutines.isEmpty() || orderBy?.equals(defaultOrdering) == false || direction?.equals(defaultDirection) == false) {
             fetchCurrentUserRoutines(orderBy, direction)
         }
 
         // Get routines that have the same id as the user routines.
-        return routineMutex.withLock {
-            this.routines.filter { routine ->
-                userRoutines.contains(
-                    routine.id
-                )
-            }
-        }
+        return userRoutines
     }
 
     // Returns an average of the score of the routine.

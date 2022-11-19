@@ -11,7 +11,7 @@ class NetworkExercise(
     @SerializedName("detail")
     var detail: String,
     @SerializedName("metadata")
-    var metadata: NetworkExerciseMetadata,
+    var metadata: NetworkExerciseMetadata?,
 ) {
     class NetworkExerciseMetadata(
         @SerializedName("tags")
@@ -19,12 +19,16 @@ class NetworkExercise(
     )
 
     fun asModel(imageUrl: String) : Exercise {
+        var tags: List<String> = emptyList()
+        if(metadata != null) {
+            tags = metadata!!.tags
+        }
         return Exercise(
             id = id,
             name = name,
             description = detail,
             imageUrl = imageUrl,
-            tags = metadata.tags,
+            tags = tags,
             seconds = 0,
             reps = 0
         )
