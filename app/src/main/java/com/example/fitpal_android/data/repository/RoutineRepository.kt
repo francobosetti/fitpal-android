@@ -92,7 +92,8 @@ class RoutineRepository(
 
             networkRoutine.asModel(
                 routineCycles,
-                favoriteRoutines.any { it.id == networkRoutine.id })
+                true
+            )
         }
 
 
@@ -160,7 +161,8 @@ class RoutineRepository(
 
             networkRoutine.asModel(
                 routineCycles,
-                favoriteRoutines.any { it.id == networkRoutine.id })
+                true
+            )
         }
 
         this.favoriteRoutines = favoriteRoutines
@@ -302,7 +304,6 @@ class RoutineRepository(
         // Add the routine id to the favorite routines.
         routineRemoteDataSource.addFavoriteRoutine(routineId)
         fetchFavoriteRoutines()
-
     }
 
     // Removes a routine from the favorite routines.
