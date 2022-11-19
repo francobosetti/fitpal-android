@@ -10,4 +10,5 @@ data class DetailedRoutineState (
     val isFetching: Boolean = false,
     val error: String = "",
     val showPopup: Boolean = false,
+    val loadingInput: Boolean = false,
 )

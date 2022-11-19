@@ -41,28 +41,28 @@ class DetailedRoutineViewModel(
         fetchJob = viewModelScope.launch {
             detailedRoutineState = detailedRoutineState.copy(isFetching = true, error = "")
 
-            try {
+            detailedRoutineState = try {
                 val routine = routineRepository.getRoutine(routineId)
                 val rating = routineRepository.getRoutineUserScore(routineId)
 
-                detailedRoutineState = detailedRoutineState.copy(
+                detailedRoutineState.copy(
                     routine = routine,
                     userRating = rating,
-                    isFetching = false,
                     error = ""
                 )
             } catch (e: Exception) {
-                detailedRoutineState = detailedRoutineState.copy(
-                    isFetching = false,
+                detailedRoutineState.copy(
                     error = e.message ?: "Unknown error"
                 )
             }
+
+            detailedRoutineState = detailedRoutineState.copy(isFetching = false)
         }
     }
 
     fun rateRoutine(rating: Double) {
         viewModelScope.launch {
-            detailedRoutineState = detailedRoutineState.copy(isFetching = true, error = "")
+            detailedRoutineState = detailedRoutineState.copy(loadingInput = true, error = "")
 
             try {
                 routineRepository.rateRoutine(routineId, rating * 2)
@@ -72,7 +72,6 @@ class DetailedRoutineViewModel(
 
                 detailedRoutineState = detailedRoutineState.copy(
                     routine = routine,
-                    isFetching = false,
                     error = ""
                 )
 
@@ -80,10 +79,10 @@ class DetailedRoutineViewModel(
 
             } catch (e: Exception) {
                 detailedRoutineState = detailedRoutineState.copy(
-                    isFetching = false,
                     error = e.message ?: "Unknown error"
                 )
             }
+            detailedRoutineState = detailedRoutineState.copy(loadingInput = false)
         }
         // reset rating
         detailedRoutineState = detailedRoutineState.copy(reviewRating = 0.0)
@@ -91,7 +90,7 @@ class DetailedRoutineViewModel(
 
     fun toggleFav() {
         viewModelScope.launch {
-            detailedRoutineState = detailedRoutineState.copy(isFetching = true, error = "")
+            detailedRoutineState = detailedRoutineState.copy(loadingInput = true, error = "")
 
             try {
                 if (detailedRoutineState.routine?.isFavorite == true) {
@@ -105,17 +104,16 @@ class DetailedRoutineViewModel(
 
                 detailedRoutineState = detailedRoutineState.copy(
                     routine = routine,
-                    isFetching = false,
                     error = ""
                 )
 
                 validationEventChannel.send(DetailedRoutineEvent.FavoriteToggled)
             } catch (e: Exception) {
                 detailedRoutineState = detailedRoutineState.copy(
-                    isFetching = false,
                     error = e.message ?: "Unknown error"
                 )
             }
+            detailedRoutineState = detailedRoutineState.copy(loadingInput = false)
         }
     }
 
