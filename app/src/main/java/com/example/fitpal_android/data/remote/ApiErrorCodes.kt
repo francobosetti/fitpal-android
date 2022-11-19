@@ -5,8 +5,8 @@ object ApiErrorCodes {
     const val EMAIL_ALREADY_IN_USE = 2
     const val EMAIL_NOT_FOUND_ERROR = 3
     const val INV_EMAIL_OR_PASSWORD = 4
-    const val DATABASE_ERROR = 5        //TODO:REVISAR
-    const val INVALID_REQUEST = 6       //TODO:REVISAR
+    const val DATABASE_ERROR = 5
+    const val INVALID_REQUEST = 6
     const val UNAUTHORIZED = 7          //TODO:MANEJAR EN EL LOGIN DEL MAIN
     const val INV_VERIFICATION = 8
     const val CONNECTION_ERROR = 98

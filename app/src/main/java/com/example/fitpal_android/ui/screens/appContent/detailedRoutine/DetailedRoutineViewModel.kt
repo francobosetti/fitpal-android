@@ -62,8 +62,6 @@ class DetailedRoutineViewModel(
                 routineRepository.fetchRoutine(routineId)
                 val routine = routineRepository.getRoutine(routineId)
 
-                Log.d("Routine", routine.rating.toString())
-
                 detailedRoutineState = detailedRoutineState.copy(
                     routine = routine,
                     isFetching = false,
@@ -79,6 +77,8 @@ class DetailedRoutineViewModel(
                 )
             }
         }
+        // reset rating
+        detailedRoutineState = detailedRoutineState.copy(reviewRating = 0.0)
     }
 
     fun toggleFav() {
@@ -109,5 +109,17 @@ class DetailedRoutineViewModel(
                 )
             }
         }
+    }
+
+    fun showPopup() {
+        detailedRoutineState = detailedRoutineState.copy(showPopup = true)
+    }
+
+    fun dismissPopup() {
+        detailedRoutineState = detailedRoutineState.copy(showPopup = false)
+    }
+
+    fun updateReviewRating(rating: Double) {
+        detailedRoutineState = detailedRoutineState.copy(reviewRating = rating)
     }
 }

@@ -2,7 +2,7 @@ package com.example.fitpal_android.data.remote
 
 import com.example.fitpal_android.data.remote.api.ApiExerciseService
 import com.example.fitpal_android.data.remote.model.exercise.NetworkExercise
-import com.example.fitpal_android.data.remote.model.exercise.NetworkExerciseVideo
+import com.example.fitpal_android.data.remote.model.exercise.NetworkExerciseImage
 import com.example.fitpal_android.data.remote.model.NetworkPagedContent
 
 class ExerciseRemoteDataSource(
@@ -13,7 +13,7 @@ class ExerciseRemoteDataSource(
         return handleApiResponse { apiExerciseService.getExercises(page, size) }
     }
 
-    suspend fun getExerciseVideo(exerciseId: Int): NetworkPagedContent<NetworkExerciseVideo> {
-        return handleApiResponse { apiExerciseService.getExerciseVideo(exerciseId) }
+    suspend fun getExerciseImage(exerciseId: Int): NetworkPagedContent<NetworkExerciseImage> {
+        return handleApiResponse { apiExerciseService.getExerciseImage(exerciseId) }
     }
 }

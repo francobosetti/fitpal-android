@@ -42,7 +42,6 @@ class LoginViewModel(
         }
     }
 
-    // TODO: CHECK IN BACKEND
     private fun login() {
         // Remove trailing spaces
         loginFormState = loginFormState.copy(

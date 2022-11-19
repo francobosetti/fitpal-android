@@ -89,4 +89,5 @@
     <string name="no_fav">No favorite routines found</string>
     <string name="no_routines">No routines found</string>
     <string name="seconds">" secs"</string>
+    <string name="post">Post</string>
 </resources>

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
@@ -18,28 +17,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import coil.compose.AsyncImage
 import com.example.fitpal_android.R
+import com.example.fitpal_android.ui.theme.Black000
 
 @Composable
 fun DetailedRoutineCard(
     name: String,
     description: String,
     difficulty: String,
-    videoUrl: String,
+    imageUrl: String,
     modifier: Modifier,
     rating: Double,
-    userRating: Double?,
     isFavorite: Boolean,
+    showPopup: Boolean,
+    selectedRating: Double,
     onStartPressedCallback: () -> Unit,
     onSharePressedCallback: () -> Unit,
     onFavoritePressedCallback: () -> Unit,
-    onRatingSubmitCallback: (Double) -> Unit
+    onRatingSubmitCallback: (Double) -> Unit,
+    onUpdateSelectedRatingCallback: (Double) -> Unit,
+    onShowPopupCallback: () -> Unit,
+    onDismissPopupCallback: () -> Unit,
 ) {
-    var showPopup by remember { mutableStateOf(false) }
-    var selectedRating by remember { mutableStateOf(userRating ?: 0.0) }
-
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(8.dp),
@@ -49,7 +52,7 @@ fun DetailedRoutineCard(
 
             // Image
             AsyncImage(
-                model = videoUrl,
+                model = imageUrl,
                 contentDescription = "Routine video",
                 modifier = Modifier
                     .padding(12.dp)
@@ -166,7 +169,7 @@ fun DetailedRoutineCard(
 
             // Rating text button
             TextButton(
-                onClick = { showPopup = true },
+                onClick = { onShowPopupCallback() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -192,38 +195,32 @@ fun DetailedRoutineCard(
 
             // Popup with rating options
             if (showPopup) {
-                Popup(alignment = Alignment.Center, onDismissRequest = { showPopup = false }) {
+                Dialog(
+                    onDismissRequest = { onDismissPopupCallback() },
+                ) {
                     Card(
                         backgroundColor = MaterialTheme.colors.secondary,
                         shape = RoundedCornerShape(8.dp),
                     ) {
-                        Column {
-                            // Title
-                            Text(
-                                text = stringResource(R.string.rating_title),
-                                style = MaterialTheme.typography.h6,
-                                color = MaterialTheme.colors.onPrimary,
-                                modifier = Modifier.padding(12.dp)
-                            )
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
 
-                            // Rating options
+                            // Rating stars
                             RatingRow(
                                 rating = selectedRating,
-                                onRatingPressed = { onRatingSubmitCallback(selectedRating); showPopup = false },
-                                onStarPressed = { rating -> selectedRating = rating },
+                                onStarPressed = { rating -> onUpdateSelectedRatingCallback(rating) },
                                 starPressable = true
                             )
-
-                            // Cancel button
                             Button(
-                                onClick = { showPopup = false },
+                                onClick = { onRatingSubmitCallback(selectedRating); onDismissPopupCallback() },
                                 modifier = Modifier
-                                    .padding(12.dp)
+                                    .padding(12.dp),
+                                enabled = (selectedRating != 0.0)
                             ) {
                                 // Center text
-                                Text(text = stringResource(R.string.cancel_button_text))
+                                Text(text = stringResource(R.string.post))
                             }
-
                         }
                     }
                 }
@@ -232,11 +229,9 @@ fun DetailedRoutineCard(
     }
 }
 
-// TODO: hacer que maneje doubles
 @Composable
 fun RatingRow(
     rating: Double,
-    onRatingPressed: (Double) -> Unit,
     onStarPressed: (Double) -> Unit,
     starPressable: Boolean
 ) {
@@ -287,18 +282,5 @@ fun RatingRow(
             tint = if (rating >= 5) MaterialTheme.colors.primary else MaterialTheme.colors.background,
             modifier = if (starPressable) starModifier.clickable { onStarPressed(5.0) } else starModifier
         )
-
-        // Rating text button
-        TextButton(
-            onClick = { onRatingPressed(rating) },
-            modifier = Modifier.padding(end = 8.dp, start = 4.dp, bottom = 8.dp, top = 8.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.rating_button_text),
-                style = MaterialTheme.typography.body1,
-                textDecoration = TextDecoration.Underline,
-                color = MaterialTheme.colors.primary,
-            )
-        }
     }
 }

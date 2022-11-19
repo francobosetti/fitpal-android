@@ -18,7 +18,7 @@ import coil.compose.AsyncImage
 // It shows a video thumbnail, the name of the exercise, the exercise tags and the exercise description
 
 @Composable
-fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: Modifier) {
+fun ExerciseCard(name: String, tags: List<String>, imageUrl: String, modifier: Modifier) {
     Card(
         backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(12.dp),
@@ -27,10 +27,9 @@ fun ExerciseCard(name: String, tags: List<String>, videoUrl: String, modifier: M
         Column {
 
             // Video thumbnail
-            /* TODO : implementar video (otra vez xd)*/
             AsyncImage(
-                model = videoUrl,
-                contentDescription = "Exercise video",
+                model = imageUrl,
+                contentDescription = "Exercise image",
                 modifier = Modifier
                     .padding(12.dp)
                     .fillMaxWidth()

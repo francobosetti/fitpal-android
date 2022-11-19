@@ -2,7 +2,7 @@ package com.example.fitpal_android.data.remote.model.exercise
 
 import com.google.gson.annotations.SerializedName
 
-class NetworkExerciseVideo(
+class NetworkExerciseImage(
     @SerializedName("id")
     var id: Int,
     @SerializedName("number")

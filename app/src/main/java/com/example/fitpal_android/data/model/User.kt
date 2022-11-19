@@ -6,4 +6,4 @@ class User (
     val lastname: String,
     var email: String,
     val avatarUrl: String,
-) // TODO: check if Public user can be extended
+)

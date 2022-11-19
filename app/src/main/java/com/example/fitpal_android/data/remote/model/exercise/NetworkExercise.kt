@@ -18,12 +18,12 @@ class NetworkExercise(
         var tags: List<String>,
     )
 
-    fun asModel(videoUrl: String) : Exercise {
+    fun asModel(imageUrl: String) : Exercise {
         return Exercise(
             id = id,
             name = name,
             description = detail,
-            videoUrl = videoUrl,
+            imageUrl = imageUrl,
             tags = metadata.tags,
             seconds = 0,
             reps = 0

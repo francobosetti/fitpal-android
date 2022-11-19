@@ -57,7 +57,7 @@ class RoutineRepository(
                         val cycleExercises =
                             routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
                                 val videoUrl =
-                                    exerciseRemoteDataSource.getExerciseVideo(networkCycleExercise.exercise.id).content.first().url
+                                    exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
 
                                 networkCycleExercise.asModel(videoUrl)
                             }
@@ -91,7 +91,7 @@ class RoutineRepository(
                 val cycleExercises =
                     routineRemoteDataSource.getCycleExercises(networkCycle.id).content.map { networkCycleExercise ->
                         val videoUrl =
-                            exerciseRemoteDataSource.getExerciseVideo(networkCycleExercise.exercise.id).content.first().url
+                            exerciseRemoteDataSource.getExerciseImage(networkCycleExercise.exercise.id).content.first().url
 
                         networkCycleExercise.asModel(videoUrl)
                     }
@@ -272,9 +272,6 @@ class RoutineRepository(
 
     // Rates a routine.
     suspend fun rateRoutine(routineId: Int, rating: Double) {
-
-        // TODO: si el usuario ya ha valorado la rutina, se deberia actualizar la valoracion, la api no t permite hacerlo, nose si hacer q el usuario vote muchas veces o no dejarle
-
         routineRemoteDataSource.addRoutineReview(routineId, rating)
     }
 

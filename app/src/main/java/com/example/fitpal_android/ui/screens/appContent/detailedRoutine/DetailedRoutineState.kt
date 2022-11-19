@@ -6,6 +6,8 @@ import com.example.fitpal_android.data.model.Routine
 data class DetailedRoutineState (
     val routine: Routine? = null,
     val userRating: Double? = null,
+    val reviewRating: Double = 0.0,
     val isFetching: Boolean = false,
     val error: String = "",
+    val showPopup: Boolean = false,
 )
